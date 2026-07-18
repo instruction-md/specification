@@ -78,12 +78,13 @@ Copyright © 2026 TSOK Inc.
 
 ## Known open items at `draft-1-rc`
 
-- The per-kind **lifecycle** table (§4.1) is drafted; the sub-block set
-  (`case`, `signature`, `schema`, `preview`) is named in the source RFCs but
-  not yet carried into §4 — flagged in `conformance/registry/kinds.json`.
-- §4's "`example` exists in both layers" bullet is stale: `example` is prose in
-  both dialects and there is no `!example` in the machinery set. Wording, not
-  semantics.
+- The per-kind **lifecycle** table (§4.1) is drafted but unratified.
+- Conformance **profiles** beyond Core are unwritten.
 - The `!` sigil lexeme is settled but revisitable on repo review.
-- Conformance profiles beyond Core are unwritten; `expected.document` (the
-  control-plane observables, including delivered text) has no schema yet.
+- `expected.document` (the control-plane observables, including delivered
+  text) has no schema yet.
+- `conformance/README.md` states that a fixture pins the `spec:` version it is
+  written against; **no fixture does yet**, and adding one requires a
+  coordinated runner change (strict readers treat an unrecognized expectation
+  line as fatal). Documented rule, unimplemented — the same "nothing checks for
+  presence" shape as the identity rule that §3.2 rule 9 restores.

@@ -122,6 +122,13 @@ Normative rules, each with a conformance fixture:
    1.6.0: without this rule, `:::!workflow` parsed clean as prose and its
    configuration vanished without a diagnostic. agentd's next release carries
    the guard.)
+9. **Block identity** (restored — this rule was present at draft-0.2 and lost
+   in the reconciliation rewrites; `unique` appeared nowhere in draft-1-rc):
+   `name` is a block's identity within the document and is **unique per kind**;
+   `kind/name` is its qualified form. A duplicate `kind/name` is refused. §3.3's
+   `@kind/name` resolution is undefined without this — two `!function{name=lint}`
+   blocks give `@function/lint` no answer — and the source RFC carried the
+   duplicate refusal explicitly (agentd RFC 0039 §7 rule 3).
 
 ### 3.3 References
 
@@ -185,8 +192,21 @@ version; resolve per-reader deterministically and **attest the resolution**
   identity (`!peer` `!policy` `!secret-ref`), compute (`!runtime` `!function`
   `!test` `!fixture`), infra (`!git` `!volume` `!image`), compose (`!agent`,
   `!override`).
-- `example` exists in both layers with one meaning — the proof the shared
-  layer is real (R§0.2).
+- `example` is the one kind **both vocabularies contributed independently**,
+  with one meaning each — the proof the shared layer is real (R§0.2).
+  `context` is agentd-origin and prose *by disposition* (R2§3); it is not in
+  the instruction.md vocabulary, so it proves something different and equally
+  useful: its move off the sigil is the acceptance test for the version pin.
+- **Sub-blocks** — valid only inside their parent, unsigiled (the parent's
+  fence and sigil govern them), disposition inherited from the parent, and
+  **exempt from rule 9's uniqueness**: a sub-block's `name` is scoped to its
+  parent, so two `!test` blocks may each carry a `:::case{name=happy}`. They
+  therefore have no document-level identity and MUST NOT be `@ref`'d — a global
+  reference needs a globally unique target, and none of the four has
+  independent lifecycle semantics to retire (§4.1). The set: `case` (in
+  `!test`), `signature` (in `!function`), `schema` and `preview` (in `!ui`).
+  A sub-block outside its parent is refused, naming the parent it needs
+  (the table agentd RFC 0039 §7 rule 11 refuses against).
 - **Every kind declares:** disposition, family, attribute schema, and a
   **lifecycle** — what happens when the block disappears on a live update
   (unbind, drain, retire, or "restart-only") (R§1f; this gates phase A).
