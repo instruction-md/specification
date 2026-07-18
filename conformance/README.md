@@ -47,37 +47,43 @@ interactive `bash`/`zsh`. Author fixtures as files, or with quoted heredocs
 (`<<'EOF'`) or single-quoted strings — never inside double quotes at an
 interactive prompt, or `:::!workflow` will be silently corrupted.
 
-## Current results — read this before trusting a "green" claim
+## Naming the binary is part of the claim
 
-Run against `agentd 2.2.0` (`/usr/local/bin/agentd`, the only agentd on this
-machine), **6 of 7 fixtures fail**, and the 7th passes vacuously:
+A conformance claim MUST carry the implementation version it was made against.
+This is not bookkeeping — it is the rule the corpus learned the hard way.
 
-```
-  driving agentd with config_version=2, specs=1
-  FAIL 001-core-happy            workflows=[], expected ['drain']
-  FAIL 010-unknown-kind          valid=True, expected False
-  FAIL 011-unclosed-fence        valid=True, expected False
-  ok   012-nested-is-text        (asserts workflows: [] — trivially true when nothing extracts)
-  FAIL 013-mcp-needs-name        valid=True, expected False
-  FAIL 014-attr-name-wins        workflows=[], expected ['renamed']
-  FAIL 015-duplicate-name-refused valid=True, expected False
-```
+Two true statements, made simultaneously, that appeared to contradict:
 
-One cause explains all of it: **2.2.0 does not extract directives from
-instruction text.** Verified directly, outside the runner — `:::banana{name=x}`
-validates clean at exit 0 instead of failing closed on an unknown kind, and
-`:::workflow{name=drain}` registers no workflow, via `--instruction-file` and
-via config alike. The v2 config schema has no extraction gate: the only
-matching properties are `agent.instruction` (a plain string) and
-`intelligence.dialect` (unrelated — an LLM API dialect).
+- the reference implementation's gate: **0 failures**;
+- this repository's first run: **6 of 7 failed**, the 7th passing vacuously
+  (it asserts `workflows: []`, trivially true when nothing extracts).
 
-These fixtures encode the specification, so they are left as they are. A binary
-that does not implement the spec is a finding about the binary.
+Both were correct. They ran different binaries, and neither statement said so.
 
-The reference implementation's own gate reports green against a build it
-describes as 1.6.0, which is not the binary here. That divergence is the point:
-**the two sides were running different binaries and neither could see it.**
-Pin the version you claim conformance for.
+The cause, verified from the implementation's history rather than assumed:
+directive extraction (`directives.rs`, RFC 0034) entered that tree in commit
+`97f34865` on **2026-08-23**. The agentd installed at `/usr/local/bin/agentd`
+is dated **2026-08-18** — five days *older than the feature*. It reports
+version `2.2.0`, which outranks the current `1.6.0` only because the project
+reset its numbering to `v1.0.0` on 2026-08-23. So the higher version number is
+the older software, and a stale install silently looks like a newer one.
+
+Current state, both verified here:
+
+| binary | probed `config_version` | result |
+|---|---|---|
+| `agentd 1.6.0` | 1 | **7/7 pass** |
+| `agentd 2.2.0` (`/usr/local/bin`, predates the feature) | 2 | cannot extract; 6 fail |
+
+Both runners now print the version first and diagnose a pre-feature binary once
+by name, rather than emitting six opaque fixture failures. Point `AGENTD_BIN`
+at a 1.x build.
+
+The `config_version` probe exists for the same reason: that key is
+implementation surface and it moved between those two builds (1.6 takes `"1"`,
+2.2 requires `"2"`), so a hardcoded value made every fixture fail for reasons
+unrelated to any fixture. A neutral corpus whose runner embeds a versioned
+config schema has a coupling nothing pins. It is probed now, not embedded.
 
 ## `registry/kinds.json`
 

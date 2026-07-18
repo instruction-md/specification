@@ -83,9 +83,8 @@ Copyright © 2026 TSOK Inc.
 - The `!` sigil lexeme is settled but revisitable on repo review.
 - `expected.document` (the control-plane observables, including delivered
   text) has no schema yet.
-- **No implementation currently passes the corpus.** Against `agentd 2.2.0`,
-  6 of 7 Core fixtures fail and the 7th passes vacuously, because that build
-  does not extract directives from instruction text at all — the RFC 0034
-  behaviour dialect 1 rests on. Evidence and method in
-  [`conformance/README.md`](conformance/README.md). Until this resolves, "the
-  corpus is the arbiter" describes an intent, not an enforced state.
+- A conformance claim must name the implementation version it was made
+  against; the corpus passes 7/7 against `agentd 1.6.0` and cannot run against
+  a build predating the feature. See
+  [`conformance/README.md`](conformance/README.md) — including why the stale
+  install reporting `2.2.0` is *older* than `1.6.0`.
