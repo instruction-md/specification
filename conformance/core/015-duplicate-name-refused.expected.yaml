@@ -1,0 +1,5 @@
+# SPEC.md §3.2 rule 9: `name` is unique per kind; a duplicate `kind/name` is
+# refused. Pins the dialect-1 half — the rule the reconciliation rewrites lost
+# and nothing detected, because no fixture asserted its presence.
+valid: false
+errors: ["duplicate workflow name"]
