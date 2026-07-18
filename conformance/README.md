@@ -26,8 +26,15 @@ different things:
   enforces the degradation contract (SPEC.md §3.2 rule 6); without it the
   contract is a promise rather than a test.
 
-A fixture pins the `spec:` version it is written against, so dialect-boundary
-cases — which fixture `012` exists to capture — are expressible.
+A fixture pins the `spec:` version it is written against, so version-boundary
+cases stay expressible once a second version exists.
+
+A fixture also declares the capability **`grants:`** it needs, and the default
+is **none**. That default is what keeps the trust ladder testable: `012`
+declares `grants: [compute]` and loads, while `018` — byte-identical in its
+first block — declares nothing and must be refused. A runner that granted
+everything by default could not express the second case, and the ladder's
+fail-closed guarantee would go untested.
 
 ## Running it
 

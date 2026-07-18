@@ -49,15 +49,22 @@ at once and determines the unknown-name rule for each.
 
 ### 3.1 Front matter (normative)
 
-A document declares its spec version in YAML front matter; a reader refuses a
-version it does not implement. **Absent front matter = spec 1** (R2§4): a plain
-prose file — an AGENTS.md, a bare instruction — IS a spec-1 document, and the
-format stays a strict superset of prose. Adoption costs nothing; dialect 2 is
-opted into by saying so. Front matter also carries `id`, `version`,
-`parameters` (declared inputs: `source ∈ static|workspace|agent_attribute|prompt`),
-and signing metadata (§6). Front matter never reaches the model. The dialect
-lives in the DOCUMENT, not the reader's config — the same bytes must mean the
-same thing to every reader (R§2a; supersedes agentd's `instruction_dialect`).
+A document MAY declare its spec version in YAML front matter; a reader refuses
+a version it does not implement. **Absent front matter = version 1** (R2§4),
+which is presently the only version, so in practice every document is a
+version-1 document until a second exists.
+
+The format is a **strict superset of prose**, and more strongly than before:
+an unknown bare kind is inert punctuation (§3.2 rule 2), so a plain prose file —
+an AGENTS.md, a bare instruction, a document using `:::` fences this spec has
+never heard of — is valid and loses nothing. Only the `!` sigil and the
+reserved bare names carry obligations. Adoption costs nothing.
+
+Front matter also carries `id`, `version`, `parameters` (declared inputs:
+`source ∈ static|workspace|agent_attribute|prompt`), and signing metadata (§6).
+Front matter never reaches the model. The version lives in the DOCUMENT, not
+the reader's configuration — the same bytes must mean the same thing to every
+reader (R§2a).
 
 ### 3.2 Grammar
 
@@ -92,7 +99,7 @@ Normative rules, each with a conformance fixture:
    shadows a machinery name — `:::workflow` without the sigil — fails CLOSED
    with "did you mean `:::!workflow`". The reserved set is the machinery set of
    **the document's declared spec version**, not the reader's: a bare prose
-   name legal at spec 2.0 stays legal under every later reader, or registry
+   name legal at version 1 stays legal under every later reader, or registry
    growth would retroactively invalidate documents — the exact breakage
    fail-open exists to prevent. Not hypothetical: RFC 0034 §5 already reserves
    `approval`, `memory`, `schedule` for future registration, and two of those
@@ -114,14 +121,14 @@ Normative rules, each with a conformance fixture:
    machinery acknowledges out; between the two rules, delivery is fully
    specified.
 8. **Version-skew refusal** (R2§5, refined): a reader MUST refuse a document
-   that declares a spec version it does not implement, and MUST refuse
-   dialect-2 lexical markers it does not recognize (a `:::!` fence); absent
-   both, the document is spec 1 and parseable. The refusal keys on EVIDENCE of
-   a newer dialect, not on front matter's mere presence — a spec-1 prose file
-   with unrelated front matter stays valid. (Verified against shipped agentd
-   1.6.0: without this rule, `:::!workflow` parsed clean as prose and its
-   configuration vanished without a diagnostic. The guard ships in agentd
-   1.7.0.)
+   that declares a spec version it does not implement, and MUST refuse lexical
+   markers of a newer version it does not recognize. The refusal keys on
+   EVIDENCE of a newer version, not on front matter's mere presence — a prose
+   file with unrelated front matter stays valid. The rule is written for the
+   versions that do not exist yet, and it is not speculative: a reader
+   predating the `!` sigil parsed `:::!workflow` clean as prose and its
+   configuration vanished without a diagnostic. Silence is the failure mode
+   this rule exists to prevent. (The guard ships in agentd 1.7.0.)
 9. **Block identity** (restored — this rule was present at draft-0.2 and lost
    in the reconciliation rewrites; `unique` appeared nowhere in draft-1-rc):
    `name` is a block's identity within the document and is **unique per kind**;
@@ -180,9 +187,8 @@ version; resolve per-reader deterministically and **attest the resolution**
   moved from machinery** (R2§3): its body degrades into delivery wrapped in
   `<reference>` tags — prose disposition by definition, confirmed by the
   reference implementation's own test suite
-  (`context_and_example_keep_their_bodies_in_tags`). Its migration off the
-  sigil is the acceptance test for the version pin: a spec-2.0 reader treats
-  bare `:::context` as prose; dialect-1 documents are untouched.
+  (`context_and_example_keep_their_bodies_in_tags`). It is bare, like every
+  prose kind, and unlike the machinery it once sat beside.
 - **Structural**: `when` (variants), `include` (composition) — resolved at
   delivery.
 - **Machinery layer** (from agentd; sigiled): core `!workflow` `!skill`
@@ -300,7 +306,7 @@ the review, all accepted:
   steering, not narrowing, and are refused ungated. Tag-add, disable,
   enum-tighten stay ungated.
 - **`:::!config` writes against an allow-list**, not a deny-list (R§1e): the
-  grant keys, security, services, dialect, and signature config are
+  grant keys, security, services, spec version, and signature config are
   unreachable by construction, and the next config key added is unreachable by
   default.
 - **Content-driven trifecta widening is refused** (R§1g, joint rule): on live
@@ -421,7 +427,7 @@ trust configuration.
 ### 6.5 Verification (normative, ordered)
 
 1. Read the front-matter spec version; refuse an unimplemented version (§3.1)
-   and unrecognized newer-dialect markers (§3.2 rule 8).
+   and unrecognized markers of a newer version (§3.2 rule 8).
 2. Verify the delivery signature over the received bytes; recompute and compare
    `digest`. Mismatch ⇒ refuse.
 3. Extract the manifest; verify the author signature over `authored.digest`

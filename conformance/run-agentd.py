@@ -51,7 +51,7 @@ def load_expected(path):
     # A silently-ignored typo in an expectation file is a passing test that
     # asserts nothing — the exact failure mode a conformance corpus exists to
     # prevent (finding: instruction.md review §7.3).
-    exp = {"errors": [], "registers": {}, "spec": "1"}
+    exp = {"errors": [], "registers": {}, "spec": "1", "grants": []}
     for n, line in enumerate(open(path), 1):
         line = line.split("#")[0].rstrip()
         if not line.strip(): continue
@@ -60,6 +60,8 @@ def load_expected(path):
         if m: exp["spec"] = m.group(1); continue
         m = re.match(r"^valid:\s*(true|false)$", line)
         if m: exp["valid"] = m.group(1) == "true"; continue
+        m = re.match(r"^grants:\s*\[(.*)\]$", line)
+        if m: exp["grants"] = [t.strip() for t in m.group(1).split(",") if t.strip()]; continue
         m = re.match(r"^errors:\s*\[(.*)\]$", line)
         if m: exp["errors"] = [s.strip().strip('"') for s in m.group(1).split(",") if s.strip()]; continue
         m = re.match(r"^\s+(workflows|mcp_servers):\s*\[(.*)\]$", line)
@@ -69,10 +71,14 @@ def load_expected(path):
         raise SystemExit(f"{path}: missing required `valid:`")
     return exp
 
-def run(doc_path):
+def run(doc_path, grants):
     doc = open(doc_path).read()
     cfg = {"config_version": CONFIG_VERSION,
-           "agent": {"name": "conf", "preflight": "never", "instruction": doc},
+           # Grants are per fixture and default to NONE, so the trust ladder stays
+           # testable: a fixture that needs `compute` says so, and a fixture that
+           # asserts refusal-without-grant simply omits it (SPEC.md §5).
+           "agent": {"name": "conf", "preflight": "never", "instruction": doc,
+                     "document_capabilities": grants},
            "intelligence": {"endpoints": ["http://127.0.0.1:1/v1"], "model": "mock"},
            "store": {"kind": "memory"}}
     cfg_path = doc_path + ".cfg.json"
@@ -101,7 +107,7 @@ for doc_path in sorted(glob.glob(os.path.join(ROOT, "*", "*.instruction.md"))):
     if exp["spec"] not in SPECS:
         print(f"  skip {name} (spec {exp['spec']}; this runtime speaks {'/'.join(sorted(SPECS))})")
         continue
-    valid, errtext, caps = run(doc_path)
+    valid, errtext, caps = run(doc_path, exp["grants"])
     problems = []
     if valid != exp.get("valid"):
         problems.append(f"valid={valid}, expected {exp.get('valid')}")
