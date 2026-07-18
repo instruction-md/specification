@@ -120,8 +120,8 @@ Normative rules, each with a conformance fixture:
    a newer dialect, not on front matter's mere presence — a spec-1 prose file
    with unrelated front matter stays valid. (Verified against shipped agentd
    1.6.0: without this rule, `:::!workflow` parsed clean as prose and its
-   configuration vanished without a diagnostic. agentd's next release carries
-   the guard.)
+   configuration vanished without a diagnostic. The guard ships in agentd
+   1.7.0.)
 9. **Block identity** (restored — this rule was present at draft-0.2 and lost
    in the reconciliation rewrites; `unique` appeared nowhere in draft-1-rc):
    `name` is a block's identity within the document and is **unique per kind**;
