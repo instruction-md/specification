@@ -9,6 +9,41 @@ runner with the same observable checks; the corpus itself is neutral.
 import json, os, subprocess, sys, glob, re
 
 AGENTD = os.environ.get("AGENTD_BIN", "agentd")
+# Spec dialects the driven binary speaks. A fixture pinned to anything else is
+# skipped, never failed (SPEC.md §7): the corpus may lead the implementation.
+SPECS = set(os.environ.get("AGENTD_SPECS", "1").split(","))
+
+
+def detect_config_version():
+    """The config schema the driven binary accepts.
+
+    The corpus is neutral over observable BEHAVIOUR, but a runner must still
+    hand the binary a config, and that schema is implementation surface that
+    moves between releases — agentd 1.6 takes `config_version: "1"`, 2.2
+    rejects it as mixing v1 keys with v2 sections. Hardcoding either version
+    makes every fixture fail against the other, for reasons that have nothing
+    to do with the fixtures. So probe once with a directive-free document and
+    use whatever validates.
+    """
+    forced = os.environ.get("AGENTD_CONFIG_VERSION")
+    if forced:
+        return forced
+    for cv in ("2", "1"):
+        cfg = {"config_version": cv,
+               "agent": {"name": "probe", "preflight": "never", "instruction": "hello"},
+               "intelligence": {"endpoints": ["http://127.0.0.1:1/v1"], "model": "mock"},
+               "store": {"kind": "memory"}}
+        path = os.path.join(ROOT, ".probe.json")
+        open(path, "w").write(json.dumps(cfg))
+        try:
+            r = subprocess.run([AGENTD, "-c", path, "--validate-config"],
+                               capture_output=True, text=True, timeout=30)
+        finally:
+            os.unlink(path)
+        if r.returncode == 0:
+            return cv
+    raise SystemExit(
+        f"{AGENTD}: no probed config_version validates; set AGENTD_CONFIG_VERSION")
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
 def load_expected(path):
@@ -16,11 +51,13 @@ def load_expected(path):
     # A silently-ignored typo in an expectation file is a passing test that
     # asserts nothing — the exact failure mode a conformance corpus exists to
     # prevent (finding: instruction.md review §7.3).
-    exp = {"errors": [], "registers": {}}
+    exp = {"errors": [], "registers": {}, "spec": "1"}
     for n, line in enumerate(open(path), 1):
         line = line.split("#")[0].rstrip()
         if not line.strip(): continue
         if line.strip() == "registers:": continue
+        m = re.match(r"""^spec:\s*["']?([0-9]+)["']?$""", line)
+        if m: exp["spec"] = m.group(1); continue
         m = re.match(r"^valid:\s*(true|false)$", line)
         if m: exp["valid"] = m.group(1) == "true"; continue
         m = re.match(r"^errors:\s*\[(.*)\]$", line)
@@ -34,7 +71,7 @@ def load_expected(path):
 
 def run(doc_path):
     doc = open(doc_path).read()
-    cfg = {"config_version": "1",
+    cfg = {"config_version": CONFIG_VERSION,
            "agent": {"name": "conf", "preflight": "never", "instruction": doc},
            "intelligence": {"endpoints": ["http://127.0.0.1:1/v1"], "model": "mock"},
            "store": {"kind": "memory"}}
@@ -54,10 +91,16 @@ def run(doc_path):
     finally:
         os.unlink(cfg_path)
 
+CONFIG_VERSION = detect_config_version()
+print(f"  driving {AGENTD} with config_version={CONFIG_VERSION}, specs={'/'.join(sorted(SPECS))}")
+
 fails = 0
 for doc_path in sorted(glob.glob(os.path.join(ROOT, "*", "*.instruction.md"))):
     name = os.path.basename(doc_path).replace(".instruction.md", "")
     exp = load_expected(doc_path.replace(".instruction.md", ".expected.yaml"))
+    if exp["spec"] not in SPECS:
+        print(f"  skip {name} (spec {exp['spec']}; this runtime speaks {'/'.join(sorted(SPECS))})")
+        continue
     valid, errtext, caps = run(doc_path)
     problems = []
     if valid != exp.get("valid"):

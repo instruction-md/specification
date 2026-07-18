@@ -47,6 +47,38 @@ interactive `bash`/`zsh`. Author fixtures as files, or with quoted heredocs
 (`<<'EOF'`) or single-quoted strings — never inside double quotes at an
 interactive prompt, or `:::!workflow` will be silently corrupted.
 
+## Current results — read this before trusting a "green" claim
+
+Run against `agentd 2.2.0` (`/usr/local/bin/agentd`, the only agentd on this
+machine), **6 of 7 fixtures fail**, and the 7th passes vacuously:
+
+```
+  driving agentd with config_version=2, specs=1
+  FAIL 001-core-happy            workflows=[], expected ['drain']
+  FAIL 010-unknown-kind          valid=True, expected False
+  FAIL 011-unclosed-fence        valid=True, expected False
+  ok   012-nested-is-text        (asserts workflows: [] — trivially true when nothing extracts)
+  FAIL 013-mcp-needs-name        valid=True, expected False
+  FAIL 014-attr-name-wins        workflows=[], expected ['renamed']
+  FAIL 015-duplicate-name-refused valid=True, expected False
+```
+
+One cause explains all of it: **2.2.0 does not extract directives from
+instruction text.** Verified directly, outside the runner — `:::banana{name=x}`
+validates clean at exit 0 instead of failing closed on an unknown kind, and
+`:::workflow{name=drain}` registers no workflow, via `--instruction-file` and
+via config alike. The v2 config schema has no extraction gate: the only
+matching properties are `agent.instruction` (a plain string) and
+`intelligence.dialect` (unrelated — an LLM API dialect).
+
+These fixtures encode the specification, so they are left as they are. A binary
+that does not implement the spec is a finding about the binary.
+
+The reference implementation's own gate reports green against a build it
+describes as 1.6.0, which is not the binary here. That divergence is the point:
+**the two sides were running different binaries and neither could see it.**
+Pin the version you claim conformance for.
+
 ## `registry/kinds.json`
 
 The per-version block-kind registry required by SPEC.md §3.2 rule 3. The

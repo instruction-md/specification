@@ -1,4 +1,5 @@
 # Dialect 1 does not recurse: the inner workflow is TEXT and must not register.
+spec: "1"
 valid: true
 registers:
   workflows: []

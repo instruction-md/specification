@@ -83,8 +83,9 @@ Copyright © 2026 TSOK Inc.
 - The `!` sigil lexeme is settled but revisitable on repo review.
 - `expected.document` (the control-plane observables, including delivered
   text) has no schema yet.
-- `conformance/README.md` states that a fixture pins the `spec:` version it is
-  written against; **no fixture does yet**, and adding one requires a
-  coordinated runner change (strict readers treat an unrecognized expectation
-  line as fatal). Documented rule, unimplemented — the same "nothing checks for
-  presence" shape as the identity rule that §3.2 rule 9 restores.
+- **No implementation currently passes the corpus.** Against `agentd 2.2.0`,
+  6 of 7 Core fixtures fail and the 7th passes vacuously, because that build
+  does not extract directives from instruction text at all — the RFC 0034
+  behaviour dialect 1 rests on. Evidence and method in
+  [`conformance/README.md`](conformance/README.md). Until this resolves, "the
+  corpus is the arbiter" describes an intent, not an enforced state.
