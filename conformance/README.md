@@ -49,41 +49,40 @@ interactive prompt, or `:::!workflow` will be silently corrupted.
 
 ## Naming the binary is part of the claim
 
-A conformance claim MUST carry the implementation version it was made against.
-This is not bookkeeping — it is the rule the corpus learned the hard way.
+A conformance claim MUST carry the implementation version it was made against,
+and a runner MUST confirm by probe that the binary implements the surface being
+tested. This is not bookkeeping — it is the rule the corpus learned the hard
+way.
 
-Two true statements, made simultaneously, that appeared to contradict:
+**A version number does not establish a binary's age or its capability.** A
+stale install can outrank a current release numerically while predating a
+feature it is being tested for — release numbering gets reset, branches diverge,
+packages linger. The number tells you what the build calls itself, not what it
+implements.
 
-- the reference implementation's gate: **0 failures**;
+The failure this produces is quiet and looks like a disagreement. Two true
+statements, made simultaneously, that appeared to contradict:
+
+- the reference implementation's own gate: **0 failures**;
 - this repository's first run: **6 of 7 failed**, the 7th passing vacuously
   (it asserts `workflows: []`, trivially true when nothing extracts).
 
 Both were correct. They ran different binaries, and neither statement said so.
+The corpus was never wrong and the fixtures never changed; the claim was
+under-specified.
 
-The cause, verified from the implementation's history rather than assumed:
-directive extraction (`directives.rs`, RFC 0034) entered that tree in commit
-`97f34865` on **2026-08-23**. The agentd installed at `/usr/local/bin/agentd`
-is dated **2026-08-18** — five days *older than the feature*. It reports
-version `2.2.0`, which outranks the current `1.6.0` only because the project
-reset its numbering to `v1.0.0` on 2026-08-23. So the higher version number is
-the older software, and a stale install silently looks like a newer one.
+So: the runners print the implementation version before the first fixture, and
+probe extraction with one known-good document. A binary that validates that
+document clean but registers nothing from it **predates the directive surface**
+and is reported once, by name, instead of emitting a screenful of opaque
+fixture failures. Point `AGENTD_BIN` at a build that implements it; the corpus
+then passes **7/7**.
 
-Current state, both verified here:
-
-| binary | probed `config_version` | result |
-|---|---|---|
-| `agentd 1.6.0` | 1 | **7/7 pass** |
-| `agentd 2.2.0` (`/usr/local/bin`, predates the feature) | 2 | cannot extract; 6 fail |
-
-Both runners now print the version first and diagnose a pre-feature binary once
-by name, rather than emitting six opaque fixture failures. Point `AGENTD_BIN`
-at a 1.x build.
-
-The `config_version` probe exists for the same reason: that key is
-implementation surface and it moved between those two builds (1.6 takes `"1"`,
-2.2 requires `"2"`), so a hardcoded value made every fixture fail for reasons
-unrelated to any fixture. A neutral corpus whose runner embeds a versioned
-config schema has a coupling nothing pins. It is probed now, not embedded.
+The `config_version` probe exists for the same reason. That key is
+implementation surface and it moves between releases, so a hardcoded value made
+every fixture fail for reasons unrelated to any fixture. A neutral corpus whose
+runner embeds a versioned config schema has a coupling nothing pins — it is
+probed now, not embedded, and `AGENTD_CONFIG_VERSION` overrides.
 
 ## `registry/kinds.json`
 

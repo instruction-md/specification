@@ -84,7 +84,6 @@ Copyright © 2026 TSOK Inc.
 - `expected.document` (the control-plane observables, including delivered
   text) has no schema yet.
 - A conformance claim must name the implementation version it was made
-  against; the corpus passes 7/7 against `agentd 1.6.0` and cannot run against
-  a build predating the feature. See
-  [`conformance/README.md`](conformance/README.md) — including why the stale
-  install reporting `2.2.0` is *older* than `1.6.0`.
+  against, and the runner must probe that the binary implements the surface
+  being tested — a version number establishes neither age nor capability. See
+  [`conformance/README.md`](conformance/README.md).
