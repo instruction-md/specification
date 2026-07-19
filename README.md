@@ -1,4 +1,4 @@
-# The Instruction Document Specification
+# The Instruction Specification
 
 **Status:** draft-1 — content-complete; not yet stable.
 **Publisher:** instruction.md.
@@ -7,7 +7,7 @@
 plus a version. `instruction.md` as a *filename* is a convention, not the
 identity — a served document has no filename.
 
-An instruction document is one Markdown file that fully defines an AI agent
+An instruction is one Markdown file that fully defines an AI agent
 — the prose that instructs it and the machinery that equips it — readable by
 a person, loadable by a runtime, governable by a control plane. Any plain
 prose file is already a valid one. This repository holds the specification
@@ -32,7 +32,7 @@ and complete example documents in [`samples/`](samples/).
 
 ## 1. Purpose
 
-An **instruction document** is one Markdown file that fully defines an AI
+An **instruction** is one Markdown file that fully defines an AI
 agent: the prose that instructs it, and the machinery that equips it —
 workflows, tools, code, files, runtimes, knowledge, endpoints, people,
 identity. It is readable top to bottom by a person, loadable by a runtime, and
