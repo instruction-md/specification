@@ -3,7 +3,7 @@
 **Status:** draft-1 — content-complete; not yet stable.
 **Publisher:** instruction.md.
 **License:** CC BY 4.0.
-**Identity:** the media type `text/markdown; variant=instruction-document`,
+**Identity:** the media type `text/markdown; variant=instruction`,
 plus a version. `instruction.md` as a *filename* is a convention, not the
 identity — a served document has no filename.
 
@@ -12,7 +12,7 @@ An instruction document is one Markdown file that fully defines an AI agent
 a person, loadable by a runtime, governable by a control plane. Any plain
 prose file is already a valid one. This repository holds the specification
 (this file), its registry and grammar as a JSON Schema
-([`instruction-document.schema.json`](instruction-document.schema.json), §9),
+([`instruction.schema.json`](instruction.schema.json), §9),
 and complete example documents in [`samples/`](samples/).
 
 ---
@@ -1440,7 +1440,7 @@ Signatures are JWS compact serializations over a claims object.
 Implementations MUST support Ed25519 and MUST domain-separate by `typ`.
 
 ```json
-{ "spec": "instruction-document/1",
+{ "spec": "instruction/1",
   "typ": "author",
   "doc": "instruction://ins_42",
   "version": "ver_01K003",
@@ -1807,7 +1807,7 @@ misrepresented, and every sentence of guidance is where the author put it.
 The registry in §5 is published as data, so that a validator in any language
 can be driven from one file rather than transcribed from prose:
 
-**`instruction-document.schema.json`** — a JSON Schema (draft 2020-12).
+**`instruction.schema.json`** — a JSON Schema (draft 2020-12).
 
 It validates the **block tree** — the JSON a parser emits from a document —
 not the Markdown itself. JSON Schema cannot parse Markdown, and this
