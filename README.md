@@ -1,89 +1,91 @@
 # The Instruction Document Specification
 
-An open specification for **the instruction document**: one Markdown file that
-defines an AI agent — its prose instruction and the machinery it carries
-(workflows, tools, code, files, runtimes, knowledge, endpoints, people,
-identity) — readable top to bottom by a person, loadable by a runtime, and
-governable by a control plane.
+An open specification, published by **instruction.md**, for the **instruction
+document**: one Markdown file that fully defines an AI agent — the prose that
+instructs it, and the machinery that equips it.
 
-**Status: `draft-1-rc`.** Content-complete and reconciled; not yet stable. See
-[SPEC.md](SPEC.md).
+**Status: draft-1.** Content-complete; not yet stable.
+Read the specification: [SPECIFICATION.md](SPECIFICATION.md).
+
+## What an instruction document is
+
+A document is plain Markdown. Any prose file is already a valid one. On top of
+prose it adds **blocks** — fenced regions that carry meaning — and every block
+has a **kind** (`must`, `human`, `workflow`) with one of three dispositions:
+
+| disposition | what happens at delivery | unknown name |
+|---|---|---|
+| **prose** | degrades into text the model reads — `:::must` becomes `**MUST:** …` | inert; the prose survives |
+| **machinery** | stripped, folds into the runtime's configuration; the model gets one acknowledgement line | refused, naming the known set |
+| **structural** | resolved away — variants selected, includes inlined, parameters substituted | refused |
+
+Machinery carries a `!` sigil — `:::!workflow`, `:::!human` — so that a
+renderer that knows nothing of this specification still shows the fence, and
+configuration never masquerades as text. Prose kinds are bare. The whole
+design rests on one contract: **paste the document into a plain Markdown
+viewer and it must still read as correct, complete guidance.**
+
+## The forms
+
+A kind is a unit of meaning; a form is a way of writing one. The container
+fence is general but heavy for things that are small, bodiless, numerous, or
+long. The specification defines the others:
+
+```markdown
+:::!human{name=oncall role=approver}         container — one instance, with a body
+reach: { channel: "@channel/ops" }
+:::
+
+::!human{name=lead role=reviewer}            leaf — one instance, one line
+
+:::!human[]                                  set — many instances, as a table
+| name | role     | channel      |           (or a definition list, for bodied ones)
+|------|----------|--------------|
+| sre  | operator | @channel/ops |
+:::
+
+## !skill support-tone                       section — a long entity, as a heading
+Warm, concise, specific…
+
+MUST: run the test suite before a PR.        keyword — a rule, in one line
+```
+
+Inside prose, references are chips: `[@On-call](principal://…)` for people,
+`[&Ticketing](server://…)` for capabilities, `[#Standards](instruction://…)`
+for other documents, `[[function/lint]]` for a block in this one, `${env}`
+for a parameter. Unrendered, each is a link or a word.
 
 ## Two roles, equally first-class
 
-The spec is written so that both consumers can implement every rule:
+- A **runtime** extracts the machinery and *becomes* the agent.
+- A **control plane** stores, versions, diffs, resolves, serves, signs and
+  revokes documents *without executing them*.
 
-- a **runtime** extracts blocks and *becomes* the agent;
-- a **control plane** stores, versions, diffs, reviews, resolves, serves,
-  signs and revokes documents *without executing them*.
+Every rule is written so both can implement it.
 
-A construct only a runtime can check does not belong in the format.
+## Trust
 
-## The idea that makes it one spec
+A document that declares code, files, listeners and people is a program.
+Capability is **granted by the operator, never claimed by the document**:
+machinery families sit behind independent grants — `material`, `knowledge`,
+`interface`, `identity`, `compute`, `infra`, `compose` — each with its blast
+radius stated, fail-closed, restart-only. A document served over a network
+carries two signatures — an offline author signature and an online delivery
+signature over a **resolution manifest** — and a signature only ever *caps*
+what the operator granted. Authorization is separate from authenticity: the
+serving index is the revocation channel, and a signed document stops being
+usable the moment it stops being sanctioned.
 
-Two independent designs converged on the same `:::` block syntax with opposite
-meanings — one where blocks *degrade into* the delivered prompt, one where they
-are *stripped from* it and fold into configuration. The spec's foundation is
-that this is not a conflict but a missing concept: every kind declares a
-**disposition**.
+## Versioning
 
-| disposition | at delivery | unknown-name policy |
-|---|---|---|
-| `prose` | degrades to labeled text the model reads | fail **open** — inert punctuation, prose preserved |
-| `machinery` | stripped; folds into configuration | fail **closed** — name the known set |
-| `structural` | resolved away | fail closed |
+A document declares the specification version it is written against; absent
+a declaration it is version 1, the only version. A reader refuses what it
+does not implement, and refuses the lexical markers of a newer version rather
+than parsing them as prose — silence is the failure mode the format is built
+to prevent.
 
-Machinery is lexically namespaced (`:::!workflow`) so both unknown-name policies
-can coexist. That sigil was chosen on evidence: `:::!workflow` does not parse as
-a directive in existing Markdown tooling, so the fence survives into rendered
-output and machinery announces itself; a prefix that *does* parse gets its
-markers consumed and renders configuration as though it were prose.
+## License
 
-## Layout
+Specification text: [CC BY 4.0](LICENSE).
 
-```
-SPEC.md                        the specification
-conformance/                   the conformance corpus (Apache-2.0)
-  core/                        (document, expected) fixture pairs
-  registry/kinds.json          per-version block-kind + reserved-name registry (§3.2 rule 3)
-  run-agentd.py                reference runner for one implementation
-```
-
-## Governance
-
-The corpus is the arbiter. A change that breaks it is a major version. Spec
-documents are versioned; a document declares the version it is written against
-and a reader refuses what it does not implement, so the same bytes mean the
-same thing to every reader.
-
-Both known implementations run the corpus in CI and neither owns it:
-
-- **instruction.md** — spec owner; control-plane reference (versioning,
-  resolution, signing, revocation).
-- **agentd** — runtime reference implementation.
-
-## Licensing
-
-Deliberately split:
-
-- **Spec text** (`SPEC.md`, this README) — [CC BY 4.0](LICENSE).
-- **Conformance corpus** (`conformance/`) — [Apache-2.0](conformance/LICENSE).
-
-Creative Commons licenses are not appropriate for software and carry no patent
-grant; a conformance suite that multiple vendors run in CI needs one.
-Apache-2.0 is one-way compatible into GPL-3.0/AGPL-3.0, so an AGPL
-implementation can vendor the corpus cleanly.
-
-Copyright © 2026 TSOK Inc.
-
-## Known open items at `draft-1-rc`
-
-- The per-kind **lifecycle** table (§4.1) is drafted but unratified.
-- Conformance **profiles** beyond Core are unwritten.
-- The `!` sigil lexeme is settled but revisitable on repo review.
-- `expected.document` (the control-plane observables, including delivered
-  text) has no schema yet.
-- A conformance claim must name the implementation version it was made
-  against, and the runner must probe that the binary implements the surface
-  being tested — a version number establishes neither age nor capability. See
-  [`conformance/README.md`](conformance/README.md).
+Copyright © 2026 instruction.md
