@@ -84,6 +84,24 @@ does not implement, and refuses the lexical markers of a newer version rather
 than parsing them as prose — silence is the failure mode the format is built
 to prevent.
 
+## Validating a document
+
+The registry is published as data: [`instruction-document.schema.json`](instruction-document.schema.json)
+is a JSON Schema that validates the block tree a parser emits — every kind,
+its attributes, its forms, its sub-blocks — and carries the grammar as regular
+expressions and the semantic rules a validator must implement in code. A
+validator in any language reads the file and needs no hard-coded vocabulary.
+Specification §9 describes the pipeline.
+
+## Files
+
+```
+SPECIFICATION.md                  the specification
+instruction-document.schema.json  the registry and grammar, as a JSON Schema (§9)
+README.md                         this overview
+LICENSE                           CC BY 4.0
+```
+
 ## License
 
 Specification text: [CC BY 4.0](LICENSE).
