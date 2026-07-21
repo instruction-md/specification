@@ -131,6 +131,8 @@ the third retry succeeded after a nine-minute wait (T-3310), which is
 consistent with the documented cap of ten minutes. *Established.*
 :::
 
+## Reference
+
 :::glossary
 Primary source
 :   Written by the owning team and reviewed. The handbook and the runbooks.

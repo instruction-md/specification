@@ -649,6 +649,10 @@ table or a definition list, chosen by what the entries need.
 - A **multi-valued attribute** (`may`, `tags`, `allow`, `values`, …) is
   comma-separated within the cell. Which attributes are multi-valued is part
   of the kind's schema (§5).
+- A cell for an attribute that carries **structured data** — a `case`'s
+  `given` and `expect`, a `!stream`'s `retention` — holds a YAML flow value
+  written inline: `{ max_age: 7d }`. The format passes the cell's text
+  through unchanged; the kind's schema interprets it.
 - References are written bare in cells — there is no YAML in a table.
 
 #### 4.3.2 Definition-list body — instances defined by a body
@@ -744,23 +748,37 @@ Rules:
    optional attribute list. Closing `#`s are permitted and ignored. Any
    heading level from 1 to 6 may be used. Setext headings (underlined) are
    not recognized as section blocks.
-2. The body extends to the **next heading of the same or a shallower
-   level** — the same number of `#` characters or fewer — or to the end of
-   the document. Deeper *unsigiled* headings, with more `#` characters,
-   belong to the body, as `### Escalation` does above.
+2. The body extends from the heading to the **earliest** of:
+   - the next heading of the same or a shallower level — the same number of
+     `#` characters or fewer — or the end of the document;
+   - a sigiled heading at any level (rule 3);
+   - a sigiled fence, leaf or set at column 0 (rule 4);
+   - for a kind whose container body is YAML or code, the closing line of
+     its single fenced code block (rule 6).
+
+   Deeper *unsigiled* headings, with more `#` characters, belong to the
+   body, as `### Escalation` does above.
 3. A **sigiled heading at any level ends the current section and starts a
    new block.** Sections do not nest; containment uses fences.
-4. Fences inside the section are parsed normally. A `:::case` inside a
-   `## !test` section is that test's case.
+4. **Bare** fences inside the section are parsed normally and belong to it:
+   a `:::case` inside a `## !test` section is that test's case, and a
+   `:::example` inside a `## !skill` section is part of the skill's
+   guidance. A **sigiled** fence, leaf or set ends the section and returns
+   the document to the top level: machinery is never the child of a
+   section. To end a Markdown-bodied section before a bare block that
+   belongs to the document, write a heading.
 5. The section form is **machinery only**. A bare heading is always just a
    heading: `## human oncall` is prose, and the reserved-bare guard never
    applies to headings. Prose kinds with long bodies use the container.
 6. **Structured-body kinds in section form.** For a kind whose container
-   body is YAML (`!workflow`, `!mcp`, …), the section's body MUST contain
-   exactly one fenced code block, which is the definition; the surrounding
-   prose is the block's documentation and is stored as its `description`.
-   This is the point of the form: the machinery and the paragraph that
-   explains it travel together.
+   body is YAML or code (`!workflow`, `!mcp`, `!function`, …), the section's
+   body MUST contain exactly one fenced code block, which is the definition,
+   and **the section ends at that block's closing fence**. The prose before
+   the fence is the block's documentation and is stored as its
+   `description`. Whatever follows the fence belongs to the document, not to
+   the section. This is the point of the form: the machinery and the
+   paragraph that explains it travel together, and the document resumes
+   without a heading.
 
 ````markdown
 ## !workflow nightly-digest
@@ -774,6 +792,38 @@ steps:
   post: { kind: agent, depends_on: [wake], instruction: "Summarize yesterday's tickets" }
   done: { kind: finish, depends_on: [post] }
 ```
+````
+
+   Where each section ends, shown:
+
+````markdown
+## !workflow nightly-digest
+
+Runs at 02:00 and posts a summary.        ← description
+
+```yaml
+steps: …
+```                                        ← the workflow section ends here (rule 6)
+
+:::context{title="Digest format"}         ← top level
+One paragraph, then the numbers that changed.
+:::
+
+## !skill summarizing
+
+Lead with the number that changed.
+
+:::example{title="A good summary"}        ← part of the skill: bare, no heading intervened (rule 4)
+Refunds rose 12% week on week; two tickets account for the rise.
+:::
+
+:::!data{name=thresholds format=table}    ← ends the skill: sigiled (rule 4)
+| metric  | alert |
+|---------|-------|
+| refunds | 10%   |
+:::
+
+## Reference                               ← ends nothing new: the skill already ended
 ````
 
 7. **Delivery.** The acknowledgement line replaces the whole section, heading
