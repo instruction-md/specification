@@ -93,7 +93,7 @@ Every route is logged to the audit stream before the subagent is called.
 ::!secret-ref{name=ticketing kind=file path=/var/run/secrets/ticketing}
 
 ::::!mcp{name=ticketing endpoint=https://mcp.internal.example/ticketing}
-auth: { kind: bearer, token: "@secret-ref/ticketing" }
+auth: { kind: static, token: "@secret-ref/ticketing" }
 
 :::override{target=create_ticket}
 description: >
@@ -117,7 +117,9 @@ disabled: [ticketing.delete_ticket, ticketing.merge_ticket]
 :::
 
 :::!config
-limits: { max_concurrent_routes: 8, max_subagent_runtime: 4h }
+limits:
+  subagents: { breadth: 8, total: 40, rate: "20/1h" }
+  run: { deadline: 4h }
 :::
 
 ## !workflow dispatch

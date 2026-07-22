@@ -1258,7 +1258,7 @@ What the agent runs, knows, connects to, and may call. Default grant.
 ::!secret-ref{name=ticketing kind=file path=/var/run/secrets/ticketing}
 
 :::!mcp{name=ticketing endpoint=https://mcp.internal.example/ticketing allow="read, ticket:*" deny="ticket:delete"}
-auth: { kind: bearer, token: "@secret-ref/ticketing" }
+auth: { kind: static, token: "@secret-ref/ticketing" }
 :::
 ```
 
@@ -1873,7 +1873,7 @@ Open and update tickets. Never delete; deletion is a compliance decision.
 ::!secret-ref{name=ticketing kind=file path=/var/run/secrets/ticketing}   ← leaf, identity
 
 ::::!mcp{name=ticketing endpoint=https://mcp.internal.example/ticketing}   ← container with sub-blocks
-auth: { kind: bearer, token: "@secret-ref/ticketing" }
+auth: { kind: static, token: "@secret-ref/ticketing" }
 
 :::override{target=delete_ticket}
 disabled: true

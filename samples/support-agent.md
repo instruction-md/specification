@@ -78,7 +78,7 @@ through [[workflow/approve-refund]].
 ::!secret-ref{name=billing kind=file path=/var/run/secrets/billing}
 
 ::::!mcp{name=ticketing endpoint=https://mcp.internal.example/ticketing}
-auth: { kind: bearer, token: "@secret-ref/ticketing" }
+auth: { kind: static, token: "@secret-ref/ticketing" }
 
 :::override{target=delete_ticket}
 disabled: true
