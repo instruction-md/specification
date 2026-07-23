@@ -1901,8 +1901,9 @@ answer on the ticket.
 
 ```yaml
 steps:
-  ask:    { kind: human, role: "@human/oncall", ui: "@ui/refund-approval" }
-  record: { kind: tool, depends_on: [ask], tool: ticketing.update }
+  start:  { kind: manual }
+  ask:    { kind: human, depends_on: [start], question: "Approve this refund?", schema: "@ui/refund-approval", to: "@human/oncall", timeout: 15m }
+  record: { kind: mcp.tool, depends_on: [ask], server: ticketing, tool: update, args: { approved: "{{steps.ask.output.approve}}" } }
   done:   { kind: finish, depends_on: [record] }
 ```
 

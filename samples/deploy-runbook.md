@@ -115,69 +115,65 @@ rate: "10/1m"
 
 ## !workflow deploy
 
-Deploys ${release} to ${environment} in two waves with a human gate before
-each wave in production. Posts every transition to the deploys channel.
+Deploys a release to an environment in two waves, with a human gate before
+each wave in production. Posts every transition to the deploys channel. A
+failed run starts [[workflow/rollback]].
 
 ```yaml
-start: { kind: manual, role: "@human/release" }
+inputs:
+  schema:
+    type: object
+    required: [release, environment]
+    properties:
+      release:     { type: string }
+      environment: { type: string, enum: [staging, production] }
 steps:
+  start: { kind: manual }
   precheck:
     kind: agent
-    instruction: "Verify the preconditions section; stop with a reason if any fails"
+    depends_on: [start]
+    instruction: "Verify the preconditions section for {{inputs.release}} on {{inputs.environment}}; stop with a reason if any fails"
   gate1:
     kind: human
     depends_on: [precheck]
-    role: "@human/release"
-    ui: "@ui/wave-approval"
-    when: "environment == 'production'"
-  wave1:
-    kind: tool
-    depends_on: [gate1]
-    tool: deploy.wave_start
-    args: { percent: 25 }
-  verify1:
-    kind: tool
-    depends_on: [wave1]
-    tool: deploy.wave_verify
-    args: { minutes: 10 }
+    when: "inputs.environment == 'production'"
+    question: "Start wave 1 (25%) of {{inputs.release}}?"
+    schema: "@ui/wave-approval"
+    to: "@human/release"
+    timeout: 1h
+  wave1:   { kind: mcp.tool, depends_on: [gate1], server: deploy, tool: wave_start,  args: { percent: 25 } }
+  verify1: { kind: mcp.tool, depends_on: [wave1], server: deploy, tool: wave_verify, args: { minutes: 10 } }
   gate2:
     kind: human
     depends_on: [verify1]
-    role: "@human/release"
-    ui: "@ui/wave-approval"
-    when: "environment == 'production'"
-  wave2:
-    kind: tool
-    depends_on: [gate2]
-    tool: deploy.wave_start
-    args: { percent: 100 }
-  verify2:
-    kind: tool
-    depends_on: [wave2]
-    tool: deploy.wave_verify
-    args: { minutes: 10 }
+    when: "inputs.environment == 'production'"
+    question: "Wave 1 verified. Start wave 2 (100%) of {{inputs.release}}?"
+    schema: "@ui/wave-approval"
+    to: "@human/release"
+    timeout: 1h
+  wave2:   { kind: mcp.tool, depends_on: [gate2], server: deploy, tool: wave_start,  args: { percent: 100 } }
+  verify2: { kind: mcp.tool, depends_on: [wave2], server: deploy, tool: wave_verify, args: { minutes: 10 } }
   announce:
     kind: agent
     depends_on: [verify2]
-    instruction: "Post the completion summary to the deploys channel"
-  done:
-    kind: finish
-    depends_on: [announce]
-on_failure: "@workflow/rollback"
+    instruction: "Post the completion summary for {{inputs.release}} to the deploys channel"
+  done: { kind: finish, depends_on: [announce] }
 ```
 
 ## !workflow rollback
 
-Restores the previous release. Anyone on call may start it; it asks nothing
-and posts everything.
+Restores the previous release. Anyone on call may start it, and it starts
+itself when a deploy run fails. It asks nothing until the end, and posts
+everything.
 
 ```yaml
-start: { kind: manual, role: "@human/oncall" }
 steps:
-  back:     { kind: tool, tool: deploy.release_rollback }
-  verify:   { kind: tool, depends_on: [back], tool: deploy.wave_verify, args: { minutes: 5 } }
-  incident: { kind: tool, depends_on: [verify], tool: status.incident_post }
-  page:     { kind: human, depends_on: [incident], role: "@human/sre-lead" }
+  start:  { kind: manual }
+  failed: { kind: event, on: workflow.failed, filter: "payload.workflow == 'deploy'" }
+  back:     { kind: mcp.tool, depends_on: [start, failed], server: deploy, tool: release_rollback }
+  verify:   { kind: mcp.tool, depends_on: [back], server: deploy, tool: wave_verify, args: { minutes: 5 } }
+  incident: { kind: mcp.tool, depends_on: [verify], server: status, tool: incident_post, args: { text: "Rolled back after a failed deploy" } }
+  page:     { kind: human, depends_on: [incident], question: "Rollback complete and verified; acknowledge the incident", to: "@human/sre-lead", timeout: 30m }
   done:     { kind: finish, depends_on: [page] }
 ```
 
@@ -186,10 +182,12 @@ steps:
 Reads health for the last day and posts a one-line summary at 07:00.
 
 ```yaml
-start: { kind: schedule, cron: "0 7 * * *" }
 steps:
-  read: { kind: stream, stream: health, from: "-24h" }
-  post: { kind: agent, depends_on: [read], instruction: "Summarize in one line; flag anything below 99.9%" }
+  wake: { kind: schedule, cron: "0 7 * * *" }
+  post:
+    kind: agent
+    depends_on: [wake]
+    instruction: "Read the last 24 hours of the health stream and summarize in one line; flag anything below 99.9%"
   done: { kind: finish, depends_on: [post] }
 ```
 

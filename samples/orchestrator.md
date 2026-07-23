@@ -125,34 +125,45 @@ limits:
 ## !workflow dispatch
 
 Wakes on every inbox event, classifies it against the routing table, logs the
-decision, and hands the item to the chosen subagent.
+decision, and hands the item to the chosen subagent. A failed run starts
+[[workflow/reroute]].
 
 ```yaml
-start: { kind: subscribe, stream: inbox, from: latest }
 steps:
-  classify: { kind: agent, instruction: "Classify against the routing table; answer with one route name" }
-  log:      { kind: stream, depends_on: [classify], stream: audit, subject: route.decided }
-  route:
-    kind: agent-call
-    depends_on: [log]
-    agent: "{{classify.route}}"
-    instruction: "{{item.body}}"
-  ack:      { kind: tool, depends_on: [route], tool: ticketing.comment, args: { text: "Routed to {{classify.route}}" } }
+  wake:     { kind: stream, stream: inbox }
+  classify: { kind: classify, depends_on: [wake], input: "{{steps.wake.output}}", classes: [support, coder, deployer, research], prompt: "Choose the agent from the routing table" }
+  log:      { kind: emit, depends_on: [classify], stream: audit, subject: route.decided, data: { route: "{{steps.classify.output}}", item: "{{steps.wake.output.id}}" } }
+  support:  { kind: subagent, depends_on: [log], when: "steps.classify.output == 'support'",  template: "@agent/support",  params: { item: "{{steps.wake.output}}" } }
+  coder:    { kind: subagent, depends_on: [log], when: "steps.classify.output == 'coder'",    template: "@agent/coder",    params: { item: "{{steps.wake.output}}" } }
+  deployer: { kind: subagent, depends_on: [log], when: "steps.classify.output == 'deployer'", template: "@agent/deployer", params: { item: "{{steps.wake.output}}" } }
+  research: { kind: subagent, depends_on: [log], when: "steps.classify.output == 'research'", template: "@agent/research", params: { item: "{{steps.wake.output}}" } }
+  ack:      { kind: mcp.tool, depends_on: [support, coder, deployer, research], server: ticketing, tool: comment, args: { text: "Routed to {{steps.classify.output}}" } }
   done:     { kind: finish, depends_on: [ack] }
-on_failure: "@workflow/reroute"
 ```
 
 ## !workflow reroute
 
-Started by the dispatcher when a route was wrong. Moves the item and notes
-why, so the routing table can be corrected later.
+Started by the dispatcher, or by a failed dispatch run. Asks the dispatcher
+where the item belongs, moves it, and notes why, so the routing table can be
+corrected later.
 
 ```yaml
-start: { kind: manual, role: "@human/dispatcher" }
 steps:
-  move: { kind: agent-call, agent: "{{input.agent}}", instruction: "{{input.body}}" }
-  note: { kind: stream, depends_on: [move], stream: audit, subject: route.corrected }
-  done: { kind: finish, depends_on: [note] }
+  start:  { kind: manual }
+  failed: { kind: event, on: workflow.failed, filter: "payload.workflow == 'dispatch'" }
+  which:
+    kind: human
+    depends_on: [start, failed]
+    question: "Which agent should take this item, and why was the first route wrong?"
+    schema: { type: object, required: [agent, body], properties: { agent: { type: string, enum: [support, coder, deployer, research] }, body: { type: string } } }
+    to: "@human/dispatcher"
+    timeout: 4h
+  support:  { kind: subagent, depends_on: [which], when: "steps.which.output.agent == 'support'",  template: "@agent/support",  params: { item: "{{steps.which.output.body}}" } }
+  coder:    { kind: subagent, depends_on: [which], when: "steps.which.output.agent == 'coder'",    template: "@agent/coder",    params: { item: "{{steps.which.output.body}}" } }
+  deployer: { kind: subagent, depends_on: [which], when: "steps.which.output.agent == 'deployer'", template: "@agent/deployer", params: { item: "{{steps.which.output.body}}" } }
+  research: { kind: subagent, depends_on: [which], when: "steps.which.output.agent == 'research'", template: "@agent/research", params: { item: "{{steps.which.output.body}}" } }
+  note:     { kind: emit, depends_on: [support, coder, deployer, research], stream: audit, subject: route.corrected, data: { agent: "{{steps.which.output.agent}}" } }
+  done:     { kind: finish, depends_on: [note] }
 ```
 
 ## !workflow digest
@@ -160,10 +171,12 @@ steps:
 Posts a routing summary to the dispatch channel every evening.
 
 ```yaml
-start: { kind: schedule, cron: "0 18 * * 1-5" }
 steps:
-  read: { kind: stream, stream: audit, from: "-24h" }
-  post: { kind: agent, depends_on: [read], instruction: "Count routes by agent; list anything rerouted or stuck" }
+  wake: { kind: schedule, cron: "0 18 * * 1-5" }
+  post:
+    kind: agent
+    depends_on: [wake]
+    instruction: "Read the last 24 hours of the audit stream; count routes by agent and list anything rerouted or stuck"
   done: { kind: finish, depends_on: [post] }
 ```
 

@@ -131,20 +131,27 @@ answer on the ticket. Runs once per request; the customer is told the window
 before it starts.
 
 ```yaml
+inputs:
+  schema:
+    type: object
+    required: [ticket, amount]
+    properties: { ticket: { type: string }, amount: { type: number } }
 steps:
+  start: { kind: manual }
   ask:
     kind: human
-    role: "@human/oncall"
-    ui: "@ui/refund-approval"
+    depends_on: [start]
+    question: "Approve a refund of {{inputs.amount}} on ticket {{inputs.ticket}}?"
+    schema: "@ui/refund-approval"
+    to: "@human/oncall"
     timeout: 15m
-    on_timeout: escalate
   record:
-    kind: tool
+    kind: mcp.tool
     depends_on: [ask]
-    tool: ticketing.comment
-  done:
-    kind: finish
-    depends_on: [record]
+    server: ticketing
+    tool: comment
+    args: { ticket: "{{inputs.ticket}}", text: "Refund {{inputs.amount}} approved: {{steps.ask.output.approve}}" }
+  done: { kind: finish, depends_on: [record] }
 ```
 
 ## !workflow reopen
@@ -155,8 +162,8 @@ duty operator.
 ```yaml
 steps:
   wake:   { kind: subscribe, server: ticketing, uri: "ticket://resolved/replied" }
-  reopen: { kind: tool, depends_on: [wake], tool: ticketing.update, args: { status: open } }
-  notify: { kind: human, depends_on: [reopen], role: "@human/duty" }
+  reopen: { kind: mcp.tool, depends_on: [wake], server: ticketing, tool: update, args: { ticket: "{{steps.wake.output.id}}", status: open } }
+  notify: { kind: human, depends_on: [reopen], question: "Ticket {{steps.wake.output.id}} was reopened by a customer reply; take it?", to: "@human/duty", timeout: 1h }
   done:   { kind: finish, depends_on: [notify] }
 ```
 

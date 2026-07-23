@@ -203,11 +203,23 @@ fixes it or asks the reviewer.
 
 ```yaml
 steps:
-  wake:    { kind: subscribe, server: ci, uri: "ci://runs/failed?branch=mine" }
-  read:    { kind: tool, depends_on: [wake], tool: ci.read_log }
-  decide:  { kind: agent, depends_on: [read], instruction: "Fix the failure if it is in your change; otherwise summarize it for the reviewer" }
-  ask:     { kind: human, depends_on: [decide], role: "@human/reviewer", when: "decide.outcome == 'needs-human'" }
-  done:    { kind: finish, depends_on: [decide] }
+  wake: { kind: subscribe, server: ci, uri: "ci://runs/failed?branch=mine" }
+  read: { kind: mcp.tool, depends_on: [wake], server: ci, tool: read_log, args: { run: "{{steps.wake.output.run_id}}" } }
+  decide:
+    kind: agent
+    depends_on: [read]
+    instruction: |
+      Fix the failure if it is in your change. Otherwise reply with the single
+      line NEEDS-HUMAN, then a summary for the reviewer.
+      {{steps.read.output}}
+  ask:
+    kind: human
+    depends_on: [decide]
+    when: "steps.decide.output.startsWith('NEEDS-HUMAN')"
+    question: "{{steps.decide.output}}"
+    to: "@human/reviewer"
+    timeout: 4h
+  done: { kind: finish, depends_on: [decide, ask] }
 ```
 
 :::context{title="Repository layout"}
