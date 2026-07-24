@@ -199,7 +199,7 @@ parameters:
 | `version` | the immutable version identifier of these bytes | the control plane |
 | `title` | a display title; not delivered | the author |
 | `parameters` | declared inputs, resolved at delivery; same schema as the `param` kind (§5.2) | the author |
-| `signature` | signing metadata (§7); ignored by readers that do not verify | the control plane |
+| `signature` | the author signature: a JWS compact serialization on one line (§7.2); excluded from the digest; ignored by readers that do not verify | the control plane |
 
 Rules:
 
@@ -1637,10 +1637,17 @@ sanctioned.
 
 ### 7.2 The attestation
 
-Signatures are JWS compact serializations [RFC7515] over a claims object.
-Implementations MUST support Ed25519 (`alg: EdDSA`, [RFC8037]) and MUST
-domain-separate by `typ`. Digests are SHA-256 [FIPS180-4], written
-`sha256:<hex>`.
+Signatures are JWS compact serializations [RFC7515] over a JSON claims
+object [RFC8259]. Implementations MUST support Ed25519 (`alg: EdDSA`,
+[RFC8037]). The JOSE header carries `alg` and `typ` — `author` or
+`delivery`, equal to the `typ` claim — and MAY carry `kid` to select among a
+publisher's pinned keys. A verifier MUST check the `typ` claim, not only the
+header, and MUST refuse a signature whose `typ` is not the one the
+verification step expects: a delivery signature never stands in for an
+author signature, nor the reverse. Digests are SHA-256 [FIPS180-4], written
+`sha256:<hex>` with lower-case hexadecimal.
+
+**Author claims** — over the authored bytes:
 
 ```json
 { "spec": "instruction/1",
@@ -1652,6 +1659,47 @@ domain-separate by `typ`. Digests are SHA-256 [FIPS180-4], written
   "pub": "https://instruction.md/pub/acme",
   "iat": 1757000000, "exp": 1788536000 }
 ```
+
+**Delivery claims** — over the delivered bytes, for one reader:
+
+```json
+{ "spec": "instruction/1",
+  "typ": "delivery",
+  "doc": "instruction://ins_42",
+  "version": "ver_01K003",
+  "digest": "sha256:…",
+  "aud": "principal://usr_7",
+  "manifest": { "authored": { "version": "ver_01K003", "digest": "sha256:…" }, "…": "…" },
+  "author": "eyJhbGciOiJFZERTQSIsInR5cCI6ImF1dGhvciJ9.…",
+  "capabilities": ["material"],
+  "pub": "https://instruction.md/pub/acme",
+  "iat": 1757000000, "exp": 1757003600 }
+```
+
+| Claim | Author signature | Delivery signature |
+|---|---|---|
+| `spec` | `instruction/1`, the attestation format; REQUIRED | the same |
+| `typ` | `author` | `delivery` |
+| `doc` | the document's `id` (§3.1) | the same |
+| `version` | the authored version attested | the authored version this delivery was resolved from |
+| `digest` | the **authored bytes** (below) | the **delivered bytes**, exactly as sent |
+| `aud` | — | the reader, as a `principal://` or `agent://` URI; REQUIRED |
+| `manifest` | — | the resolution manifest of §7.4, embedded as JSON; REQUIRED |
+| `author` | — | the author signature, JWS compact serialization, verbatim; REQUIRED |
+| `capabilities` | the ceiling the author stands behind | the ceiling the delivery service attests; MUST be a subset of the author's |
+| `pub` | the publisher, matched against trust configuration (§7.5) | the same |
+| `iat`, `exp` | seconds since the epoch; long-lived | SHOULD expire within hours: it attests one resolution, not the document |
+
+**What the author digest covers.** The authored bytes are the document as
+stored, with one exception: when the front matter carries a `signature` key,
+the line that holds it is excluded, so that a signature can travel inside
+the document it signs. `signature` MUST therefore be a top-level front-matter
+key whose value is the author signature's JWS compact serialization on a
+single line, and a verifier removes exactly that line before hashing. A
+delivery signature is never carried in the document: it travels in the
+delivery envelope beside the delivered bytes — over HTTP, in the
+`Instruction-Signature` response header; over other transports, as a
+string-valued metadata field named `signature`.
 
 **A signature caps; it MUST NOT grant.** Effective families = operator grant ∩
 per-source ceiling ∩ attested `capabilities`. A document attested for
@@ -1667,8 +1715,8 @@ document uses; a block outside its attestation refuses the document whole.
   exists.
 - **Delivery signature** (`typ: "delivery"`) — an **online service key**, in
   the serving path, over the *delivered* bytes, the audience, the resolution
-  manifest (§7.4) and a reference to the author signature. Attests what was
-  actually sent, and to whom.
+  manifest (§7.4) and the author signature itself, embedded. Attests what
+  was actually sent, and to whom.
 
 The online key is structurally weaker than the offline one, and this
 specification says so rather than letting deployments discover it. A
@@ -1731,13 +1779,17 @@ This configuration is operator surface and MUST be unreachable from `!config`.
 
 ### 7.6 Verification, in order
 
-1. Read the front-matter version; refuse an unimplemented version (§3.1) and
-   unrecognized markers of a newer one (§3.3 rule 8).
-2. Verify the delivery signature over the received bytes; recompute and
-   compare `digest`. Mismatch ⇒ refuse.
-3. Extract the manifest; verify the author signature over `authored.digest`
-   against a pinned key for the claimed publisher. An unpinned publisher is
-   not a weaker trust level — it is a refusal.
+1. Read the front-matter version; refuse an unimplemented version (§3.3
+   rule 8) and an unknown sigiled kind (§3.3 rule 2).
+2. Verify the delivery signature over the received bytes against a pinned
+   delivery key: `typ` is `delivery`, `aud` names this reader, `exp` has not
+   passed, and the recomputed digest of the received bytes equals `digest`.
+   Any mismatch ⇒ refuse.
+3. Take the manifest and the embedded author signature from the delivery
+   claims. Verify the author signature against a pinned key for its `pub`:
+   `typ` is `author`, `doc` and `version` equal the delivery's, `digest`
+   equals `manifest.authored.digest`, and `exp` has not passed. An unpinned
+   publisher is not a weaker trust level — it is a refusal.
 4. Effective families = grant ∩ `max_capabilities` ∩ author-attested ∩
    delivery-attested.
 5. Any block whose family exceeds effective ⇒ refuse the document whole. No
@@ -2287,5 +2339,11 @@ catalogue, so that implementations agree on what a document's author sees:
 | unsupported isolation | `line N: this reader does not support isolation=process` |
 | unimplemented version | `front matter: spec "2" is not implemented by this reader` |
 | non-integer version | `front matter: spec "1.0" is not a version — versions are integers` |
+| signature `typ` mismatch | `signature: expected typ "author", found "delivery"` |
+| audience mismatch | `delivery: aud "principal://usr_9" is not this reader` |
+| digest mismatch | `delivery: digest does not match the received bytes` |
+| manifest without `variants.dropped` | `manifest: variants.dropped is required (§7.4 rule 5)` |
+| unpinned publisher | `publisher "https://…" is not pinned in instruction_sources` |
+| delivery ceiling exceeds author's | `delivery: capabilities [compute] exceed the author attestation [material]` |
 | dangling on live update | `update refused: workflow/deploy still references human/oncall, which the update removes` |
 | trifecta widening on update | `update refused: it would add untrusted_input alongside live egress tools` |
