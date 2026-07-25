@@ -513,6 +513,23 @@ What the model sees is a declared property of each kind — its disposition —
 not a table hard-coded in the reader, so that a later version adds a kind by
 adding a registry entry (§9).
 
+**Layout is in place.** A block's delivered form replaces exactly the lines
+the block occupied, and every other line of the document — prose, headings,
+blank lines — is delivered unchanged. The replaced region is: for a
+container or set, the opening fence line through the closing fence line;
+for a leaf, its line; for a section, the heading through the last non-blank
+line of the section; for a keyword, the paragraph or list item; for an
+alert, the blockquote. A block that delivers nothing leaves nothing. Runs of
+consecutive blank lines that result are collapsed to one, and blank lines at
+the start and end of the document are removed. Inside a delivered block the
+body's line breaks are preserved; a keyword label is prefixed to the first
+line (`**MUST:** first line`, continuation lines unchanged, `> ` prefixes of
+an alert removed); the `EXAMPLE` and `Tool` labels stand on a line of their
+own above the body; a glossary delivers one line per term, its continuation
+lines joined by single spaces. Two readers given the same document and
+context therefore deliver the same bytes, which is what the delivery
+signature (§7.3) needs.
+
 **Tables inside data-bearing blocks: cell content is normative, layout is
 not.** A formatter that preserves cells preserves semantics; column
 alignment, padding and separator length carry no meaning.
@@ -1847,7 +1864,9 @@ safe. Operator surface only.
 
 A support agent, defined end to end. Every form of §4 appears at least
 once, as does every position a reference can take (§3.4). Line comments
-(`←`) are annotations, not part of the document. Longer documents —
+(`←`) are annotations, not part of the document, so the listing as printed
+is not itself loadable; [`samples/support-agent.md`](samples/support-agent.md)
+is a loadable, fuller version of the same agent. Longer documents —
 a coding agent, a deployment runbook, a research agent, an orchestrator, and
 the house-style document they include — are in [`samples/`](samples/).
 
@@ -2047,6 +2066,10 @@ fifteen minutes. I've noted that the outage began around 09:10 your time.
 
 #refunds #support-tier-1
 ```
+
+The HTML comment stands in for the inlined house-style document
+([`samples/house-style.md`](samples/house-style.md), resolved for this
+reader); the comment itself is not delivered.
 
 Note what is absent: the parameters, the staging variant, the `!ui` card
 (it is for the human's client), the workflow's YAML, the skill's text (it is
@@ -2281,15 +2304,15 @@ What each authored construct becomes in the delivered text.
 | Authored | Delivered |
 |---|---|
 | front matter | nothing |
-| `:::must` … / `MUST: …` / `> [!MUST]` | `**MUST:** …` |
+| `:::must` … / `MUST: …` / `> [!MUST]` | `**MUST:** …` — the label prefixed to the first body line; further lines unchanged |
 | `:::should` / `:::never` / `:::guardrail` / `:::note` / `:::tip` / `:::warning` / `:::caution` / `:::important` | `**SHOULD:**` / `**NEVER:**` / `**GUARDRAIL:**` / `**NOTE:**` / `**TIP:**` / `**WARNING:**` / `**CAUTION:**` / `**IMPORTANT:**` + body |
 | `MUST NOT:` / `INFO:` | `**NEVER:**` / `**NOTE:**` |
-| `:::example{title=T}` | `**EXAMPLE — T:**` + body verbatim |
+| `:::example{title=T}` | `**EXAMPLE — T:**` on its own line, then the body verbatim |
 | `:::context{title=T}` | `<reference title="T">` body `</reference>` |
 | `:::form{title=T}` | `**Inputs to collect — T**` + one list item per parameter |
-| `:::tool{cap allow deny}` | `**Tool — Label** (\`cap\`) — allowed: …; denied: …` + body |
+| `:::tool{cap allow deny}` | `**Tool — Label** (\`cap\`) — allowed: …; denied: …` on its own line, a blank line, then the body |
 | `:::glossary` | `**Term** — definition`, one line per term |
-| `:::when{…}` kept | body, unwrapped |
+| `:::when{…}` kept | body, unwrapped, in place |
 | `:::when{…}` dropped | nothing; recorded in the manifest |
 | `::include{…}` | the included document, resolved for this reader |
 | `::param` / `:::param[]` | nothing |
@@ -2302,6 +2325,7 @@ What each authored construct becomes in the delivered text.
 | `## !kind x` + section | the same one line; the section is gone |
 | sub-blocks | nothing of their own; folded into the parent's line |
 | unknown bare `:::foo` | body, as prose; the fences removed |
+| blank lines | preserved; a run of several collapses to one |
 
 ## Appendix B — Refusals
 
