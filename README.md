@@ -188,7 +188,7 @@ version: ver_01K003
 title: Support agent
 parameters:
   - { name: environment, type: enum, values: [staging, production], source: workspace, required: true }
-  - { name: region, type: string, source: agent_attribute }
+  - { name: region, type: string, source: agent_attribute, default: eu-west, description: "Reader's home region" }
 ---
 ```
 
@@ -1055,7 +1055,11 @@ Forms: C. Attributes: `name`, `title`.
 
 Parameter capture. The body references declared parameters; an editor
 renders a capture form for them; the delivered text is a list of the inputs
-to collect — **never a live form**, which this specification forbids.
+to collect — **never a live form**, which this specification forbids. The
+list has one item per parameter referenced in the body, in order of first
+reference: `- **name**`, followed — when any apply — by ` — ` and the
+parameter's `description`, `required`, `one of: …` (an enum's `values`) and
+`default: …`, separated by `; `. The body's own text is not delivered.
 
 ```markdown
 :::form{title="Before we start"}
@@ -1068,9 +1072,8 @@ Which region, if not the default? ${region}
 
 ```markdown
 **Inputs to collect — Before we start**
-
-- **Environment** — required; one of: staging, production
-- **Region**
+- **environment** — required; one of: staging, production
+- **region** — Reader's home region; default: eu-west
 ```
 
 #### `tool`
@@ -1094,7 +1097,6 @@ Open tickets for engineering escalations only; billing has its own queue.
 
 ```markdown
 **Tool — Ticketing** (`server://ticketing`) — allowed: read, ticket:create; denied: ticket:delete
-
 Open tickets for engineering escalations only; billing has its own queue.
 ```
 
@@ -2040,13 +2042,13 @@ You are working real tickets. Every write is visible to a customer.
 ## People and channels
 
 [2 human roles are declared: oncall, lead]
+
 [channel "ops" is available for #ops]
 [channel "eng" is available for #eng]
 
 ## Tools
 
 **Tool — Ticketing** (`server://ticketing`) — allowed: read, ticket:create, ticket:update; denied: ticket:delete
-
 Open and update tickets. Never delete; deletion is a compliance decision.
 
 [mcp server "ticketing" is connected; its tools are available]
@@ -2309,8 +2311,8 @@ What each authored construct becomes in the delivered text.
 | `MUST NOT:` / `INFO:` | `**NEVER:**` / `**NOTE:**` |
 | `:::example{title=T}` | `**EXAMPLE — T:**` on its own line, then the body verbatim |
 | `:::context{title=T}` | `<reference title="T">` body `</reference>` |
-| `:::form{title=T}` | `**Inputs to collect — T**` + one list item per parameter |
-| `:::tool{cap allow deny}` | `**Tool — Label** (\`cap\`) — allowed: …; denied: …` on its own line, a blank line, then the body |
+| `:::form{title=T}` | `**Inputs to collect — T**` on its own line, then one list item per parameter referenced in the body (§5.1); the body's text is not delivered |
+| `:::tool{cap allow deny}` | `**Tool — Label** (\`cap\`) — allowed: …; denied: …` on its own line, then the body |
 | `:::glossary` | `**Term** — definition`, one line per term |
 | `:::when{…}` kept | body, unwrapped, in place |
 | `:::when{…}` dropped | nothing; recorded in the manifest |
