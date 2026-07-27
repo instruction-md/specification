@@ -520,8 +520,9 @@ container or set, the opening fence line through the closing fence line;
 for a leaf, its line; for a section, the heading through the last non-blank
 line of the section; for a keyword, the paragraph or list item; for an
 alert, the blockquote. A block that delivers nothing leaves nothing. Runs of
-consecutive blank lines that result are collapsed to one, and blank lines at
-the start and end of the document are removed. Inside a delivered block the
+consecutive blank lines that result are collapsed to one, blank lines at
+the start and end of the document are removed, and the delivered text ends
+with exactly one newline. Inside a delivered block the
 body's line breaks are preserved; a keyword label is prefixed to the first
 line (`**MUST:** first line`, continuation lines unchanged, `> ` prefixes of
 an alert removed); the `EXAMPLE` and `Tool` labels stand on a line of their
