@@ -103,7 +103,7 @@ deployment configuration.
 :::!endpoint{name=deploy-hook kind=webhook path=/hooks/deploy methods=POST}
 auth: { hmac: { secret: "@secret-ref/deployer" } }
 into: { stream: deploys, subject: deploy.requested }
-rate: "10/1m"
+rate: "10/60s"
 :::
 
 :::!stream[]
