@@ -727,8 +727,10 @@ refunds
 - **Delivery.** A set of machinery delivers **one** acknowledgement line
   naming its members by name: `[3 human roles are declared: oncall, lead,
   sre]`. The noun is the kind's display noun from the registry (`x-nouns`,
-  §9.3). A set of prose degrades per entry, each labeled. Structural sets (`param[]`)
-  resolve away.
+  §9.3). A set of a kind that delivers nothing on its own (no
+  acknowledgement template — `!peer`, `!secret-ref`, `!source`, …) delivers
+  nothing as a set either. A set of prose degrades per entry, each labeled.
+  Structural sets (`param[]`) resolve away.
 - **Unrendered:** a table, or a definition list — both are among the
   best-degrading constructs Markdown has, and both read correctly with no
   knowledge of this specification.
@@ -2324,7 +2326,7 @@ What each authored construct becomes in the delivered text.
 | `[#L](instruction://…)` etc. | the link, unchanged |
 | `#tag` | unchanged |
 | `:::!kind{name=x}` (any machinery form) | `[kind "x" …]` — one line per block, per §5.3 |
-| `:::!kind[]` with N members | `[N <nouns> are declared: a, b, c]` — one line; the noun is the kind's `x-nouns` |
+| `:::!kind[]` with N members | `[N <nouns> are declared: a, b, c]` — one line; the noun is the kind's `x-nouns`; nothing when the kind has no acknowledgement |
 | `## !kind x` + section | the same one line; the section is gone |
 | sub-blocks | nothing of their own; folded into the parent's line |
 | unknown bare `:::foo` | body, as prose; the fences removed |

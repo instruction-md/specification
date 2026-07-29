@@ -68,7 +68,7 @@ approve, retry a deploy, or change the pipeline.
 
 ## Workspace
 
-::!git{name=source url=https://git.example/acme/${repo} ref=${default_branch}}
+::!git{name=source url="https://git.example/acme/${repo}" ref="${default_branch}"}
 ::!volume{name=work kind=ephemeral size=2Gi}
 ::!image{name=py311 digest=sha256:3f0a9c1e7b2d4f6a8c0e2b4d6f8a0c2e4b6d8f0a2c4e6b8d0f2a4c6e8b0d2f4a registry=registry.example/acme/py311}
 
