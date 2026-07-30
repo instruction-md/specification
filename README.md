@@ -688,7 +688,8 @@ refunds
 ```
 
 - A **term** line is the instance's `name`, followed by an optional attribute
-  list. The name obeys the `name` grammar of §3.2.
+  list. In a set, the name obeys the `name` grammar of §3.2; in a
+  definition-list *body* (`glossary`), a term is free text on one line.
 - The **definition** begins on the next line with a colon and at least one
   space. Continuation lines are indented to the same column. Multiple
   paragraphs are allowed, each beginning with `:`.
