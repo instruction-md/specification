@@ -17,7 +17,8 @@ document model, the grammar, the forms in which a block may be written, the
 registry of block kinds, delivery to a model, lifecycle, the capability grant
 model, and signing, serving and revocation. The registry and grammar are also
 published as a JSON Schema ([`instruction.schema.json`](instruction.schema.json),
-§9), and complete example documents are in [`samples/`](samples/).
+§9), and complete example documents are in [`samples/`](samples/). Changes enter
+through [`proposals/`](proposals/README.md).
 
 ### Table of contents
 
