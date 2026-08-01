@@ -16,20 +16,20 @@
       },
       "children": [
         {
-          "kind": "must",
+          "kind": "should",
           "sigil": false,
           "form": "keyword",
-          "line": 10,
+          "line": 11,
           "attrs": {},
           "body": {
             "type": "markdown",
-            "text": "read the diff before commenting.\nSecond line of the rule."
+            "text": "quote the line you are commenting on."
           }
         }
       ],
       "body": {
         "type": "markdown",
-        "text": ""
+        "text": "Read the diff before commenting."
       }
     },
     {

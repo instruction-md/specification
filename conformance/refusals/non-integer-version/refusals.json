@@ -5,6 +5,6 @@
   },
   {
     "line": null,
-    "message": "schema /frontMatter/spec: must match pattern \"^[0-9]+$\""
+    "message": "/frontMatter/spec: must match pattern \"^[0-9]+$\""
   }
 ]

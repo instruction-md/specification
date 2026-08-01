@@ -1,7 +1,7 @@
 # Nested keywords
 
-**MUST:** **MUST:** read the diff before commenting.
-Second line of the rule.
+**MUST:** Read the diff before commenting.
+**SHOULD:** quote the line you are commenting on.
 
 **NEVER:** skip the checklist.
 

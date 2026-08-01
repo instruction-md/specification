@@ -7,8 +7,8 @@ title: Nested keywords
 # Nested keywords
 
 :::must{name=review}
-MUST: read the diff before commenting.
-Second line of the rule.
+Read the diff before commenting.
+SHOULD: quote the line you are commenting on.
 :::
 
 :::when{environment="production"}
