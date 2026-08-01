@@ -1,0 +1,14 @@
+[
+  {
+    "line": 1,
+    "message": "row 1 has no name — every member of human[] needs one"
+  },
+  {
+    "line": 1,
+    "message": "schema /blocks/0/members/0/attrs: must have required property 'name'"
+  },
+  {
+    "line": 1,
+    "message": "schema /blocks/0/members/0: must match \"then\" schema"
+  }
+]

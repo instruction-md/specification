@@ -1,0 +1,14 @@
+[
+  {
+    "line": 1,
+    "message": "\"channel_id\" is not an attribute of human"
+  },
+  {
+    "line": 1,
+    "message": "schema /blocks/0/members/0/attrs: \"channel_id\" is not an attribute of human"
+  },
+  {
+    "line": 1,
+    "message": "schema /blocks/0/members/0: must match \"then\" schema"
+  }
+]
