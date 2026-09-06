@@ -4,7 +4,9 @@
 **Format version:** 1 (`spec: "1"`).
 **Date:** 2026-07-20.
 **Publisher:** instruction.md.
-**License:** CC BY 4.0 (`LICENSE`).
+**License:** this text is CC BY 4.0 (`LICENSE`). The conformance fixtures are
+Apache 2.0 (`conformance/LICENSE`), because implementations vendor those files
+into their own source trees and the licence travels with the copy.
 **Media type:** `text/markdown; variant=instruction` (§11).
 
 ### Abstract
