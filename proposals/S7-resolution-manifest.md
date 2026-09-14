@@ -108,6 +108,15 @@ and every producer diagnostic (`line`, any key not named in §1) **removed
 first**. Two conformant implementations then agree on the signature, not only
 on the shape. The corpus pins this form as `manifest.canonical.json`.
 
+The form carries no discriminator of its own: it is versioned by the
+specification revision that defines it (the document's `spec: "1"`, and the
+attestation's `spec: "instruction/1"` claim names the revision the signer
+followed). A future change to the shape or to the canonical form MUST carry a
+discriminator inside the manifest, so a verifier that recomputes locally knows
+which shape to reproduce and version skew reads as skew, not as tampering.
+Today §7.6 verification parses the embedded manifest and compares digests;
+nothing recomputes, which is why the absence costs nothing yet.
+
 ### 4. Open question — value digests as an oracle
 
 A value digest confirms a guess: `env=prod`, a tenant id, a region — the
@@ -134,6 +143,13 @@ form is the part that needs the specification, not an implementation.
   consulted facts need the `when` evaluator to record the keys it compared;
   the canonical form is a serialiser. The registry that embeds the crate's
   manifest moves with it.
+  Skew, measured on 0.2.0: `parameters`, `facts` and `includes` are
+  `serde(default)` vectors of values and `Manifest` does not deny unknown
+  fields, so counter ids, `source`, `target`, consulted facts and `unresolved`
+  land on 0.2.0 unchanged; `Authored.version` is a required string, so a
+  conformant manifest that omits it (a file reader's) does not deserialise on
+  0.2.0 while a registry's, which carries the version, does. That is the one
+  place the two versions cannot talk, and it is on the file-reader side only.
 - `@instruction-md/spec`, `instruction_md` (Python), `instruction` (Go):
   consulted facts, sorted parameters and unresolved, UTF-8 include bytes, the
   canonical serialiser — done on the branch that accompanies this proposal.
