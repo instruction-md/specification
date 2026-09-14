@@ -9,7 +9,12 @@
       "value_digest": "sha256:4b4e49dd2de5eae9881688638d7453803ea88b3721146b8f97a5508b5b5c6aa5"
     }
   ],
-  "facts": [],
+  "facts": [
+    {
+      "key": "depth",
+      "value_digest": "sha256:74611c1d6455b534323a21f8133a6f43dc3a8188e7b946f96dcc28dde932fcb2"
+    }
+  ],
   "variants": {
     "kept": [],
     "dropped": [
