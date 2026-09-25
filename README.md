@@ -19,8 +19,17 @@ document model, the grammar, the forms in which a block may be written, the
 registry of block kinds, delivery to a model, lifecycle, the capability grant
 model, and signing, serving and revocation. The registry and grammar are also
 published as a JSON Schema ([`instruction.schema.json`](instruction.schema.json),
-§9), and complete example documents are in [`samples/`](samples/). Changes enter
+§9), and complete example documents are in [`samples/`](samples/), with what each delivers in [`samples/delivered/`](samples/delivered/). Writers start with the [guide](guide/README.md) and the [cheat sheet](guide/cheatsheet.md). Changes enter
 through [`proposals/`](proposals/README.md).
+
+**Revision 1.1** (2026-09-25) adds, without invalidating any version-1
+document: `SHOULD NOT` keeping its negation (S8), author notes (S9), registered
+context keys with `unless` and `otherwise` (S10), the skill trigger (S11),
+named keyword rules and prose identity (S12, S26), `MAY`/`ALWAYS`/`AVOID` (S13),
+reasons (S14), conditions (S15), examples to avoid (S16), `output` (S17),
+typed parameters (S18), advisories and refusal codes (S19, S20), reference body
+schemas (S22), `!eval` (S23), rule strength and `overrides` (S24) and label
+styles (S25). The authoring guide is [`guide/`](guide/README.md).
 
 ### Table of contents
 
@@ -77,6 +86,7 @@ through [`proposals/`](proposals/README.md).
   - [12.2 Informative references](#122-informative-references)
 - [Appendix A — Delivery reference](#appendix-a--delivery-reference)
 - [Appendix B — Refusals](#appendix-b--refusals)
+- [Appendix C — Advisories](#appendix-c--advisories)
 
 ---
 
@@ -132,8 +142,10 @@ when it implements every MUST and MUST NOT that applies to its role:
 - an **editor** implements §3 and §4 and the editor duties of §3.6.
 
 A **refusal** is a reader declining the whole document. A refusal MUST name
-the line, the construct, and what to write instead; Appendix B is the
-catalogue. A reader MUST NOT partially load a document it refuses.
+the line, the construct, and what to write instead, and MUST carry the code
+Appendix B gives its condition; Appendix B is the catalogue. An **advisory**
+never refuses: a reader MAY report advisories, and one that does uses the codes
+of Appendix C. A reader MUST NOT partially load a document it refuses.
 
 ### 1.5 Notation
 
@@ -170,6 +182,11 @@ from parts may read it first.
 | acknowledgement | the one line a machinery block leaves in the delivered text in place of its body (§3.3 rule 7) |
 | operator surface | text the operator authored and the runtime read at startup, or a document admitted under §7 |
 | trifecta | untrusted input, sensitive access and egress in one agent — the shape of an exfiltration path; blocks carry these tags and a runtime refuses to assemble all three silently |
+| author note | an HTML comment at column 0: for reviewers, never parsed for blocks, never delivered (§3.3 rule 11) |
+| rule | a normativity block with a strength: `must`, `should`, `never`, `guardrail`, `may` and their aliases (§5.1) |
+| reason | the `BECAUSE:` text attached to a rule, delivered after it (§4.5 rule 7) |
+| condition | the `(if …)` of a rule: text for the model, decided during the task — unlike `when`, which a reader decides before delivery (§4.5 rule 8) |
+| advisory | a diagnostic that never refuses; a document with advisories loads and delivers unchanged (Appendix C) |
 
 **Disposition is the foundation.** The same fence syntax can carry text meant
 for the model and configuration meant for the runtime. Disposition makes both
@@ -203,6 +220,7 @@ parameters:
 | `title` | a display title; not delivered | the author |
 | `parameters` | declared inputs, resolved at delivery; same schema as the `param` kind (§5.2) | the author |
 | `signature` | the author signature: a JWS compact serialization on one line (§7.2); excluded from the digest; ignored by readers that do not verify | the control plane |
+| `delivery` | `{ labels: bold \| plain \| tags }` — how labelled prose is delivered (§3.5); default `bold` | the author |
 
 Rules:
 
@@ -231,12 +249,16 @@ close-fence := ":"{m}                                                 ; m ≥ n,
 leaf        := "::" sigil? kind attrs?                                ; exactly two colons, column 0; §4.2
 set         := ":"{n} sigil? kind "[]" attrs? EOL body close-fence    ; §4.3
 section     := "#"{1,6} SP "!" kind SP name attrs?                    ; ATX heading, column 0; §4.4
-keyword     := "**"? KEYWORD ":" "**"? SP text                        ; start of a paragraph or list item; §4.5
+keyword     := "**"? KEYWORD ("[" name "]")? condition? ":" "**"? SP text   ; start of a paragraph or list item; §4.5
+condition   := SP "(if" SP [^()]+ ")"                                 ; §4.5 rule 8
+reason      := "**"? "BECAUSE" ":" "**"? SP text                      ; after a rule; §4.5 rule 7
+note        := "<!--" … "-->"                                         ; column 0, outside fenced code; §3.3 rule 11
 alert       := "> [!" KEYWORD "]" EOL ("> " text EOL)*                ; §4.6
 sigil       := "!"                                                    ; marks machinery
 kind        := [A-Za-z][A-Za-z0-9_-]*
 name        := [A-Za-z0-9][A-Za-z0-9._-]*
 KEYWORD     := "MUST" | "MUST NOT" | "SHOULD" | "SHOULD NOT" | "NEVER" | "GUARDRAIL"
+             | "MAY" | "ALWAYS" | "AVOID"
              | "NOTE" | "INFO" | "TIP" | "IMPORTANT" | "WARNING" | "CAUTION" | "EXAMPLE"
 body        := (prose | block | code-fence)*                          ; inner blocks use shorter fences
 code-fence  := a CommonMark fenced code block; colon fences inside it are not recognized (§3.3 rule 5)
@@ -396,7 +418,9 @@ spec: "2"                        ← refused by a version-1 reader: spec "2" is 
 
 **9. Block identity.** `name` is a block's identity within the document and
 is **unique per kind**; `kind/name` is the qualified form. A duplicate
-`kind/name` is refused. The rule holds across forms: a `!human` declared as a
+`kind/name` is refused. A prose block has identity when it carries a name —
+`:::must{name=x}`, or `MUST[x]:` (§4.5 rule 5) — and is anonymous otherwise;
+machinery requires a name in every form but the set. The rule holds across forms: a `!human` declared as a
 leaf and another with the same name inside a set are duplicates. Reference
 resolution (§3.4) is undefined without this rule.
 
@@ -416,6 +440,25 @@ conversation, tool results, retrieved knowledge, an included document the
 reader has not admitted, or model output — is never parsed for blocks,
 whatever it contains. This is not configurable. Extracting machinery from the
 untrusted channel would make prompt injection a feature of the format.
+
+**11. Author notes.** A line that begins at column 0 with `<!--`, outside
+fenced code, opens an **author note**, which ends at the end of the first line
+that contains `-->` (the opening line itself, for a one-line note). An author
+note is not scanned for blocks, references, keywords or parameters, and is
+never delivered. A comment that begins mid-line is inline HTML and is prose.
+Inside a YAML or code body, `<!--` is body content; inside a `verbatim`
+container it is quoted material and is delivered.
+
+```markdown
+<!-- legal asked for this wording on 2026-09-20; do not soften -->
+MUST: quote the refund policy verbatim.
+
+<!--
+:::!workflow{name=old-refund}    ← commented out: not parsed, not loaded
+steps: …
+:::
+-->
+```
 
 ### 3.4 References
 
@@ -501,16 +544,26 @@ reference.
 Delivery is the transformation from authored bytes to the bytes one reader
 receives. It runs, in order:
 
-1. front matter is removed;
+1. front matter and author notes (§3.3 rule 11) are removed;
 2. `include`s are inlined (each resolved with its own parameters, §5.2);
-3. `when` variants are selected;
-4. prose blocks are degraded to their delivered forms (Appendix A);
-5. machinery blocks are replaced by their acknowledgement lines;
-6. `${parameters}` are substituted.
+3. `when`, `unless` and `otherwise` variants are selected (§5.2);
+4. rules that another rule overrides are removed (§5.1 Overrides);
+5. prose blocks are degraded to their delivered forms (Appendix A), in the
+   document's label style;
+6. machinery blocks are replaced by their acknowledgement lines;
+7. `${parameters}` are substituted.
 
 Substitution runs last so that a parameter value is never re-parsed as
 Markdown or as a fence. A resolved value is data: inserted as plain text,
-size-capped, never interpreted.
+size-capped, never interpreted — and only when it satisfies its parameter's
+type (§5.2 `param`).
+
+**Label styles.** Front matter `delivery: { labels: … }` chooses how labelled
+prose — normativity, reasons, examples, outputs — is delivered: `bold`
+(`**MUST:** …`, the default), `plain` (`MUST: …`) or `tags` (`<must>…</must>`,
+a multi-line body opening the tag on its first line and closing it on its
+last). Every other delivered form is the same in all styles. An included
+document is delivered in its own style.
 
 What the model sees is a declared property of each kind — its disposition —
 not a table hard-coded in the reader, so that a later version adds a kind by
@@ -857,9 +910,10 @@ Refunds rose 12% week on week; two tickets account for the rise.
 
 ### 4.5 Keyword — normativity in a single line
 
-The normativity prose kinds — `must`, `should`, `never`, `guardrail`, `note`,
-`tip`, `warning`, `caution`, `important`, `example` — degrade at delivery to a
-labeled line: `**MUST:** Run the test suite before opening a PR.` That
+The normativity prose kinds — `must`, `should`, `never`, `guardrail`, `may`,
+`note`, `tip`, `warning`, `caution`, `important`, `example` and their aliases —
+degrade at delivery to a labeled line: `**MUST:** Run the test suite before
+opening a PR.` That
 delivered form is also an **authored** form. A paragraph or list item that
 begins with the kind's keyword in capitals, followed by a colon, *is* a block
 of that kind:
@@ -880,8 +934,11 @@ Recognition rules:
    only: optional `**`, the keyword in capitals, `:`, optional `**`, then at
    least one space. `MUST:` mid-sentence, `must:` in lower case, `MUST` with
    no colon, or a keyword in a heading or a table cell, is prose.
-2. `MUST NOT:` is an alias of `NEVER:`. `SHOULD NOT:` is classified as
-   `should`; the text carries the negation. `INFO:` is an alias of `NOTE:`.
+2. `MUST NOT:` is an alias of `NEVER:`; `ALWAYS:` of `MUST:`; `INFO:` of
+   `NOTE:`. `SHOULD NOT:` is a `should` block with the **`not` flag** and is
+   delivered as `**SHOULD NOT:**` — the negation is the keyword's, and it is
+   never dropped; the container spelling is `:::should{not}`. `AVOID:` is an
+   alias of `SHOULD NOT:`. An alias is delivered under its canonical label.
 3. The block is the **paragraph** (to the next blank line) or the **list
    item** (its own text, not its nested items). A multi-paragraph rule uses
    the container form.
@@ -889,16 +946,48 @@ Recognition rules:
    document prose, inside `!skill` bodies, inside `context`, inside `when` —
    **except inside `example`**, whose body is quoted material, and never
    inside YAML or code.
-5. Keyword blocks are **anonymous**: they have no `name` and cannot be
-   referenced. A tool that extracts them addresses them positionally. A rule
-   that must be referenceable uses the container form with `name`.
+5. A keyword block is anonymous unless its keyword carries a **name** in
+   brackets: `MUST[tests-before-pr]: …`. A named keyword block has identity
+   exactly as a container with `name` does (§3.3 rule 9) and may be
+   referenced, `[[must/tests-before-pr]]`. The name is not delivered.
 6. There is nothing to degrade. The authored line *is* the delivered line,
-   normalized to the bold form: `MUST: x` delivers as `**MUST:** x`.
+   normalized to the document's label style: `MUST: x` delivers as
+   `**MUST:** x` by default.
+7. **Reasons.** A paragraph or list item beginning `BECAUSE:` (recognized as
+   a keyword is), or a line beginning `BECAUSE:` that directly follows a
+   keyword block's text, is the **reason** of the rule immediately before it in
+   the same parent, when only blank lines separate them. A container gives its
+   reason as `{because="…"}`. A rule has at most one reason. The reason is part
+   of the rule — it moves, is attributed and is overridden with it — and is
+   delivered on its own line after the rule's text, `**BECAUSE:** …`, keeping a
+   list item's marker. A `BECAUSE:` that follows no rule is prose.
+8. **Conditions.** A keyword may carry a condition in parentheses after its
+   name, if any: `MUST (if the refund exceeds ${plan_limit}): …`; a container
+   gives it as `{if="…"}`. The condition is text for the model — never
+   evaluated by a reader — and is delivered in the label:
+   `**MUST (if the refund exceeds 500 USD):**`. It may contain parameters and
+   references, and may not contain parentheses. `when` is decided by the
+   reader before delivery; `if` is decided by the model during the task.
+
+```markdown
+NEVER[refund-ceiling] (if the refund exceeds ${plan_limit}): promise it without approval.
+BECAUSE: refunds above the plan limit are a finance decision, and a promise is binding.
+MAY: apply refunds below the limit without asking.
+```
+
+**Delivered:**
+
+```markdown
+**NEVER (if the refund exceeds 500 USD):** promise it without approval.
+**BECAUSE:** refunds above the plan limit are a finance decision, and a promise is binding.
+**MAY:** apply refunds below the limit without asking.
+```
 
 ### 4.6 Alert — the blockquote spelling
 
-The same ten kinds may be written as a blockquote alert, the syntax several
-Markdown renderers already style:
+The same kinds may be written as a blockquote alert, the syntax several
+Markdown renderers already style — `> [!MAY]`, `> [!ALWAYS]` and `> [!AVOID]`
+included:
 
 ```markdown
 > [!WARNING]
@@ -1000,10 +1089,14 @@ leaf, **S** set, **§** section, **K** keyword, **A** alert.
 
 ### 5.1 Prose kinds (bare)
 
-#### Normativity — `must` `should` `never` `guardrail` `note` `info` `tip` `important` `warning` `caution` `example`
+#### Normativity — `must` `should` `never` `guardrail` `may` `always` `avoid` `note` `info` `tip` `important` `warning` `caution` `example`
 
 Forms: C K A. Attributes (container only): `name` (optional; makes the block
-referenceable), `title`.
+referenceable — the keyword spelling is `MUST[name]:`), `title`. The rules —
+`must`, `should`, `never`, `guardrail`, `may` and the aliases `always` (of
+`must`) and `avoid` (of `should{not}`) — also take `if` (a condition, §4.5 rule
+8), `because` (a reason, §4.5 rule 7) and `overrides` (below); `should` takes
+the flag `not`. `may` states a permission: what the agent is free to do.
 
 These are RFC 2119-classifiable: every MUST in a document is mechanically
 extractable for review, and a control plane can answer "what changed in the
@@ -1026,9 +1119,32 @@ which and why in the PR description.
 which and why in the PR description.
 ```
 
-`example` shows what good output looks like. Its body is quoted material:
-keywords inside it are not recognized, and it is delivered under a label with
-the body verbatim.
+**Strength.** `guardrail` > `never` = `must` = `always` > `should` = `avoid`
+> `may`. Notes, tips, warnings, cautions, importants and examples are not rules
+and have no strength. The table is `x-registry.strengths`.
+
+**Overrides.** A rule container may carry `overrides="kind/name"` (a
+comma-separated list; the value is *not* an `@`-reference, because its target
+may live in an included document). At delivery each target is looked up in
+this document, then in the documents it includes, in include order, depth
+first. A target found is **not delivered** — nor its reason — and the
+resolution manifest lists it in `overridden`, a key present only when
+non-empty. A local target that is a `guardrail`, or stronger than the rule
+overriding it, is refused; such a target in an included document is found and
+kept. A target found nowhere is recorded in the manifest's `unresolved`.
+
+```markdown
+::include{id="ins_house-style"}              ← its SHOULD[brevity] is not delivered
+
+:::must{name=full-steps overrides="should/brevity"}
+Include every step of the procedure, however long the reply becomes.
+:::
+```
+
+`example` shows what good output looks like; with the flag `avoid`, what to
+avoid. Its body is quoted material: keywords inside it are not recognized, and
+it is delivered under a label with the body verbatim —
+`**EXAMPLE (avoid) — T:**` for an example to avoid.
 
 ```markdown
 :::example{title="A good escalation reply"}
@@ -1038,6 +1154,25 @@ hour. I've noted that the outage began around 09:10 your time.
 ```
 
 **Delivered:** `**EXAMPLE — A good escalation reply:**` followed by the body.
+
+#### `output`
+
+Forms: C. Attributes: `name`, `title`, `format` (free text: `json`,
+`markdown`, `text`, …), `schema` (a qualified reference, usually to a `!data`
+block holding a JSON Schema).
+
+The response contract: what the agent returns. The body describes it in prose
+and is delivered under `**OUTPUT (format) — T:**`, each part present when its
+attribute is. The schema is not delivered (`!data` never leaves the
+document); a runtime MAY validate the agent's response against it, and a
+control plane MAY show it. A `schema` that does not resolve is a dangling
+reference.
+
+```markdown
+:::output{format=json schema=@data/reply title="Reply"}
+One object. `summary` is one sentence; `next_step` says what happens next and when.
+:::
+```
 
 #### `context`
 
@@ -1166,12 +1301,53 @@ Matching rules:
 5. The resolution manifest records every kept and dropped variant (§7.4), so
    a reader can tell that content was withheld even without seeing it.
 
+**Context keys.** A reader that knows a fact of the following kinds SHOULD
+supply it under this key: `agent` (the model family: `claude`, `gpt`,
+`gemini`, …), `model` (the model identifier), `host` (the application the
+agent runs in: `claude-code`, `chatgpt`, `cursor`, `agentd`, …),
+`environment`, and `locale` (a BCP 47 tag). Any declared parameter is also a
+key; a parameter's value is a fact only when it satisfies the parameter's
+type. The list is `x-registry.context-keys`. Any other key is evaluated under
+rule 3 and reported (Appendix C, `when-unknown-key`).
+
 **Delivered:** a kept variant is unwrapped — its body appears in place, with
 no fence and no label. A dropped one leaves nothing.
 
 **Unrendered:** the fence with its condition, then the body — it reads as
 "when agent is claude: …", which is correct guidance for a reader who cannot
 evaluate it.
+
+#### `unless`
+
+Forms: C. Attributes: one or more `key="value"` conditions, as `when`.
+
+The negation of `when`: the body is dropped when **every** condition's key is
+known and matches, and kept otherwise — including when any key is unknown,
+for the reason rule 3 gives. Recorded in the manifest as `unless#n`.
+
+#### `otherwise`
+
+Forms: C. Attributes: none; any given are ignored and reported.
+
+An `otherwise` belongs to the **group** of `when` and `unless` blocks that
+immediately precede it in the same parent, separated from it and from each
+other by blank lines or author notes only. It is kept when no block of its
+group was kept; one with no group is always kept, and reported. Recorded in
+the manifest as `otherwise#n`.
+
+```markdown
+:::when{environment="production"}
+Every write is visible to a customer.
+:::
+
+:::when{environment="staging"}
+This is a rehearsal against copied tickets.
+:::
+
+:::otherwise
+You are in an environment this document does not know. Do not write anything.
+:::
+```
 
 #### `include`
 
@@ -1222,12 +1398,13 @@ readable as a table than as YAML.
 
 | Attribute | Meaning |
 |---|---|
-| `type` | `string` (default), `number`, `boolean`, `enum` (requires `values`) |
+| `type` | `string` (default), `number`, `boolean`, `enum` (requires `values`), `list` (a comma-separated value), `url` (`http://` or `https://`, no whitespace), `duration` (an integer and one of `ms` `s` `m` `h` `d` `w`) |
 | `values` | the allowed values for `enum`; multi-valued |
 | `required` | flag; an unresolved required parameter makes the document undeliverable as authoritative content — it is delivered as advisory with the placeholder intact and the name reported, or omitted, never silently blanked |
 | `default` | used when the source yields nothing; also the sample value for authoring previews |
 | `source` | where the value comes from at delivery, below |
 | `description` | shown by capture forms and editors |
+| `example` | a sample value for previews and capture forms; never delivered, never used as a value |
 
 | `source` | The value comes from | Trusted because |
 |---|---|---|
@@ -1239,6 +1416,13 @@ readable as a table than as YAML.
 Resolution reads **trusted sources only**. A value is never taken from
 conversation text, model output, or any untrusted channel; a resolved value
 is data, inserted as plain text, size-capped, never re-parsed.
+
+**Values are checked against their type.** A `number` is `-?digits(.digits)?`,
+a `boolean` is `true` or `false`, an `enum` value is one of `values`, and `url`
+and `duration` are as above. A given value that fails is **unresolved** — the
+placeholder stays and the name is reported — and is not replaced by the
+default, which the caller did not ask for. A default that fails its own type
+is not a value either, and is reported (Appendix C).
 
 `param` blocks resolve away entirely: nothing is delivered, and nothing is
 acknowledged.
@@ -1267,6 +1451,13 @@ agent
 `override` is not in this set: it is a sub-block of `!mcp` (§5.4), written
 bare inside its parent, and the guard does not apply to sub-blocks.
 
+**Machinery added in 1.x.** `!eval` (below) is machinery from specification
+1.1: a reader knows `:::!eval` and refuses it as unknown before 1.1. It is not
+in the reserved-bare set of version-1 documents, so a bare `:::eval` in a
+version-1 document stays inert prose (§3.3 rule 3's promise). The registry
+carries the reserved set as `x-registry.reserved-bare`, apart from
+`x-registry.machinery`.
+
 #### Core — `!workflow` `!skill` `!config` `!mcp` `!stream` `!tools`
 
 What the agent runs, knows, connects to, and may call. Default grant.
@@ -1274,7 +1465,8 @@ What the agent runs, knows, connects to, and may call. Default grant.
 | Kind | Forms | Attributes | Body | Acknowledgement |
 |---|---|---|---|---|
 | `!workflow` | C § | `name`, `armed` | YAML: the workflow's steps | `[workflow "x" is loaded and runs autonomously]` |
-| `!skill` | C S § | `name`, `description`, `when` | Markdown: the skill's guidance | `[skill "x" is available — reference it as @skill/x]` |
+| `!skill` | C S § | `name`, `description`, `trigger` (`when` is its version-1 alias) | Markdown: the skill's guidance | `[skill "x" is available — reference it as @skill/x]`; with a trigger, `[skill "x" is available — use it when {trigger}; reference it as @skill/x]` |
+| `!eval` | C § | `name`, `target` | YAML: `cases` | *(nothing — an eval is for the author's tools)* |
 | `!config` | C | — | YAML: a configuration fragment | `[runtime configuration is applied]` |
 | `!mcp` | C L | `name`, `endpoint`, `allow`, `deny` | YAML: the server entry | `[mcp server "x" is connected; its tools are available]` |
 | `!stream` | C L S | `name`, `retention` | YAML: retention policy | `[event stream "x" is declared]` |
@@ -1289,7 +1481,31 @@ auth: { kind: static, token: "@secret-ref/ticketing" }
 ```
 
 `!skill` is the kind most often written as a section (§4.4), because skills
-are prose and are long. `!config` writes against an **allow-list**: grant
+are prose and are long. Its `trigger` says when the skill applies, in words
+for the model — it reaches the model through the acknowledgement. Write it as
+`trigger`; `when` on a skill is read as its alias (a `when` *block* is a
+different thing: a variant decided before delivery).
+
+`!eval` holds behavioural tests of the document's prose, beside the rules
+they check. Its body is a list of cases:
+
+```yaml
+cases:
+  - name: escalates-large-refund
+    given: { message: "Refund my $900 annual plan", params: { plan_limit: "500 USD" } }
+    expect:
+      contains: ["on-call"]          # every string must appear (case-insensitive)
+      not_contains: ["refunded"]     # none may appear
+      matches: "(?i)escalat"         # a regular expression
+      judge: "The reply escalates to a human and promises no refund."
+```
+
+A runner delivers the document with the case's `params` and `facts`, sends
+the delivered text as the system prompt and `message` as the user turn to a
+model the **author** configures, and checks `expect`: `contains`,
+`not_contains` and `matches` deterministically, `judge` by asking the model to
+answer PASS or FAIL for the criterion. Running is never part of loading or
+delivery. `!config` writes against an **allow-list**: grant
 keys, security, services, specification version and signing configuration
 are unreachable by construction, and the next configuration key added is
 unreachable by default. The document cannot grant itself anything.
@@ -2179,7 +2395,22 @@ expressions that use no lookbehind and compile unchanged in every mainstream
 engine. Each kind's entry carries `x-disposition`, `x-family`, `x-grant`,
 `x-forms`, `x-body`, `x-identity`, `x-noun` and `x-nouns` — the display noun,
 singular and plural, used in acknowledgement lines — and `x-acknowledgement`
-— the template for its delivery line.
+— the template for its delivery line; an alias kind carries `x-alias-of`, and
+`!skill` its trigger template, `x-acknowledgement-trigger`.
+
+The registry also carries, as data rather than as a table in each reader: the
+delivered label of every labelled kind (`labels`, `negated-labels`), the flags
+a keyword sets (`keyword-flags`), the rule strengths (`strengths`), the
+registered `when` keys (`context-keys`), the reason keyword, the label styles,
+and the version-1 reserved-bare set (`reserved-bare`).
+
+A machinery kind MAY carry **`x-body-schema`**: the URI of a JSON Schema for
+its body, or an inline schema. It is informative — a runtime MAY publish a
+stricter one, and a reader MUST NOT refuse a document because its body fails
+a reference schema. Editors SHOULD use it for completion and hover.
+`!workflow` and `!config` point at agentd's published schemas; the others carry
+inline schemas of the keys this specification's examples use, open to
+additions.
 
 A parser that reads `x-grammar` and `x-registry` from the file needs no
 hard-coded knowledge of this specification's vocabulary. That is the point:
@@ -2315,7 +2546,16 @@ What each authored construct becomes in the delivered text.
 | front matter | nothing |
 | `:::must` … / `MUST: …` / `> [!MUST]` | `**MUST:** …` — the label prefixed to the first body line; further lines unchanged |
 | `:::should` / `:::never` / `:::guardrail` / `:::note` / `:::tip` / `:::warning` / `:::caution` / `:::important` | `**SHOULD:**` / `**NEVER:**` / `**GUARDRAIL:**` / `**NOTE:**` / `**TIP:**` / `**WARNING:**` / `**CAUTION:**` / `**IMPORTANT:**` + body |
-| `MUST NOT:` / `INFO:` | `**NEVER:**` / `**NOTE:**` |
+| `MUST NOT:` / `INFO:` / `ALWAYS:` | `**NEVER:**` / `**NOTE:**` / `**MUST:**` |
+| `SHOULD NOT: …` / `:::should{not}` / `AVOID: …` | `**SHOULD NOT:** …` |
+| `MAY: …` / `:::may` / `> [!MAY]` | `**MAY:** …` |
+| `MUST[name]: …` | `**MUST:** …` — the name is not delivered |
+| `MUST (if c): …` / `:::must{if=c}` | `**MUST (if c):** …` |
+| `BECAUSE: …` after a rule / `{because=…}` | `**BECAUSE:** …` on its own line after the rule |
+| a rule another rule `overrides` | nothing; listed in the manifest's `overridden` |
+| `:::example{title=T avoid}` | `**EXAMPLE (avoid) — T:**` on its own line, then the body verbatim |
+| `:::output{format=F title=T}` | `**OUTPUT (F) — T:**` on its own line, then the body |
+| `<!-- … -->` at column 0 | nothing |
 | `:::example{title=T}` | `**EXAMPLE — T:**` on its own line, then the body verbatim |
 | `:::context{title=T}` | `<reference title="T">` body `</reference>` |
 | `:::form{title=T}` | `**Inputs to collect — T**` on its own line, then one list item per parameter referenced in the body (§5.1); the body's text is not delivered |
@@ -2323,6 +2563,8 @@ What each authored construct becomes in the delivered text.
 | `:::glossary` | `**Term** — definition`, one line per term |
 | `:::when{…}` kept | body, unwrapped, in place |
 | `:::when{…}` dropped | nothing; recorded in the manifest |
+| `:::unless{…}` kept / dropped | as `when` |
+| `:::otherwise` | its body, unwrapped, when no variant of its group was kept; else nothing |
 | `::include{…}` | the included document, resolved for this reader |
 | `::param` / `:::param[]` | nothing |
 | `${name}` | the value, as plain text |
@@ -2335,48 +2577,94 @@ What each authored construct becomes in the delivered text.
 | sub-blocks | nothing of their own; folded into the parent's line |
 | unknown bare `:::foo` | body, as prose; the fences removed |
 | blank lines | preserved; a run of several collapses to one |
+| any labelled line, with `delivery: { labels: plain }` / `tags` | `MUST: …` / `<must>…</must>` (§3.5) |
 
 ## Appendix B — Refusals
 
-Every refusal names the line, the construct, and what to write instead. The
-catalogue, so that implementations agree on what a document's author sees:
+Every refusal names the line, the construct, and what to write instead, and
+carries the **code** of its condition. The code is the contract: conformance
+compares a refusal's line and code; the message shapes are RECOMMENDED, so that
+implementations agree on what a document's author sees and may still translate
+it.
 
-| Condition | Message shape |
-|---|---|
-| unknown sigiled kind | `line N: unknown machinery kind "x" — this reader implements version 1 (known: workflow, skill, …)` |
-| sigiled prose kind | `line N: "must" is a prose kind — did you mean :::must` |
-| bare machinery kind | `line N: "workflow" is a machinery kind — did you mean :::!workflow` |
-| unclosed fence | `line N: :::!skill is never closed (expected a line of ≥3 colons)` |
-| text after close fence | `line N: a closing fence must be alone on its line` |
-| malformed attribute list | `line N: attributes: expected key=value, found "on call" — quote values with spaces` |
-| duplicate attribute key | `line N: attribute "name" is repeated` |
-| `#id` / `.class` | `line N: "#oncall" is not an attribute — identity is name=oncall` |
-| duplicate identity | `line N: duplicate human/oncall (first declared at line M)` |
-| dangling reference | `line N: @function/lint does not resolve — no function named "lint"` |
-| reference cycle | `line N: reference cycle: test/a → function/b → test/a` |
-| body required | `line N: workflow requires a body (its steps) — use :::!workflow` |
-| body forbidden | `line N: include takes no body` |
-| set body mixed or unrecognized | `line N: a set body must be a table or a definition list` |
-| set row without name | `line N: row 3 has no name — every member of human[] needs one` |
-| unknown column | `line N: "channel_id" is not an attribute of human` |
-| redundant set | `line N: glossary is already a list — write :::glossary` |
-| sub-block out of place | `line N: case is valid only inside a test` |
-| section for prose kind | *(not a refusal — a bare heading is prose)* |
-| section body without its fence | `line N: a workflow section must contain exactly one fenced yaml block` |
-| ungranted family | `line N: :::!runtime needs the "compute" grant — add it to document_capabilities` |
-| self-grant | `line N: !config may not write document_capabilities` |
-| mutable image tag | `line N: image "py311:latest" is not digest-pinned` |
-| unpinned remote asset | `line N: remote src requires sha256` |
-| literal credential | `line N: a literal credential is never allowed — use a secret-ref` |
-| widening override | `line N: override may not remove tag "sensitive" — overrides only narrow` |
-| unsupported isolation | `line N: this reader does not support isolation=process` |
-| unimplemented version | `front matter: spec "2" is not implemented by this reader` |
-| non-integer version | `front matter: spec "1.0" is not a version — versions are integers` |
-| signature `typ` mismatch | `signature: expected typ "author", found "delivery"` |
-| audience mismatch | `delivery: aud "principal://usr_9" is not this reader` |
-| digest mismatch | `delivery: digest does not match the received bytes` |
-| manifest without `variants.dropped` | `manifest: variants.dropped is required (§7.4 rule 5)` |
-| unpinned publisher | `publisher "https://…" is not pinned in instruction_sources` |
-| delivery ceiling exceeds author's | `delivery: capabilities [compute] exceed the author attestation [material]` |
-| dangling on live update | `update refused: workflow/deploy still references human/oncall, which the update removes` |
-| trifecta widening on update | `update refused: it would add untrusted_input alongside live egress tools` |
+| Condition | Code | Message shape |
+|---|---|---|
+| unknown sigiled kind | `unknown-machinery-kind` | `line N: unknown machinery kind "x" — this reader implements version 1 (known: workflow, skill, …)` |
+| sigiled prose kind | `sigiled-prose-kind` | `line N: "must" is a prose kind — did you mean :::must` |
+| bare machinery kind | `bare-machinery-kind` | `line N: "workflow" is a machinery kind — did you mean :::!workflow` |
+| unclosed fence | `unclosed-fence` | `line N: :::!skill is never closed (expected a line of ≥3 colons)` |
+| text after close fence | `text-after-close-fence` | `line N: a closing fence must be alone on its line` |
+| malformed attribute list | `malformed-attributes` | `line N: attributes: expected key=value, found "on call" — quote values with spaces` |
+| duplicate attribute key | `repeated-attribute` | `line N: attribute "name" is repeated` |
+| `#id` / `.class` | `id-class-shorthand` | `line N: "#oncall" is not an attribute — identity is name=oncall` |
+| duplicate identity | `duplicate-identity` | `line N: duplicate human/oncall (first declared at line M)` |
+| dangling reference | `dangling-reference` | `line N: @function/lint does not resolve — no function named "lint"` |
+| reference cycle | `reference-cycle` | `line N: reference cycle: test/a → function/b → test/a` |
+| body required | `body-required` | `line N: workflow requires a body (its steps) — use :::!workflow` |
+| body forbidden | `body-forbidden` | `line N: include takes no body` |
+| set body mixed or unrecognized | `set-body-mixed` | `line N: a set body must be a table or a definition list` |
+| set row without name | `set-row-without-name` | `line N: row 3 has no name — every member of human[] needs one` |
+| unknown column | `unknown-column` | `line N: "channel_id" is not an attribute of human` |
+| redundant set | `redundant-set` | `line N: glossary is already a list — write :::glossary` |
+| sub-block out of place | `subblock-out-of-place` | `line N: case is valid only inside a test` |
+| section for prose kind | — | *(not a refusal — a bare heading is prose)* |
+| section body without its fence | `section-without-fence` | `line N: a workflow section must contain exactly one fenced yaml block` |
+| ungranted family | `ungranted-family` | `line N: :::!runtime needs the "compute" grant — add it to document_capabilities` |
+| self-grant | `self-grant` | `line N: !config may not write document_capabilities` |
+| mutable image tag | `mutable-image-tag` | `line N: image "py311:latest" is not digest-pinned` |
+| unpinned remote asset | `unpinned-remote-asset` | `line N: remote src requires sha256` |
+| literal credential | `literal-credential` | `line N: a literal credential is never allowed — use a secret-ref` |
+| widening override | `widening-override` | `line N: override may not remove tag "sensitive" — overrides only narrow` |
+| unsupported isolation | `unsupported-isolation` | `line N: this reader does not support isolation=process` |
+| unimplemented version | `unimplemented-version` | `front matter: spec "2" is not implemented by this reader` |
+| non-integer version | `non-integer-version` | `front matter: spec "1.0" is not a version — versions are integers` |
+| signature `typ` mismatch | `signature-typ-mismatch` | `signature: expected typ "author", found "delivery"` |
+| audience mismatch | `audience-mismatch` | `delivery: aud "principal://usr_9" is not this reader` |
+| digest mismatch | `digest-mismatch` | `delivery: digest does not match the received bytes` |
+| manifest without `variants.dropped` | `manifest-dropped-missing` | `manifest: variants.dropped is required (§7.4 rule 5)` |
+| unpinned publisher | `unpinned-publisher` | `publisher "https://…" is not pinned in instruction_sources` |
+| delivery ceiling exceeds author's | `delivery-ceiling-exceeded` | `delivery: capabilities [compute] exceed the author attestation [material]` |
+| dangling on live update | `update-dangling-reference` | `update refused: workflow/deploy still references human/oncall, which the update removes` |
+| trifecta widening on update | `update-trifecta-widening` | `update refused: it would add untrusted_input alongside live egress tools` |
+| sub-block referenced | `subblock-reference` | `line N: case/happy: sub-blocks cannot be referenced` |
+| unknown attribute | `unknown-attribute` | `line N: "colour" is not an attribute of human` |
+| missing required attribute | `missing-attribute` | `line N: workflow requires name` |
+| attribute value outside its enum or pattern | `attribute-value` | `line N: type must be one of: string, number, …` / `schema must be a reference written @kind/name` |
+| kind does not take the form | `form-not-accepted` | `line N: include does not take the container form (forms: leaf)` |
+| YAML body does not parse | `invalid-yaml-body` | `line N: workflow body is not valid YAML: …` |
+| front matter does not parse | `front-matter-yaml` | `front matter is not valid YAML: …` |
+| wire floor | `wire-floor` | `line N: :::!peer (identity) is never admissible in a document that arrived over the wire` |
+| sandbox network open | `network-any` | `line N: runtime "r": network: any is refused — the sandbox boundary is the security boundary` |
+| include target unknown (when checked) | `include-unavailable` | `line N: include target "ins_9" does not exist or is not accessible` |
+| a rule with two reasons | `because-repeated` | `line N: must already has a reason (because=) — a rule has one reason` |
+| overriding a guardrail | `override-guardrail` | `line N: guardrail/g is a guardrail — a guardrail is never overridden` |
+| overriding a stronger rule | `override-stronger` | `line N: a should may not override the stronger must/m` |
+
+## Appendix C — Advisories
+
+An **advisory** is a diagnostic that never refuses: a document with advisories
+loads and delivers exactly as it would without them. Advisories point at what
+the writer probably meant. A reader that reports them MUST use these codes and
+SHOULD use these message shapes; severity is `warning` (probably not what the
+writer meant) or `info`. Conformance compares the line and the code
+(`conformance/advisories/`).
+
+| Code | Severity | Condition | Message shape |
+|---|---|---|---|
+| `near-miss-keyword` | warning | a paragraph or list item beginning like a keyword but not one: `Must:`, `must:`, `**Must**:`, `MUST` without a colon, `MUST -` | `line N: "Must:" is prose — write "MUST:" to make it a rule` |
+| `when-unknown-key` | warning | a `when` or `unless` key that is not a context key (§5.2) or a declared parameter | `line N: "agnet" is not a context key or a parameter — the content is kept for every reader` |
+| `undeclared-parameter` | warning | `${x}` in prose with no declaration | `line N: ${x} is not declared — it is delivered as written` |
+| `unused-parameter` | info | a declared parameter referenced nowhere | `line N: parameter "x" is declared but never used` |
+| `unqualified-wikilink` | warning | `[[name]]` without a kind | `line N: [[oncall]] is not a reference — write [[kind/name]]` |
+| `sigil-scheme-mismatch` | warning | a sigil with a scheme from another row of §3.4 | `line N: "@" is for people and agents — this is an ordinary link` |
+| `orphan-because` | warning | `BECAUSE:` after no rule | `line N: BECAUSE: follows no rule — it is delivered as written` |
+| `orphan-otherwise` | warning | an `otherwise` with no group | `line N: otherwise follows no when or unless — it is always kept` |
+| `otherwise-conditions` | warning | attributes on an `otherwise` | `line N: otherwise takes no conditions — they are ignored` |
+| `empty-variant` | info | a `when`, `unless` or `otherwise` with no body | `line N: this when has no content` |
+| `skill-when-alias` | info | `when=` on a `!skill` | `line N: write trigger= on a skill; when= is read as its alias` |
+| `keyword-in-example` | info | a keyword line inside an `example` | `line N: "MUST:" inside an example is quoted text, not a rule` |
+| `param-default-type` | warning | a default that fails its own type | `line N: default "abc" is not a number` |
+| `overrides-external` | info | an `overrides` target not in this document | `line N: should/brevity is not in this document — it is looked up in included documents at delivery` |
+
+Advisories are reported for prose only: never inside author notes, fenced
+code, machinery bodies or front matter.
