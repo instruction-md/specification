@@ -161,7 +161,7 @@ output: { passed: integer, failed: integer, skipped: integer }
 
 ::!channel{name=eng kind=mcp server=chat target="#eng" tags="egress, untrusted_input"}
 
-## !skill code-review {when="reviewing a diff, yours or someone else's"}
+## !skill code-review {trigger="reviewing a diff, yours or someone else's"}
 
 Read the whole diff before commenting on any of it. Then, in this order:
 
@@ -180,7 +180,7 @@ fails without the fix? SHOULD: ask for that test if it is missing.
 Naming, structure and style come last, and only if the first two are clean.
 NEVER: block a PR on style alone.
 
-## !skill commit-messages {when="writing a commit or PR description"}
+## !skill commit-messages {trigger="writing a commit or PR description"}
 
 One line, imperative mood, under seventy characters, saying what the change
 does — not what you did. Then a blank line, then why, in as many lines as it
