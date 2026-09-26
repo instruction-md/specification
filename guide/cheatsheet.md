@@ -63,6 +63,7 @@ Parameter types: `string` `number` `boolean` `enum` `list` `url` `duration`.
 |---|---|
 | `<!-- note -->` on its own line | nothing |
 | front matter | nothing |
+| end matter — a closing `---` YAML block (owners, approved, review, changelog, sources) | nothing |
 | `:::!eval{name=…}` | nothing — run it with `instruction eval` |
 
 ## Machinery (L3)

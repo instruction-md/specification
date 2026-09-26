@@ -198,6 +198,30 @@ disables it.
 MUST: quote the refund policy verbatim.
 ```
 
+## The record at the end
+
+Front matter says what the document is and how it is handled; **end matter**
+keeps its record, after the text where a reviewer looks for it (§3.1.1):
+
+```markdown
+MUST: quote the refund policy verbatim.
+
+---
+owners: [ana]
+approved: { by: ana, on: 2026-09-20 }
+review: { every: 90d, next: 2026-12-20 }
+changelog:
+  - { version: "3", date: 2026-09-20, by: ana, summary: "Limit lowered to 200 EUR" }
+sources:
+  - { title: Refund policy, url: "https://example.com/policy/refunds" }
+---
+```
+
+Put handling in front — `classification: internal`, `handles: [pii]`,
+`audience`, `language` — and the who, when and why at the end. Neither reaches
+the model. A changelog entry that says *why* a rule changed saves the next
+author from undoing it.
+
 ## Testing what you wrote
 
 `:::!eval` puts behavioural tests beside the rules they check. They are never

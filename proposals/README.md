@@ -36,3 +36,4 @@ in two independent implementations before `published`.
 | [S24](S24-precedence-and-overrides.md) | Rule strength and `overrides` | additive 1.x | accepted |
 | [S25](S25-delivery-labels.md) | Delivery label styles | additive 1.x | accepted |
 | [S26](S26-named-prose-blocks-have-identity.md) | Named prose blocks have identity (erratum: `[[must/x]]` was refused) | erratum 1.x | accepted |
+| [S27](S27-end-matter.md) | End matter — the document's record at its end; the front/end matter vocabulary | additive 1.x | accepted |

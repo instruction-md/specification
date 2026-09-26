@@ -42,6 +42,7 @@ styles (S25). The authoring guide is [`guide/`](guide/README.md).
 - [2. Terminology](#2-terminology)
 - [3. Document model](#3-document-model)
   - [3.1 Front matter](#31-front-matter)
+    - [3.1.1 End matter](#311-end-matter)
   - [3.2 Grammar](#32-grammar)
   - [3.3 Rules](#33-rules)
   - [3.4 References](#34-references)
@@ -237,6 +238,52 @@ Rules:
    `:::` fences this specification has never heard of — is a valid document
    and loses nothing. Only the `!` sigil and the reserved bare names carry
    obligations. Adoption requires no change to existing files.
+
+### 3.1.1 End matter
+
+A document MAY end with **end matter**: a YAML block delimited by a line `---`
+and a closing `---` that is the last non-blank line of the document. Front
+matter says what the document is and how it is delivered; end matter is its
+**record** — who owns and approved it, when it is next reviewed, what changed
+and why, what its rules rest on (S27). The opening `---`
+
+1. stands at column 0 and is the last `---` line before the closing one;
+2. follows a blank line, or begins the body (directly after front matter);
+3. is outside fenced code; and
+4. is followed by a line that begins with a YAML mapping key (`name:`).
+
+A block that does not meet all four is prose (a thematic break, or a setext
+heading underline). End matter **never reaches the model** and is not scanned
+for blocks, references, keywords or parameters. It MUST be a YAML mapping; a
+reader refuses end matter that does not parse as one (`end-matter-yaml`).
+Unknown keys are preserved and ignored.
+
+```yaml
+---
+owners: [ana]
+approved: { by: ana, on: 2026-09-20 }
+review: { every: 90d, next: 2026-12-20 }
+changelog:
+  - { version: "3", date: 2026-09-20, by: ana, summary: "Limit lowered from 300 to 200 EUR" }
+sources:
+  - { title: Refund policy, url: "https://example.com/policy/refunds" }
+---
+```
+
+| Key | Meaning |
+|---|---|
+| `authors` · `owners` · `reviewers` | who wrote it, who is accountable and approves changes, who reviews them |
+| `approved` | `{ by, on }` — the last approval |
+| `review` | `{ every, next }` — the review interval (`90d`) and the next date |
+| `changelog` | `{ version, date, by, summary }` entries, newest first |
+| `sources` | the policies and documents its rules rest on: `{ title, url }` or a string |
+| `contact` · `notes` | where questions go; anything else for reviewers |
+
+Front matter keys an editor SHOULD offer by name beside those of §3.1:
+`description` (S2), `license` (S1), `requires` (S3), `tags`, `language` (BCP 47),
+`audience`, `classification` (`public` · `internal` · `confidential` ·
+`restricted` — how the document itself is handled) and `handles` (the data the
+agent may meet, e.g. `[pii, payment]`). None is delivered.
 
 ### 3.2 Grammar
 
@@ -544,7 +591,7 @@ reference.
 Delivery is the transformation from authored bytes to the bytes one reader
 receives. It runs, in order:
 
-1. front matter and author notes (§3.3 rule 11) are removed;
+1. front matter, end matter (§3.1.1) and author notes (§3.3 rule 11) are removed;
 2. `include`s are inlined (each resolved with its own parameters, §5.2);
 3. `when`, `unless` and `otherwise` variants are selected (§5.2);
 4. rules that another rule overrides are removed (§5.1 Overrides);
@@ -2633,6 +2680,7 @@ it.
 | kind does not take the form | `form-not-accepted` | `line N: include does not take the container form (forms: leaf)` |
 | YAML body does not parse | `invalid-yaml-body` | `line N: workflow body is not valid YAML: …` |
 | front matter does not parse | `front-matter-yaml` | `front matter is not valid YAML: …` |
+| end matter does not parse, or is not a mapping (§3.1.1) | `end-matter-yaml` | `end matter is not valid YAML: …` · `end matter is not a YAML mapping — write key: value lines` |
 | wire floor | `wire-floor` | `line N: :::!peer (identity) is never admissible in a document that arrived over the wire` |
 | sandbox network open | `network-any` | `line N: runtime "r": network: any is refused — the sandbox boundary is the security boundary` |
 | include target unknown (when checked) | `include-unavailable` | `line N: include target "ins_9" does not exist or is not accessible` |

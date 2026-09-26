@@ -22,6 +22,9 @@
       "items": {
         "$ref": "#/$defs/block"
       }
+    },
+    "endMatter": {
+      "$ref": "#/$defs/endMatter"
     }
   },
   "additionalProperties": false,
@@ -79,6 +82,126 @@
       },
       "additionalProperties": true,
       "$comment": "Unknown keys are preserved and ignored (§3.1 rule 2)."
+    },
+    "endMatter": {
+      "type": "object",
+      "properties": {
+        "authors": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "owners": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "reviewers": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "approved": {
+          "type": "object",
+          "properties": {
+            "by": {
+              "type": "string"
+            },
+            "on": {
+              "description": "a date; any YAML scalar"
+            }
+          },
+          "additionalProperties": true
+        },
+        "review": {
+          "type": "object",
+          "properties": {
+            "every": {
+              "type": "string",
+              "description": "a duration, e.g. 90d"
+            },
+            "next": {
+              "description": "a date; any YAML scalar"
+            }
+          },
+          "additionalProperties": true
+        },
+        "changelog": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "description": "any YAML scalar"
+              },
+              "date": {
+                "description": "a date; any YAML scalar"
+              },
+              "by": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "contact": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "$comment": "The document's record (S27): who wrote, owns and approved it, what changed and why, what it rests on. Never delivered; unknown keys are preserved and ignored (§3.1.1)."
     },
     "body": {
       "type": "object",
@@ -8946,6 +9069,11 @@
       "id": "prose-identity",
       "spec": "§3.3 rule 9 (S26)",
       "rule": "A prose block with a name has identity kind/name, unique per kind; unnamed prose blocks are anonymous."
+    },
+    {
+      "id": "end-matter",
+      "spec": "§3.1.1 (S27)",
+      "rule": "A YAML block that ends the document — a column-0 --- after a blank line, outside fenced code, whose first line is a mapping key, closed by --- as the last non-blank line — is end matter: not scanned for blocks and never delivered; it must be a YAML mapping."
     }
   ]
 }
