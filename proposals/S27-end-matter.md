@@ -29,7 +29,9 @@ A new §3.1.1, after §3.1 rule 5:
 >
 > 1. stands at column 0 and is the last `---` line before the closing one;
 > 2. follows a blank line, or begins the body (directly after front matter);
-> 3. is outside fenced code; and
+> 3. is outside fenced code, author notes (§3.3 rule 11) and the bodies of
+>    inert or verbatim containers — wherever the block scanner would not read a
+>    fence; and
 > 4. is followed by a line that begins with a YAML mapping key (`name:`).
 >
 > A block that does not meet all four is prose (a thematic break, or a setext
@@ -38,7 +40,9 @@ A new §3.1.1, after §3.1 rule 5:
 > End matter **never reaches the model**. It is not scanned for blocks,
 > references, keywords or parameters. It MUST be a YAML mapping; a reader
 > refuses end matter that does not parse as one (`end-matter-yaml`). Unknown
-> keys are preserved and ignored, as in front matter.
+> keys are preserved and ignored, as in front matter. End matter ends a
+> *document*: the body of a variant or a container is never read for it, and
+> an included document keeps its own (removed when it is inlined).
 
 §3.5 step 1 reads: "front matter, end matter (§3.1.1) and author notes
 (§3.3 rule 11) are removed".
@@ -135,3 +139,10 @@ YAML is read under the 1.2 core schema (§3.1): `on: 2026-09-20` is the string
 `conformance/corpus/end-matter/` — front matter with the handling keys, a
 thematic break and a fenced `---` inside the body (both stay prose), and end
 matter with every record key. Passes in the TypeScript, Python and Go readers.
+
+## Revisions
+
+- 2026-09-26: condition 3 names the regions the block scanner does not read
+  (author notes, inert and verbatim bodies), and end matter is read only for a
+  whole document, never for a variant or container body — both found in review
+  of the first implementations, which disagreed on them.

@@ -249,14 +249,18 @@ and why, what its rules rest on (S27). The opening `---`
 
 1. stands at column 0 and is the last `---` line before the closing one;
 2. follows a blank line, or begins the body (directly after front matter);
-3. is outside fenced code; and
+3. is outside fenced code, author notes (§3.3 rule 11) and the bodies of
+   inert or verbatim containers — wherever the block scanner would not read a
+   fence; and
 4. is followed by a line that begins with a YAML mapping key (`name:`).
 
 A block that does not meet all four is prose (a thematic break, or a setext
 heading underline). End matter **never reaches the model** and is not scanned
 for blocks, references, keywords or parameters. It MUST be a YAML mapping; a
 reader refuses end matter that does not parse as one (`end-matter-yaml`).
-Unknown keys are preserved and ignored.
+Unknown keys are preserved and ignored. End matter ends a *document*: the
+body of a variant or a container is never read for it, and an included
+document keeps its own (removed when it is inlined).
 
 ```yaml
 ---
