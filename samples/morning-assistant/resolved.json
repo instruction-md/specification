@@ -1,0 +1,1316 @@
+{
+  "format": "instruction-resolved/1",
+  "status": "partial",
+  "document": {
+    "uri": "https://example.org/samples/morning-assistant/instruction.md",
+    "sha256": "sha256:389ca367728a5679d5361c8039eb877e62eb7c6d1a9bab6c0dc497d4b9936f1d"
+  },
+  "body": [
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 6,
+        "end": 6
+      },
+      "instance": "root/personal"
+    },
+    {
+      "type": "directive",
+      "kind": "instruction",
+      "form": "container",
+      "attrs": {
+        "id": "brief-length",
+        "title": "Brief length"
+      },
+      "range": {
+        "start": 7,
+        "end": 9
+      },
+      "children": [
+        {
+          "type": "directive",
+          "kind": "should",
+          "form": "keyword",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "keep the morning brief under 150 words.\n",
+              "instance": "root"
+            }
+          ],
+          "range": {
+            "start": 33,
+            "end": 33
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root/personal"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 10,
+        "end": 10
+      },
+      "instance": "root/personal"
+    },
+    {
+      "type": "directive",
+      "kind": "policy",
+      "form": "container",
+      "attrs": {
+        "id": "priorities",
+        "title": "Choosing priorities"
+      },
+      "range": {
+        "start": 11,
+        "end": 14
+      },
+      "children": [
+        {
+          "type": "directive",
+          "kind": "must",
+          "form": "keyword",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "distinguish commitments from suggestions.\n",
+              "instance": "root/personal"
+            }
+          ],
+          "range": {
+            "start": 12,
+            "end": 12
+          },
+          "instance": "root/personal"
+        },
+        {
+          "type": "directive",
+          "kind": "should",
+          "form": "keyword",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "recommend one achievable focus task.\n",
+              "instance": "root/personal"
+            }
+          ],
+          "range": {
+            "start": 13,
+            "end": 13
+          },
+          "instance": "root/personal"
+        },
+        {
+          "type": "directive",
+          "kind": "must",
+          "form": "keyword",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "identify the first uninterrupted work period.\n",
+              "instance": "root"
+            }
+          ],
+          "range": {
+            "start": 37,
+            "end": 37
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root/personal"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 15,
+        "end": 15
+      },
+      "instance": "root/personal"
+    },
+    {
+      "type": "markdown",
+      "source": "\n# Morning assistant\n\nPrepare a useful brief for the day in America/Toronto. Prefer concrete facts,\nname uncertainty, and make the next decision easy for the owner.\n\n\n",
+      "range": {
+        "start": 24,
+        "end": 31
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 35,
+        "end": 35
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 39,
+        "end": 39
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 41,
+        "end": 41
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "policy",
+      "form": "container",
+      "attrs": {
+        "id": "calendar-privacy",
+        "title": "Calendar privacy",
+        "authority": "Team practice"
+      },
+      "range": {
+        "start": 7,
+        "end": 10
+      },
+      "children": [
+        {
+          "type": "directive",
+          "kind": "never",
+          "form": "keyword",
+          "attrs": {
+            "because": "availability does not imply permission to disclose an event's contents."
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "expose another person's private appointment details in a shared brief.\n",
+              "instance": "root/privacy"
+            }
+          ],
+          "range": {
+            "start": 8,
+            "end": 8
+          },
+          "instance": "root/privacy"
+        }
+      ],
+      "instance": "root/privacy"
+    },
+    {
+      "type": "markdown",
+      "source": "\n## People and connected objects\n\n",
+      "range": {
+        "start": 43,
+        "end": 45
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "person",
+      "form": "leaf",
+      "attrs": {
+        "id": "owner",
+        "title": "Alex",
+        "role": "owner",
+        "src": "https://example.org/people/alex",
+        "resolver": "contacts"
+      },
+      "range": {
+        "start": 46,
+        "end": 46
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 47,
+        "end": 47
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "mcp",
+      "form": "container",
+      "attrs": {
+        "id": "calendar",
+        "title": "Calendar",
+        "src": "https://example.org/mcp/calendar",
+        "registry": "https://registry.modelcontextprotocol.io",
+        "account": "personal",
+        "tools": [
+          "events.list",
+          "availability.read"
+        ]
+      },
+      "range": {
+        "start": 48,
+        "end": 52
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "Read appointments and availability for planning. Ask :person[Alex]{ref=#owner}\nbefore sending or changing an invitation. Tool names describe the intended\nconnection; the reader's host binds the actual account and tool schema.\n",
+          "range": {
+            "start": 49,
+            "end": 51
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 53,
+        "end": 53
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "skill",
+      "form": "container",
+      "attrs": {
+        "id": "prioritize",
+        "title": "Prioritize the day",
+        "src": "./skills/prioritize/SKILL.md",
+        "trigger": "planning around competing meetings and tasks"
+      },
+      "range": {
+        "start": 54,
+        "end": 56
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "Use the prioritization skill to recommend one achievable focus task.\n",
+          "range": {
+            "start": 55,
+            "end": 55
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 57,
+        "end": 57
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "agent",
+      "form": "container",
+      "attrs": {
+        "id": "travel",
+        "title": "Travel researcher",
+        "protocol": "a2a",
+        "src": "https://example.org/.well-known/agent-card.json"
+      },
+      "range": {
+        "start": 58,
+        "end": 61
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "A specialist reference for travel research. Describing this agent does not\nsend it a task.\n",
+          "range": {
+            "start": 59,
+            "end": 60
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\nUse :mcp[Calendar]{ref=#calendar} and :skill[Prioritize the day]{ref=#prioritize}.\nEscalate ambiguous commitments to :person[Alex]{ref=#owner}.\n\n## Review the routine\n\n",
+      "range": {
+        "start": 62,
+        "end": 67
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "columns",
+      "form": "container",
+      "attrs": {
+        "count": 2
+      },
+      "range": {
+        "start": 68,
+        "end": 82
+      },
+      "children": [
+        {
+          "type": "directive",
+          "kind": "column",
+          "form": "container",
+          "attrs": {},
+          "range": {
+            "start": 69,
+            "end": 75
+          },
+          "children": [
+            {
+              "type": "directive",
+              "kind": "card",
+              "form": "container",
+              "attrs": {
+                "title": "Shared guidance"
+              },
+              "range": {
+                "start": 70,
+                "end": 74
+              },
+              "children": [
+                {
+                  "type": "directive",
+                  "kind": "must",
+                  "form": "keyword",
+                  "attrs": {
+                    "id": "status",
+                    "because": "an unanswered invitation is not a commitment."
+                  },
+                  "children": [
+                    {
+                      "type": "markdown",
+                      "source": "distinguish confirmed and tentative appointments.\n",
+                      "instance": "root"
+                    }
+                  ],
+                  "range": {
+                    "start": 71,
+                    "end": 71
+                  },
+                  "instance": "root"
+                },
+                {
+                  "type": "directive",
+                  "kind": "never",
+                  "form": "keyword",
+                  "attrs": {
+                    "if": "an event is tentative"
+                  },
+                  "children": [
+                    {
+                      "type": "markdown",
+                      "source": "describe it as confirmed.\n",
+                      "instance": "root"
+                    }
+                  ],
+                  "range": {
+                    "start": 73,
+                    "end": 73
+                  },
+                  "instance": "root"
+                }
+              ],
+              "instance": "root"
+            }
+          ],
+          "instance": "root"
+        },
+        {
+          "type": "directive",
+          "kind": "column",
+          "form": "container",
+          "attrs": {},
+          "range": {
+            "start": 76,
+            "end": 81
+          },
+          "children": [
+            {
+              "type": "directive",
+              "kind": "example",
+              "form": "container",
+              "attrs": {
+                "title": "A good brief"
+              },
+              "range": {
+                "start": 77,
+                "end": 80
+              },
+              "children": [
+                {
+                  "type": "markdown",
+                  "source": "Your 09:00 catch-up is tentative. Your 11:00 review is confirmed. You have\n90 uninterrupted minutes beforehand; the draft proposal is a useful focus task.\n",
+                  "instance": "root"
+                }
+              ],
+              "instance": "root"
+            }
+          ],
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 83,
+        "end": 83
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "tabs",
+      "form": "container",
+      "attrs": {
+        "title": "Review aids"
+      },
+      "range": {
+        "start": 84,
+        "end": 95
+      },
+      "children": [
+        {
+          "type": "directive",
+          "kind": "tab",
+          "form": "container",
+          "attrs": {
+            "title": "Checklist"
+          },
+          "range": {
+            "start": 85,
+            "end": 89
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "- [ ] Confirm the timezone.\n- [ ] Preserve appointment status.\n- [ ] Separate commitments and suggestions.\n",
+              "range": {
+                "start": 86,
+                "end": 88
+              },
+              "instance": "root"
+            }
+          ],
+          "instance": "root"
+        },
+        {
+          "type": "directive",
+          "kind": "tab",
+          "form": "container",
+          "attrs": {
+            "title": "Terminology"
+          },
+          "range": {
+            "start": 90,
+            "end": 94
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Morning brief\n:   A short, useful plan for the day.\n    It is not a claim that suggested tasks are confirmed appointments.\n",
+              "range": {
+                "start": 91,
+                "end": 93
+              },
+              "instance": "root"
+            }
+          ],
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 96,
+        "end": 96
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "details",
+      "form": "container",
+      "attrs": {
+        "title": "Why tentative matters"
+      },
+      "range": {
+        "start": 97,
+        "end": 99
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "The source status must survive summarization.[^status]\n",
+          "range": {
+            "start": 98,
+            "end": 98
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n[^status]: Calendar uncertainty should remain visible to the owner.\n\n## Schedule and workflow declarations\n\n",
+      "range": {
+        "start": 100,
+        "end": 104
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "schedule",
+      "form": "container",
+      "attrs": {
+        "id": "weekday-brief",
+        "title": "Weekday morning",
+        "dialect": "icalendar"
+      },
+      "range": {
+        "start": 105,
+        "end": 110
+      },
+      "value": {
+        "format": "yaml",
+        "source": "timezone: America/Toronto\nrecurrence: \"FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=8;BYMINUTE=0;BYSECOND=0\"\ntarget: \"#morning-flow\"\ndescription: An external system may explicitly register this declaration.\n",
+        "data": {
+          "timezone": "America/Toronto",
+          "recurrence": "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=8;BYMINUTE=0;BYSECOND=0",
+          "target": "#morning-flow",
+          "description": "An external system may explicitly register this declaration."
+        }
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 111,
+        "end": 111
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "workflow",
+      "form": "container",
+      "attrs": {
+        "id": "morning-flow",
+        "title": "Build the brief",
+        "dialect": "example/morning-flow/1"
+      },
+      "range": {
+        "start": 112,
+        "end": 117
+      },
+      "value": {
+        "format": "yaml",
+        "source": "steps:\n  - { id: read, action: read-calendar, server: \"#calendar\" }\n  - { id: plan, action: suggest-priority, skill: \"#prioritize\", after: [read] }\n  - { id: review, action: prepare-brief, after: [plan] }\n",
+        "data": {
+          "steps": [
+            {
+              "id": "read",
+              "action": "read-calendar",
+              "server": "#calendar"
+            },
+            {
+              "id": "plan",
+              "action": "suggest-priority",
+              "skill": "#prioritize",
+              "after": [
+                "read"
+              ]
+            },
+            {
+              "id": "review",
+              "action": "prepare-brief",
+              "after": [
+                "plan"
+              ]
+            }
+          ]
+        }
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n```mermaid {#routine-diagram caption=\"Explanatory view; this diagram does not execute\"}\nflowchart LR\n  A[Read appointments] --> B[Keep status]\n  B --> C[Suggest one focus task]\n  C --> D[Prepare brief]\n```\n\n## Code and explicit tests\n\n",
+      "range": {
+        "start": 118,
+        "end": 127
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "sandbox",
+      "form": "container",
+      "attrs": {
+        "id": "python-check",
+        "title": "Python test profile",
+        "adapter": "example/python"
+      },
+      "range": {
+        "start": 128,
+        "end": 133
+      },
+      "value": {
+        "format": "yaml",
+        "source": "language: python\nisolation: container\nnetwork: none\nresources: { timeout: 10s, memory: 128Mi }\n",
+        "data": {
+          "language": "python",
+          "isolation": "container",
+          "network": "none",
+          "resources": {
+            "timeout": "10s",
+            "memory": "128Mi"
+          }
+        }
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 134,
+        "end": 134
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "script",
+      "form": "container",
+      "attrs": {
+        "id": "formatter",
+        "title": "Preserve event status",
+        "lang": "python",
+        "sandbox": "#python-check",
+        "src": "./assets/format_events.py",
+        "entry": "format_event"
+      },
+      "range": {
+        "start": 135,
+        "end": 143
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "The attached script formats one event without changing its status. Its\neditable source is the linked Python file; the example below illustrates it.\n\n```python {filename=\"format_events.py\" highlight=\"2\"}\ndef format_event(event):\n    return f'{event[\"time\"]}: {event[\"title\"]} ({event[\"status\"]})'\n```\n",
+          "range": {
+            "start": 136,
+            "end": 142
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 144,
+        "end": 144
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "test",
+      "form": "container",
+      "attrs": {
+        "id": "formatter-test",
+        "target": "#formatter",
+        "adapter": "example/python"
+      },
+      "range": {
+        "start": 145,
+        "end": 150
+      },
+      "value": {
+        "format": "yaml",
+        "source": "cases:\n  - name: preserves-tentative\n    input: { time: \"09:00\", title: Catch-up, status: tentative }\n    expect: { equals: \"09:00: Catch-up (tentative)\" }\n",
+        "data": {
+          "cases": [
+            {
+              "name": "preserves-tentative",
+              "input": {
+                "time": "09:00",
+                "title": "Catch-up",
+                "status": "tentative"
+              },
+              "expect": {
+                "equals": "09:00: Catch-up (tentative)"
+              }
+            }
+          ]
+        }
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 151,
+        "end": 151
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "eval",
+      "form": "container",
+      "attrs": {
+        "id": "brief-eval",
+        "target": "#status",
+        "adapter": "example/model-eval"
+      },
+      "range": {
+        "start": 152,
+        "end": 157
+      },
+      "value": {
+        "format": "yaml",
+        "source": "cases:\n  - name: preserve-status\n    message: \"Summarize: 09:00 catch-up, tentative; 11:00 review, confirmed.\"\n    expect: { contains: [tentative, confirmed], not_contains: [\"both confirmed\"] }\n",
+        "data": {
+          "cases": [
+            {
+              "name": "preserve-status",
+              "message": "Summarize: 09:00 catch-up, tentative; 11:00 review, confirmed.",
+              "expect": {
+                "contains": [
+                  "tentative",
+                  "confirmed"
+                ],
+                "not_contains": [
+                  "both confirmed"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n## Media, drawings and a third-party block\n\n",
+      "range": {
+        "start": 158,
+        "end": 160
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "drawing",
+      "form": "container",
+      "attrs": {
+        "id": "brief-layout",
+        "title": "Editable brief design",
+        "src": "./assets/brief.canvas",
+        "preview": "./assets/brief.svg"
+      },
+      "range": {
+        "start": 161,
+        "end": 164
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "A heading followed by commitments and suggested priorities. Read commitments\nfirst. The preview is derived from the editable canvas resource.\n",
+          "range": {
+            "start": 162,
+            "end": 163
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 165,
+        "end": 165
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "image",
+      "form": "leaf",
+      "attrs": {
+        "id": "embedded-mark",
+        "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciLz4=",
+        "decorative": true
+      },
+      "range": {
+        "start": 166,
+        "end": 166
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 167,
+        "end": 167
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "charts:metric",
+      "form": "container",
+      "attrs": {
+        "label": "Focus tasks",
+        "value": 1
+      },
+      "range": {
+        "start": 168,
+        "end": 170
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "Recommend **one** achievable focus task.\n",
+          "range": {
+            "start": 169,
+            "end": 169
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 171,
+        "end": 171
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "component",
+      "form": "container",
+      "attrs": {
+        "component": "brief-summary",
+        "stylesheet": "./assets/brief.css",
+        "title": "Summary card"
+      },
+      "range": {
+        "start": 172,
+        "end": 174
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "Commitments first. Suggested priorities second. Ask the owner when uncertain.\n",
+          "range": {
+            "start": 173,
+            "end": 173
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 175,
+        "end": 175
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "data",
+      "form": "container",
+      "attrs": {
+        "id": "reply-schema",
+        "format": "json"
+      },
+      "range": {
+        "start": 176,
+        "end": 178
+      },
+      "value": {
+        "format": "json",
+        "source": "{\"type\":\"object\",\"required\":[\"commitments\",\"priorities\"],\"properties\":{\"commitments\":{\"type\":\"array\"},\"priorities\":{\"type\":\"array\"}}}\n",
+        "data": {
+          "type": "object",
+          "required": [
+            "commitments",
+            "priorities"
+          ],
+          "properties": {
+            "commitments": {
+              "type": "array"
+            },
+            "priorities": {
+              "type": "array"
+            }
+          }
+        }
+      },
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 179,
+        "end": 179
+      },
+      "instance": "root"
+    },
+    {
+      "type": "directive",
+      "kind": "output",
+      "form": "container",
+      "attrs": {
+        "response-format": "markdown",
+        "schema": "#reply-schema",
+        "title": "Daily brief"
+      },
+      "range": {
+        "start": 180,
+        "end": 184
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "For a human, use commitments, priorities and open decisions as labelled\nsections. If an adapter requests structured output, the linked schema describes\nits required fields. Cite the :cite[planning source]{ref=planning} when relevant.\n",
+          "range": {
+            "start": 181,
+            "end": 183
+          },
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    },
+    {
+      "type": "markdown",
+      "source": "\n",
+      "range": {
+        "start": 185,
+        "end": 185
+      },
+      "instance": "root"
+    }
+  ],
+  "extensions": [
+    {
+      "instance": "root",
+      "alias": "charts",
+      "id": "dev.example/charts",
+      "version": "1.0.0",
+      "sha256": "sha256:3ad49db129eb4fc3a095f22a10011002fc9d56d57bd95e70a29429925e2cbb4c"
+    }
+  ],
+  "objects": [
+    {
+      "key": "root/owner",
+      "kind": "person",
+      "label": "Alex",
+      "target": "https://example.org/people/alex",
+      "status": "unresolved"
+    },
+    {
+      "key": "root/calendar",
+      "kind": "mcp",
+      "label": "Calendar",
+      "target": "https://example.org/mcp/calendar",
+      "status": "unresolved"
+    },
+    {
+      "key": "root/travel",
+      "kind": "agent",
+      "label": "Travel researcher",
+      "target": "https://example.org/.well-known/agent-card.json",
+      "status": "unresolved"
+    }
+  ],
+  "resources": [],
+  "dependencies": [
+    {
+      "uri": "https://example.org/samples/morning-assistant/base.md",
+      "resolved_uri": "https://example.org/samples/morning-assistant/base.md",
+      "sha256": "sha256:fd6e5ddc1ed18d877bc652d575860130a61bf3c0fece5f50d5a5bed9650e23d6",
+      "mode": "live",
+      "instance": "root",
+      "extensions": {}
+    },
+    {
+      "uri": "https://example.org/samples/morning-assistant/team.md",
+      "resolved_uri": "https://example.org/samples/morning-assistant/team.md",
+      "sha256": "sha256:68d79307d5f20714e3a3a1bb2e55703e8b458537f0b9e972d8e24bcb04b18432",
+      "mode": "live",
+      "instance": "root",
+      "extensions": {}
+    },
+    {
+      "uri": "https://example.org/samples/morning-assistant/extensions/charts.extension.json",
+      "resolved_uri": "https://example.org/samples/morning-assistant/extensions/charts.extension.json",
+      "sha256": "sha256:3ad49db129eb4fc3a095f22a10011002fc9d56d57bd95e70a29429925e2cbb4c",
+      "mode": "live",
+      "instance": "root",
+      "extensions": {
+        "charts": "1.0.0"
+      }
+    },
+    {
+      "uri": "https://example.org/samples/morning-assistant/skills/prioritize/SKILL.md",
+      "resolved_uri": "https://example.org/samples/morning-assistant/skills/prioritize/SKILL.md",
+      "sha256": "sha256:9e9358990376cfee471e51f671134250d4965758152ae89e257649cc4efb0f1e",
+      "mode": "live",
+      "instance": "root",
+      "extensions": {}
+    },
+    {
+      "uri": "https://example.org/samples/morning-assistant/assets/brief.svg",
+      "resolved_uri": "https://example.org/samples/morning-assistant/assets/brief.svg",
+      "sha256": "sha256:7fca6052dda93de104d1de4b7a46719ca903257bf36f577fd66f8b3a638020ce",
+      "mode": "live",
+      "instance": "root",
+      "extensions": {}
+    },
+    {
+      "uri": "https://example.org/samples/morning-assistant/assets/brief.canvas",
+      "resolved_uri": "https://example.org/samples/morning-assistant/assets/brief.canvas",
+      "sha256": "sha256:4985e5b5823b6e63e33a1e0a3210e0adbeccfe416e1c69001215b100c151aa9b",
+      "mode": "live",
+      "instance": "root",
+      "extensions": {}
+    },
+    {
+      "uri": "https://example.org/samples/morning-assistant/assets/format_events.py",
+      "resolved_uri": "https://example.org/samples/morning-assistant/assets/format_events.py",
+      "sha256": "sha256:2ac9873bafc7d8f1c5bdfd8d584766135c87a93e808605e224d27b676c0710c3",
+      "mode": "live",
+      "instance": "root",
+      "extensions": {}
+    },
+    {
+      "uri": "https://example.org/samples/morning-assistant/assets/brief.css",
+      "resolved_uri": "https://example.org/samples/morning-assistant/assets/brief.css",
+      "sha256": "sha256:d8ff89ccdd5ff5adf525bf4a14cb9f9794c929337d16d83315100912e49b4539",
+      "mode": "live",
+      "instance": "root",
+      "extensions": {}
+    }
+  ],
+  "provenance": [
+    {
+      "instance": "root/personal",
+      "uri": "https://example.org/samples/morning-assistant/base.md",
+      "operation": "inherit"
+    },
+    {
+      "instance": "root/personal",
+      "uri": "https://example.org/samples/morning-assistant/instruction.md",
+      "operation": "replace",
+      "target": "personal/brief-length",
+      "reason": "The owner reads the brief on a phone.",
+      "original": {
+        "type": "directive",
+        "kind": "instruction",
+        "form": "container",
+        "attrs": {
+          "id": "brief-length",
+          "title": "Brief length"
+        },
+        "range": {
+          "start": 7,
+          "end": 9
+        },
+        "children": [
+          {
+            "type": "directive",
+            "kind": "should",
+            "form": "keyword",
+            "attrs": {},
+            "children": [
+              {
+                "type": "markdown",
+                "source": "keep the morning brief under 200 words.\n",
+                "instance": "root/personal"
+              }
+            ],
+            "range": {
+              "start": 8,
+              "end": 8
+            },
+            "instance": "root/personal"
+          }
+        ],
+        "instance": "root/personal"
+      },
+      "modified_by": "https://example.org/samples/morning-assistant/instruction.md"
+    },
+    {
+      "instance": "root/personal",
+      "uri": "https://example.org/samples/morning-assistant/instruction.md",
+      "operation": "extend",
+      "target": "personal/priorities",
+      "reason": "Make focus time visible.",
+      "original": {
+        "type": "directive",
+        "kind": "policy",
+        "form": "container",
+        "attrs": {
+          "id": "priorities",
+          "title": "Choosing priorities"
+        },
+        "range": {
+          "start": 11,
+          "end": 14
+        },
+        "children": [
+          {
+            "type": "directive",
+            "kind": "must",
+            "form": "keyword",
+            "attrs": {},
+            "children": [
+              {
+                "type": "markdown",
+                "source": "distinguish commitments from suggestions.\n",
+                "instance": "root/personal"
+              }
+            ],
+            "range": {
+              "start": 12,
+              "end": 12
+            },
+            "instance": "root/personal"
+          },
+          {
+            "type": "directive",
+            "kind": "should",
+            "form": "keyword",
+            "attrs": {},
+            "children": [
+              {
+                "type": "markdown",
+                "source": "recommend one achievable focus task.\n",
+                "instance": "root/personal"
+              }
+            ],
+            "range": {
+              "start": 13,
+              "end": 13
+            },
+            "instance": "root/personal"
+          }
+        ],
+        "instance": "root/personal"
+      },
+      "modified_by": "https://example.org/samples/morning-assistant/instruction.md"
+    },
+    {
+      "instance": "root/personal",
+      "uri": "https://example.org/samples/morning-assistant/instruction.md",
+      "operation": "remove",
+      "target": "personal/obsolete",
+      "reason": "This assistant does not manage mail.",
+      "original": {
+        "type": "directive",
+        "kind": "instruction",
+        "form": "container",
+        "attrs": {
+          "id": "obsolete",
+          "title": "Legacy mail routine"
+        },
+        "range": {
+          "start": 16,
+          "end": 18
+        },
+        "children": [
+          {
+            "type": "markdown",
+            "source": "Offer to summarize unread mail.\n",
+            "range": {
+              "start": 17,
+              "end": 17
+            },
+            "instance": "root/personal"
+          }
+        ],
+        "instance": "root/personal"
+      },
+      "modified_by": "https://example.org/samples/morning-assistant/instruction.md"
+    },
+    {
+      "instance": "root/privacy",
+      "uri": "https://example.org/samples/morning-assistant/team.md",
+      "operation": "include"
+    }
+  ],
+  "diagnostics": [
+    {
+      "code": "reference-optional",
+      "severity": "warning",
+      "message": "Fictional provider not contacted by the offline sample builder.",
+      "target": "https://example.org/people/alex"
+    },
+    {
+      "code": "reference-optional",
+      "severity": "warning",
+      "message": "Fictional provider not contacted by the offline sample builder.",
+      "target": "https://example.org/mcp/calendar"
+    },
+    {
+      "code": "reference-optional",
+      "severity": "warning",
+      "message": "Fictional provider not contacted by the offline sample builder.",
+      "target": "https://example.org/.well-known/agent-card.json"
+    }
+  ]
+}

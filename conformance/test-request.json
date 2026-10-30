@@ -1,0 +1,10 @@
+{
+  "format": "instruction-test-request/1",
+  "id": "sample-test",
+  "document_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "target": "#formatter",
+  "adapter": "example/python",
+  "inputs": {
+    "status": "tentative"
+  }
+}

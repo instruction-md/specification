@@ -1,0 +1,196 @@
+[
+  {
+    "name": "quoted-escape",
+    "source": ":::context{title=\"She said \\\"no\\\"\"}\nShared.\n:::\n",
+    "valid": true,
+    "title": "She said \"no\""
+  },
+  {
+    "name": "indented-fence-is-code",
+    "source": "   ```markdown\n:::unknown\n   ```\n",
+    "valid": true,
+    "directives": 0
+  },
+  {
+    "name": "indented-directive-is-prose",
+    "source": "    :::unknown\n",
+    "valid": true,
+    "directives": 0
+  },
+  {
+    "name": "shorter-inner-fences",
+    "source": "::::columns\n:::card{title=\"A\"}\nShared.\n:::\n::::\n",
+    "valid": true,
+    "directives": 2
+  },
+  {
+    "name": "equal-inner-fences",
+    "source": ":::columns\n:::card\n:::\n:::\n",
+    "valid": false
+  },
+  {
+    "name": "plain-backmatter-to-eof",
+    "source": "Shared.\n\n---\nowners: [Alex]\n",
+    "valid": true,
+    "back": {
+      "owners": [
+        "Alex"
+      ]
+    },
+    "markdown": "Shared.\n\n"
+  },
+  {
+    "name": "backmatter-after-front-matter",
+    "source": "---\ntitle: Shared guidance\n---\nShared.\n\n---\nauthors: [Alex]\n",
+    "valid": true,
+    "back": {
+      "authors": [
+        "Alex"
+      ]
+    },
+    "markdown": "Shared.\n\n"
+  },
+  {
+    "name": "backmatter-with-yaml-comments",
+    "source": "Shared.\n\n---\n\n# Review record\nhistory: [{summary: Clarified the goal}]\ncustom: preserved\n",
+    "valid": true,
+    "back": {
+      "history": [
+        {
+          "summary": "Clarified the goal"
+        }
+      ],
+      "custom": "preserved"
+    }
+  },
+  {
+    "name": "thematic-break-stays-body",
+    "source": "Shared.\n\n---\nAnother paragraph.\n",
+    "valid": true,
+    "back": {},
+    "markdown": "Shared.\n\n---\nAnother paragraph.\n"
+  },
+  {
+    "name": "unknown-first-key-stays-body",
+    "source": "Shared.\n\n---\ncustom: body text\nauthors: also body text\n",
+    "valid": true,
+    "back": {},
+    "markdown": "Shared.\n\n---\ncustom: body text\nauthors: also body text\n"
+  },
+  {
+    "name": "setext-underline-stays-body",
+    "source": "Shared\n---\nauthors: ordinary prose\n",
+    "valid": true,
+    "back": {},
+    "markdown": "Shared\n---\nauthors: ordinary prose\n"
+  },
+  {
+    "name": "alternative-thematic-break",
+    "source": "Shared.\n\n***\nauthors: ordinary prose\n",
+    "valid": true,
+    "back": {},
+    "markdown": "Shared.\n\n***\nauthors: ordinary prose\n"
+  },
+  {
+    "name": "escaped-backmatter-marker",
+    "source": "Shared.\n\n\\---\nauthors: ordinary prose\n",
+    "valid": true,
+    "back": {},
+    "markdown": "Shared.\n\n\\---\nauthors: ordinary prose\n"
+  },
+  {
+    "name": "backmatter-looking-code",
+    "source": "```yaml\n\n---\nauthors: [Alex]\n```\n",
+    "valid": true,
+    "back": {},
+    "markdown": "```yaml\n\n---\nauthors: [Alex]\n```\n"
+  },
+  {
+    "name": "backmatter-looking-container",
+    "source": ":::context\nShared.\n\n---\nauthors: [Alex]\n:::\n",
+    "valid": true,
+    "back": {},
+    "directives": 1
+  },
+  {
+    "name": "backmatter-looking-blockquote",
+    "source": "> Shared.\n>\n> ---\n> authors: [Alex]\n",
+    "valid": true,
+    "back": {},
+    "markdown": "> Shared.\n>\n> ---\n> authors: [Alex]\n"
+  },
+  {
+    "name": "backmatter-looking-html",
+    "source": "<pre>\nShared.\n\n---\nauthors: [Alex]\n</pre>\n",
+    "valid": true,
+    "back": {},
+    "markdown": "<pre>\nShared.\n\n---\nauthors: [Alex]\n</pre>\n"
+  },
+  {
+    "name": "backmatter-duplicate-key",
+    "source": "Shared.\n\n---\nauthors: [Alex]\nauthors: [Jordan]\n",
+    "valid": false
+  },
+  {
+    "name": "backmatter-invalid-yaml",
+    "source": "Shared.\n\n---\nauthors: [Alex\n",
+    "valid": false
+  },
+  {
+    "name": "backmatter-no-closing-fence",
+    "source": "Shared.\n\n---\nauthors: [Alex]\n---\n",
+    "valid": false
+  },
+  {
+    "name": "comment-preserves-tail",
+    "source": "a<!-- reviewer -->b\n",
+    "valid": true,
+    "markdown": "ab\n"
+  },
+  {
+    "name": "should-not-keeps-negation",
+    "source": "SHOULD NOT: disclose private details.\n",
+    "valid": true,
+    "not": true
+  },
+  {
+    "name": "example-does-not-extract-rules",
+    "source": ":::example\nMUST[not-a-rule]: quoted.\n:::\n",
+    "valid": true,
+    "directives": 1
+  },
+  {
+    "name": "unclosed-directive",
+    "source": ":::policy\nShared.\n",
+    "valid": false
+  },
+  {
+    "name": "duplicate-yaml-key",
+    "source": "---\ntitle: a\ntitle: b\n---\nShared.\n",
+    "valid": false
+  },
+  {
+    "name": "yaml-date-and-on-stay-strings",
+    "source": "---\nnotes: {on: 2026-10-26}\n---\nShared.\n",
+    "valid": true,
+    "notes": {
+      "on": "2026-10-26"
+    }
+  },
+  {
+    "name": "yaml-anchors-forbidden",
+    "source": "---\nnotes: &a value\n---\n",
+    "valid": false
+  },
+  {
+    "name": "duplicate-attribute",
+    "source": "::person{id=a id=b}\n",
+    "valid": false
+  },
+  {
+    "name": "opaque-extension",
+    "source": ":::charts:metric{value=1}\n:::unknown\n:::\n",
+    "valid": true,
+    "directives": 1
+  }
+]

@@ -1,0 +1,504 @@
+[
+  {
+    "name": "explicit-body-modifications",
+    "documents": {
+      "base.md": {
+        "format": "instruction/1",
+        "uri": "base.md",
+        "body": [
+          {
+            "type": "directive",
+            "kind": "instruction",
+            "form": "container",
+            "attrs": {
+              "id": "length"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Original length."
+              }
+            ]
+          },
+          {
+            "type": "directive",
+            "kind": "policy",
+            "form": "container",
+            "attrs": {
+              "id": "priorities"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Commitments first."
+              }
+            ]
+          },
+          {
+            "type": "directive",
+            "kind": "instruction",
+            "form": "container",
+            "attrs": {
+              "id": "obsolete"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Mail routine."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "document": {
+      "format": "instruction/1",
+      "uri": "child.md",
+      "metadata": {
+        "front": {
+          "extends": [
+            {
+              "uri": "base.md",
+              "as": "personal"
+            }
+          ]
+        }
+      },
+      "body": [
+        {
+          "type": "directive",
+          "kind": "replace",
+          "form": "container",
+          "attrs": {
+            "target": "#personal/length"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shorter length."
+            }
+          ]
+        },
+        {
+          "type": "directive",
+          "kind": "extend",
+          "form": "container",
+          "attrs": {
+            "target": "#personal/priorities"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Focus time."
+            }
+          ]
+        },
+        {
+          "type": "directive",
+          "kind": "remove",
+          "form": "leaf",
+          "attrs": {
+            "target": "#personal/obsolete"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "instance": "root/personal",
+        "id": "length",
+        "kind": "instruction",
+        "text": "Shorter length."
+      },
+      {
+        "instance": "root/personal",
+        "id": "priorities",
+        "kind": "policy",
+        "text": "Commitments first.|Focus time."
+      }
+    ],
+    "changes": [
+      "replace",
+      "extend",
+      "remove"
+    ]
+  },
+  {
+    "name": "missing-patch-target",
+    "documents": {
+      "base.md": {
+        "format": "instruction/1",
+        "uri": "base.md",
+        "body": [
+          {
+            "type": "directive",
+            "kind": "instruction",
+            "form": "container",
+            "attrs": {
+              "id": "length"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Original length."
+              }
+            ]
+          },
+          {
+            "type": "directive",
+            "kind": "policy",
+            "form": "container",
+            "attrs": {
+              "id": "priorities"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Commitments first."
+              }
+            ]
+          },
+          {
+            "type": "directive",
+            "kind": "instruction",
+            "form": "container",
+            "attrs": {
+              "id": "obsolete"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Mail routine."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "document": {
+      "format": "instruction/1",
+      "uri": "child.md",
+      "metadata": {
+        "front": {
+          "extends": [
+            {
+              "uri": "base.md",
+              "as": "personal"
+            }
+          ]
+        }
+      },
+      "body": [
+        {
+          "type": "directive",
+          "kind": "remove",
+          "form": "leaf",
+          "attrs": {
+            "target": "#personal/missing"
+          }
+        }
+      ]
+    },
+    "error": "patch-target"
+  },
+  {
+    "name": "removed-target-cannot-be-patched",
+    "documents": {
+      "base.md": {
+        "format": "instruction/1",
+        "uri": "base.md",
+        "body": [
+          {
+            "type": "directive",
+            "kind": "instruction",
+            "form": "container",
+            "attrs": {
+              "id": "length"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Original length."
+              }
+            ]
+          },
+          {
+            "type": "directive",
+            "kind": "policy",
+            "form": "container",
+            "attrs": {
+              "id": "priorities"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Commitments first."
+              }
+            ]
+          },
+          {
+            "type": "directive",
+            "kind": "instruction",
+            "form": "container",
+            "attrs": {
+              "id": "obsolete"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Mail routine."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "document": {
+      "format": "instruction/1",
+      "uri": "child.md",
+      "metadata": {
+        "front": {
+          "extends": [
+            {
+              "uri": "base.md",
+              "as": "personal"
+            }
+          ]
+        }
+      },
+      "body": [
+        {
+          "type": "directive",
+          "kind": "remove",
+          "form": "leaf",
+          "attrs": {
+            "target": "#personal/length"
+          }
+        },
+        {
+          "type": "directive",
+          "kind": "extend",
+          "form": "container",
+          "attrs": {
+            "target": "#personal/length"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Later."
+            }
+          ]
+        }
+      ]
+    },
+    "error": "patch-target"
+  },
+  {
+    "name": "separate-include-instances",
+    "documents": {
+      "base.md": {
+        "format": "instruction/1",
+        "uri": "base.md",
+        "body": [
+          {
+            "type": "directive",
+            "kind": "instruction",
+            "form": "container",
+            "attrs": {
+              "id": "length"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Original length."
+              }
+            ]
+          },
+          {
+            "type": "directive",
+            "kind": "policy",
+            "form": "container",
+            "attrs": {
+              "id": "priorities"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Commitments first."
+              }
+            ]
+          },
+          {
+            "type": "directive",
+            "kind": "instruction",
+            "form": "container",
+            "attrs": {
+              "id": "obsolete"
+            },
+            "children": [
+              {
+                "type": "markdown",
+                "source": "Mail routine."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "document": {
+      "format": "instruction/1",
+      "uri": "child.md",
+      "metadata": {
+        "front": {}
+      },
+      "body": [
+        {
+          "type": "directive",
+          "kind": "include",
+          "form": "leaf",
+          "attrs": {
+            "src": "base.md#id=length",
+            "as": "one"
+          }
+        },
+        {
+          "type": "directive",
+          "kind": "include",
+          "form": "leaf",
+          "attrs": {
+            "src": "base.md#id=length",
+            "as": "two"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "instance": "root/one",
+        "id": "length",
+        "kind": "instruction",
+        "text": "Original length."
+      },
+      {
+        "instance": "root/two",
+        "id": "length",
+        "kind": "instruction",
+        "text": "Original length."
+      }
+    ],
+    "changes": []
+  },
+  {
+    "name": "inheritance-cycle",
+    "documents": {
+      "base.md": {
+        "format": "instruction/1",
+        "uri": "base.md",
+        "metadata": {
+          "front": {
+            "extends": [
+              {
+                "uri": "child.md",
+                "as": "again"
+              }
+            ]
+          }
+        },
+        "body": []
+      },
+      "child.md": {
+        "format": "instruction/1",
+        "uri": "child.md",
+        "metadata": {
+          "front": {
+            "extends": [
+              {
+                "uri": "base.md",
+                "as": "personal"
+              }
+            ]
+          }
+        },
+        "body": []
+      }
+    },
+    "document": {
+      "format": "instruction/1",
+      "uri": "child.md",
+      "metadata": {
+        "front": {
+          "extends": [
+            {
+              "uri": "base.md",
+              "as": "personal"
+            }
+          ]
+        }
+      },
+      "body": []
+    },
+    "error": "composition-cycle"
+  },
+  {
+    "name": "structured-replacement",
+    "documents": {
+      "base.md": {
+        "format": "instruction/1",
+        "uri": "base.md",
+        "body": [
+          {
+            "type": "directive",
+            "kind": "data",
+            "form": "container",
+            "attrs": {
+              "id": "settings"
+            },
+            "value": {
+              "format": "yaml",
+              "source": "{}\n",
+              "data": {}
+            }
+          }
+        ]
+      }
+    },
+    "document": {
+      "format": "instruction/1",
+      "uri": "child.md",
+      "metadata": {
+        "front": {
+          "extends": [
+            {
+              "uri": "base.md",
+              "as": "personal"
+            }
+          ]
+        }
+      },
+      "body": [
+        {
+          "type": "directive",
+          "kind": "replace",
+          "form": "container",
+          "attrs": {
+            "target": "#personal/settings",
+            "format": "yaml"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "limit: 1\n",
+            "data": {
+              "limit": 1
+            }
+          }
+        }
+      ]
+    },
+    "expected_value": {
+      "limit": 1
+    },
+    "changes": [
+      "replace"
+    ]
+  }
+]

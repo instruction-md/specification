@@ -1,0 +1,19 @@
+{
+  "format": "instruction/1",
+  "body": [
+    {
+      "type": "directive",
+      "kind": "should",
+      "form": "container",
+      "attrs": {
+        "not": true
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "disclose private details."
+        }
+      ]
+    }
+  ]
+}

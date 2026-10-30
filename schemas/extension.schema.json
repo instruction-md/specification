@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instruction.md/specification/1/schemas/extension.schema.json",
+  "title": "Instruction extension manifest",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "instruction-extension/1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)+/[a-z][a-z0-9-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "spec": {
+      "type": "array",
+      "items": {
+        "const": "1"
+      },
+      "minItems": 1
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "syntax",
+          "semantic",
+          "presentation",
+          "resolver",
+          "test-adapter"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "provides": {
+      "type": "object",
+      "properties": {
+        "blocks": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "body": {
+                "enum": [
+                  "markdown",
+                  "yaml",
+                  "json",
+                  "text",
+                  "code"
+                ]
+              },
+              "forms": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "container",
+                    "leaf",
+                    "inline"
+                  ]
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "attributes": {
+                "type": "object"
+              },
+              "fallback": {
+                "enum": [
+                  "children",
+                  "source"
+                ]
+              },
+              "required": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "resolved": {
+                "type": "object"
+              },
+              "parents": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "body",
+              "forms",
+              "attributes",
+              "fallback"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "inline": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "body": {
+                "enum": [
+                  "markdown",
+                  "yaml",
+                  "json",
+                  "text",
+                  "code"
+                ]
+              },
+              "forms": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "container",
+                    "leaf",
+                    "inline"
+                  ]
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "attributes": {
+                "type": "object"
+              },
+              "fallback": {
+                "enum": [
+                  "children",
+                  "source"
+                ]
+              },
+              "required": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "resolved": {
+                "type": "object"
+              },
+              "parents": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "body",
+              "forms",
+              "attributes",
+              "fallback"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "resolvers": {
+          "type": "object"
+        },
+        "test_adapters": {
+          "type": "object"
+        },
+        "workflow_nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "enum": [
+                  "trigger",
+                  "step"
+                ]
+              },
+              "schema": {
+                "type": "object"
+              },
+              "semantics": {
+                "type": "string"
+              },
+              "requires": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "role",
+              "schema",
+              "semantics"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "dependencies": {
+      "type": "object"
+    },
+    "modules": {
+      "type": "object"
+    },
+    "requires": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "license": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "format",
+    "id",
+    "version",
+    "spec",
+    "roles",
+    "provides"
+  ],
+  "additionalProperties": false
+}

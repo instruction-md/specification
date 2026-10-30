@@ -1,0 +1,113 @@
+{
+  "format": "instruction-bundle/1",
+  "main": "instruction.md",
+  "complete": false,
+  "entries": [
+    {
+      "path": "instruction.md",
+      "uri": "https://example.org/samples/agentd-assistant/instruction.md",
+      "media_type": "text/markdown",
+      "sha256": "sha256:34d1d58f1bf5a7790c97a2420e1fef0bd8fc3e2cc903eb752e60167a8380b18d"
+    },
+    {
+      "path": "guidance.md",
+      "uri": "https://example.org/samples/agentd-assistant/guidance.md",
+      "media_type": "text/markdown",
+      "sha256": "sha256:20ba7d6bc25df8ee28bb366cd90a0b6a5fd58f1b81e56418919dc34f1c4e5e5c"
+    },
+    {
+      "path": "skills/prioritize/SKILL.md",
+      "uri": "https://example.org/samples/agentd-assistant/skills/prioritize/SKILL.md",
+      "media_type": "text/markdown",
+      "sha256": "sha256:cf268816816d0d53149c863ae6cb6c926c5e32f2e53b0afe2fc940f9c554902b"
+    },
+    {
+      "path": "workflows/morning-brief.json",
+      "uri": "https://example.org/samples/agentd-assistant/workflows/morning-brief.json",
+      "media_type": "application/json",
+      "sha256": "sha256:d51355fb335a06833f6c046f1d760b08d0e3ca6e180300d2e0eba77b25e465dd"
+    },
+    {
+      "path": "agentd.json",
+      "uri": "https://example.org/samples/agentd-assistant/agentd.json",
+      "media_type": "application/json",
+      "sha256": "sha256:0c69855bd560690b5093f8a4b9d1e3cda861b0b9b5cfa24acd7fe0a1f389a656"
+    }
+  ],
+  "mapping": {
+    "https://example.org/samples/agentd-assistant/instruction.md": "instruction.md",
+    "https://example.org/samples/agentd-assistant/guidance.md": "guidance.md",
+    "https://example.org/samples/agentd-assistant/skills/prioritize/SKILL.md": "skills/prioritize/SKILL.md",
+    "https://example.org/samples/agentd-assistant/workflows/morning-brief.json": "workflows/morning-brief.json",
+    "https://example.org/samples/agentd-assistant/agentd.json": "agentd.json"
+  },
+  "exports": [
+    {
+      "id": "guidance",
+      "kind": "agent-instructions",
+      "path": "guidance.md",
+      "sha256": "sha256:20ba7d6bc25df8ee28bb366cd90a0b6a5fd58f1b81e56418919dc34f1c4e5e5c",
+      "adapter": "agentd",
+      "profile": "agentd/1",
+      "sources": [
+        {
+          "uri": "https://example.org/samples/agentd-assistant/instruction.md",
+          "sha256": "sha256:34d1d58f1bf5a7790c97a2420e1fef0bd8fc3e2cc903eb752e60167a8380b18d",
+          "select": {
+            "id": "guidance"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prioritize",
+      "kind": "skill",
+      "path": "skills/prioritize/SKILL.md",
+      "sha256": "sha256:cf268816816d0d53149c863ae6cb6c926c5e32f2e53b0afe2fc940f9c554902b",
+      "adapter": "agentd",
+      "profile": "agentd/1",
+      "sources": [
+        {
+          "uri": "https://example.org/samples/agentd-assistant/instruction.md",
+          "sha256": "sha256:34d1d58f1bf5a7790c97a2420e1fef0bd8fc3e2cc903eb752e60167a8380b18d",
+          "select": {
+            "id": "prioritize"
+          }
+        }
+      ]
+    },
+    {
+      "id": "brief",
+      "kind": "workflow",
+      "path": "workflows/morning-brief.json",
+      "sha256": "sha256:d51355fb335a06833f6c046f1d760b08d0e3ca6e180300d2e0eba77b25e465dd",
+      "adapter": "agentd",
+      "profile": "agentd/1",
+      "sources": [
+        {
+          "uri": "https://example.org/samples/agentd-assistant/instruction.md",
+          "sha256": "sha256:34d1d58f1bf5a7790c97a2420e1fef0bd8fc3e2cc903eb752e60167a8380b18d",
+          "select": {
+            "id": "brief"
+          }
+        }
+      ],
+      "dialect": "agentd/workflow"
+    },
+    {
+      "id": "runtime",
+      "kind": "config",
+      "path": "agentd.json",
+      "sha256": "sha256:0c69855bd560690b5093f8a4b9d1e3cda861b0b9b5cfa24acd7fe0a1f389a656",
+      "adapter": "agentd",
+      "profile": "agentd/1",
+      "sources": [
+        {
+          "uri": "https://example.org/samples/agentd-assistant/instruction.md",
+          "sha256": "sha256:34d1d58f1bf5a7790c97a2420e1fef0bd8fc3e2cc903eb752e60167a8380b18d"
+        }
+      ],
+      "dialect": "agentd/config"
+    }
+  ]
+}

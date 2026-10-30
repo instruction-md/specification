@@ -1,0 +1,110 @@
+{
+  "agent": {
+    "name": "morning-assistant",
+    "instruction": {
+      "file": "./guidance.md"
+    },
+    "tools": {
+      "internal": "none",
+      "code": "none",
+      "mcp": [
+        "calendar.events.list"
+      ]
+    }
+  },
+  "skills": {
+    "dir": "./skills"
+  },
+  "mcp": {
+    "servers": [
+      {
+        "name": "calendar",
+        "ns": "calendar",
+        "endpoint": "https://calendar.example.org/mcp",
+        "allow": [
+          "events.list"
+        ],
+        "exclude": [
+          "events.delete"
+        ]
+      }
+    ]
+  },
+  "workflows": [
+    {
+      "name": "morning-brief",
+      "description": "Prepare a reviewable daily brief.",
+      "steps": {
+        "start": {
+          "kind": "manual"
+        },
+        "calendar": {
+          "kind": "mcp.tool",
+          "depends_on": [
+            "start"
+          ],
+          "server": "calendar",
+          "tool": "events.list",
+          "args": {},
+          "timeout": "30s",
+          "retry": {
+            "max": 2,
+            "backoff": "2s"
+          }
+        },
+        "draft": {
+          "kind": "agent",
+          "depends_on": [
+            "calendar"
+          ],
+          "instruction": "Prepare a concise plan from these appointments, retaining their status: {{ steps.calendar.output }}",
+          "servers": [
+            "calendar"
+          ],
+          "timeout": "90s"
+        },
+        "review": {
+          "kind": "human",
+          "depends_on": [
+            "draft"
+          ],
+          "question": "Accept this daily brief? {{ steps.draft.output }}",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "accept",
+              "revise"
+            ]
+          },
+          "timeout": "2h"
+        },
+        "route": {
+          "kind": "switch",
+          "depends_on": [
+            "review"
+          ],
+          "on": "{{ steps.review.output }}",
+          "cases": {
+            "accept": "accepted",
+            "revise": "revision"
+          }
+        },
+        "accepted": {
+          "kind": "finish",
+          "depends_on": [
+            "route"
+          ],
+          "output": "{{ steps.draft.output }}"
+        },
+        "revision": {
+          "kind": "finish",
+          "depends_on": [
+            "route"
+          ],
+          "status": "cancelled",
+          "reason": "The reviewer requested a revision."
+        }
+      }
+    }
+  ]
+}

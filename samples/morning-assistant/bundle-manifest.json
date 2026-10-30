@@ -1,0 +1,93 @@
+{
+  "format": "instruction-bundle/1",
+  "main": "instruction.md",
+  "complete": false,
+  "entries": [
+    {
+      "path": "README.md",
+      "uri": "https://example.org/samples/morning-assistant/README.md",
+      "media_type": "text/markdown",
+      "sha256": "sha256:2ebb506ed233a969b84f445558d6028d18f860a0c3d4900acbc7037e62fa1c34"
+    },
+    {
+      "path": "assets/brief.canvas",
+      "uri": "https://example.org/samples/morning-assistant/assets/brief.canvas",
+      "media_type": "application/json",
+      "sha256": "sha256:4985e5b5823b6e63e33a1e0a3210e0adbeccfe416e1c69001215b100c151aa9b"
+    },
+    {
+      "path": "assets/brief.css",
+      "uri": "https://example.org/samples/morning-assistant/assets/brief.css",
+      "media_type": "text/css",
+      "sha256": "sha256:d8ff89ccdd5ff5adf525bf4a14cb9f9794c929337d16d83315100912e49b4539"
+    },
+    {
+      "path": "assets/brief.svg",
+      "uri": "https://example.org/samples/morning-assistant/assets/brief.svg",
+      "media_type": "image/svg+xml",
+      "sha256": "sha256:7fca6052dda93de104d1de4b7a46719ca903257bf36f577fd66f8b3a638020ce"
+    },
+    {
+      "path": "assets/format_events.py",
+      "uri": "https://example.org/samples/morning-assistant/assets/format_events.py",
+      "media_type": "text/x-python",
+      "sha256": "sha256:2ac9873bafc7d8f1c5bdfd8d584766135c87a93e808605e224d27b676c0710c3"
+    },
+    {
+      "path": "base.md",
+      "uri": "https://example.org/samples/morning-assistant/base.md",
+      "media_type": "text/markdown",
+      "sha256": "sha256:fd6e5ddc1ed18d877bc652d575860130a61bf3c0fece5f50d5a5bed9650e23d6"
+    },
+    {
+      "path": "extensions/charts.extension.json",
+      "uri": "https://example.org/samples/morning-assistant/extensions/charts.extension.json",
+      "media_type": "application/json",
+      "sha256": "sha256:3ad49db129eb4fc3a095f22a10011002fc9d56d57bd95e70a29429925e2cbb4c"
+    },
+    {
+      "path": "instruction.md",
+      "uri": "https://example.org/samples/morning-assistant/instruction.md",
+      "media_type": "text/markdown",
+      "sha256": "sha256:389ca367728a5679d5361c8039eb877e62eb7c6d1a9bab6c0dc497d4b9936f1d"
+    },
+    {
+      "path": "resolved.json",
+      "uri": "https://example.org/samples/morning-assistant/resolved.json",
+      "media_type": "application/json",
+      "sha256": "sha256:34c7d833ae597f6b7d59895284e386ae31c05044da5970e9d8c1adcb9558d89e"
+    },
+    {
+      "path": "resolved.txt",
+      "uri": "https://example.org/samples/morning-assistant/resolved.txt",
+      "media_type": "application/octet-stream",
+      "sha256": "sha256:6502deea05a76b502242453c18c64f27346dbdc3ae735d32df5200dce2cf35d1"
+    },
+    {
+      "path": "skills/prioritize/SKILL.md",
+      "uri": "https://example.org/samples/morning-assistant/skills/prioritize/SKILL.md",
+      "media_type": "text/markdown",
+      "sha256": "sha256:9e9358990376cfee471e51f671134250d4965758152ae89e257649cc4efb0f1e"
+    },
+    {
+      "path": "team.md",
+      "uri": "https://example.org/samples/morning-assistant/team.md",
+      "media_type": "text/markdown",
+      "sha256": "sha256:68d79307d5f20714e3a3a1bb2e55703e8b458537f0b9e972d8e24bcb04b18432"
+    }
+  ],
+  "mapping": {
+    "https://example.org/samples/morning-assistant/README.md": "README.md",
+    "https://example.org/samples/morning-assistant/assets/brief.canvas": "assets/brief.canvas",
+    "https://example.org/samples/morning-assistant/assets/brief.css": "assets/brief.css",
+    "https://example.org/samples/morning-assistant/assets/brief.svg": "assets/brief.svg",
+    "https://example.org/samples/morning-assistant/assets/format_events.py": "assets/format_events.py",
+    "https://example.org/samples/morning-assistant/base.md": "base.md",
+    "https://example.org/samples/morning-assistant/extensions/charts.extension.json": "extensions/charts.extension.json",
+    "https://example.org/samples/morning-assistant/instruction.md": "instruction.md",
+    "https://example.org/samples/morning-assistant/resolved.json": "resolved.json",
+    "https://example.org/samples/morning-assistant/resolved.txt": "resolved.txt",
+    "https://example.org/samples/morning-assistant/skills/prioritize/SKILL.md": "skills/prioritize/SKILL.md",
+    "https://example.org/samples/morning-assistant/team.md": "team.md"
+  }
+}

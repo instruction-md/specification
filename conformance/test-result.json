@@ -1,0 +1,13 @@
+{
+  "format": "instruction-test-result/1",
+  "request": "sample-test",
+  "document_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "status": "skipped",
+  "environment": {
+    "reason": "No external adapter configured"
+  },
+  "started": "2026-10-26T12:00:00Z",
+  "finished": "2026-10-26T12:00:00Z",
+  "assertions": [],
+  "artifacts": []
+}

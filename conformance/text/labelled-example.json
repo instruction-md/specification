@@ -1,0 +1,19 @@
+{
+  "format": "instruction/1",
+  "body": [
+    {
+      "type": "directive",
+      "kind": "example",
+      "form": "container",
+      "attrs": {
+        "title": "Quoted"
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "MUST: this is an example."
+        }
+      ]
+    }
+  ]
+}

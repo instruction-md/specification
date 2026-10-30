@@ -1,0 +1,49 @@
+name: morning-brief
+steps:
+  start:
+    kind: manual
+  read:
+    kind: mcp.tool
+    depends_on:
+    - start
+    server: calendar
+    tool: events.list
+    timeout: 30s
+    retry:
+      max: 2
+      backoff: 2s
+  draft:
+    kind: agent
+    depends_on:
+    - read
+    instruction: Prepare a daily brief. Keep tentative appointments tentative.
+  review:
+    kind: human
+    depends_on:
+    - draft
+    question: Accept this daily brief?
+    schema:
+      type: string
+      enum:
+      - accept
+      - revise
+    timeout: 2h
+  route:
+    kind: switch
+    depends_on:
+    - review
+    'on': '{{ steps.review.output }}'
+    cases:
+      accept: accepted
+      revise: revision
+  accepted:
+    kind: finish
+    depends_on:
+    - route
+    output: '{{ steps.draft.output }}'
+  revision:
+    kind: finish
+    depends_on:
+    - route
+    status: cancelled
+    reason: The reviewer requested a revision.

@@ -1,0 +1,20 @@
+{
+  "format": "instruction/1",
+  "body": [
+    {
+      "type": "directive",
+      "kind": "must",
+      "form": "container",
+      "attrs": {
+        "if": "an event is tentative",
+        "because": "Status matters."
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "retain its status."
+        }
+      ]
+    }
+  ]
+}

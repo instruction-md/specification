@@ -1,0 +1,1588 @@
+{
+  "format": "instruction-registry/1",
+  "spec": "1",
+  "common_attributes": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "title": {
+      "type": "string",
+      "pattern": "^[^\\r\\n]*$"
+    },
+    "class": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "format": {
+      "enum": [
+        "markdown",
+        "yaml",
+        "json",
+        "csv",
+        "text",
+        "html",
+        "code"
+      ]
+    },
+    "verbatim": {
+      "type": "boolean"
+    },
+    "src": {
+      "type": "string"
+    },
+    "ref": {
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "live",
+        "pinned"
+      ]
+    },
+    "version": {
+      "type": "string"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "string"
+    },
+    "style": {
+      "type": "string"
+    }
+  },
+  "kinds": {
+    "agent": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "protocol": {
+          "type": "string"
+        },
+        "resolver": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "connected"
+    },
+    "always": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {
+        "if": {
+          "type": "string",
+          "pattern": "^[^()\\r\\n]+$"
+        },
+        "because": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "guidance",
+      "alias": "must"
+    },
+    "aside": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "layout"
+    },
+    "audio": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "media-type": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "resource"
+    },
+    "avoid": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {
+        "if": {
+          "type": "string",
+          "pattern": "^[^()\\r\\n]+$"
+        },
+        "because": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "guidance",
+      "alias": "should",
+      "flags": {
+        "not": true
+      }
+    },
+    "card": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "layout"
+    },
+    "caution": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "advisory"
+    },
+    "column": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "span": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        }
+      },
+      "required": [],
+      "family": "layout",
+      "parent": "columns"
+    },
+    "columns": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        }
+      },
+      "required": [],
+      "family": "layout"
+    },
+    "component": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "component": {
+          "type": "string"
+        },
+        "stylesheet": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "component"
+      ],
+      "family": "presentation"
+    },
+    "config": {
+      "body": "yaml",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "dialect": {
+          "type": "string"
+        },
+        "adapter": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "schema-sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "id",
+        "dialect"
+      ],
+      "family": "technical",
+      "formats": [
+        "yaml",
+        "json"
+      ]
+    },
+    "context": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "guidance"
+    },
+    "data": {
+      "body": "yaml",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "technical",
+      "formats": [
+        "yaml",
+        "json",
+        "csv",
+        "text"
+      ]
+    },
+    "details": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "open": {
+          "type": "boolean"
+        }
+      },
+      "required": [],
+      "family": "layout"
+    },
+    "diagram": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "media-type": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "resource"
+    },
+    "drawing": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "media-type": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "resource"
+    },
+    "embed": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "media-type": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "src"
+      ],
+      "family": "composition"
+    },
+    "eval": {
+      "body": "yaml",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "dialect": {
+          "type": "string"
+        },
+        "adapter": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "schema-sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "technical",
+      "formats": [
+        "yaml",
+        "json"
+      ]
+    },
+    "example": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "avoid": {
+          "type": "boolean"
+        }
+      },
+      "required": [],
+      "family": "advisory",
+      "opaque": true
+    },
+    "extend": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "target": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "position": {
+          "enum": [
+            "prepend",
+            "append"
+          ]
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "family": "composition"
+    },
+    "figure": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "media-type": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "resource"
+    },
+    "form": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "contract"
+    },
+    "glossary": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "contract"
+    },
+    "grid": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "columns": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        }
+      },
+      "required": [],
+      "family": "layout"
+    },
+    "guardrail": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {
+        "if": {
+          "type": "string",
+          "pattern": "^[^()\\r\\n]+$"
+        },
+        "because": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "guidance"
+    },
+    "image": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "media-type": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "resource"
+    },
+    "important": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "advisory"
+    },
+    "include": {
+      "body": "none",
+      "forms": [
+        "leaf"
+      ],
+      "attributes": {
+        "as": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+        }
+      },
+      "required": [
+        "src",
+        "as"
+      ],
+      "family": "composition"
+    },
+    "info": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "advisory",
+      "alias": "note"
+    },
+    "instruction": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "guidance"
+    },
+    "may": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {
+        "if": {
+          "type": "string",
+          "pattern": "^[^()\\r\\n]+$"
+        },
+        "because": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "guidance"
+    },
+    "mcp": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "registry": {
+          "type": "string"
+        },
+        "server": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "allow": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "deny": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resolver": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "connected"
+    },
+    "must": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {
+        "if": {
+          "type": "string",
+          "pattern": "^[^()\\r\\n]+$"
+        },
+        "because": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "guidance"
+    },
+    "never": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {
+        "if": {
+          "type": "string",
+          "pattern": "^[^()\\r\\n]+$"
+        },
+        "because": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "guidance"
+    },
+    "note": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "advisory"
+    },
+    "output": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "response-format": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "contract"
+    },
+    "param": {
+      "body": "none",
+      "forms": [
+        "leaf"
+      ],
+      "attributes": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$"
+        },
+        "type": {
+          "enum": [
+            "string",
+            "number",
+            "integer",
+            "boolean",
+            "enum",
+            "list",
+            "url",
+            "duration"
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "default": {},
+        "example": {},
+        "source": {
+          "enum": [
+            "input",
+            "workspace",
+            "identity",
+            "static"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "family": "contract"
+    },
+    "pdf": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "media-type": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "resource"
+    },
+    "person": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "role": {
+          "type": "string"
+        },
+        "resolver": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "connected"
+    },
+    "policy": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "scope": {
+          "type": "string"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "guidance"
+    },
+    "properties": {
+      "body": "yaml",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "patch": {
+          "type": "boolean"
+        }
+      },
+      "required": [],
+      "family": "technical",
+      "formats": [
+        "yaml",
+        "json"
+      ]
+    },
+    "remove": {
+      "body": "none",
+      "forms": [
+        "leaf"
+      ],
+      "attributes": {
+        "target": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "family": "composition"
+    },
+    "replace": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "target": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "family": "composition",
+      "formats": [
+        "markdown",
+        "yaml",
+        "json"
+      ]
+    },
+    "resource": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "media-type": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "resource"
+    },
+    "role": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "resolver": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "connected"
+    },
+    "sandbox": {
+      "body": "yaml",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "dialect": {
+          "type": "string"
+        },
+        "adapter": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "schema-sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "technical",
+      "formats": [
+        "yaml",
+        "json"
+      ]
+    },
+    "schedule": {
+      "body": "yaml",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "dialect": {
+          "type": "string"
+        },
+        "adapter": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "schema-sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "id",
+        "dialect"
+      ],
+      "family": "technical",
+      "formats": [
+        "yaml",
+        "json"
+      ]
+    },
+    "script": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "lang": {
+          "type": "string"
+        },
+        "sandbox": {
+          "type": "string"
+        },
+        "entry": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "technical"
+    },
+    "section": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "layout"
+    },
+    "service": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "resolver": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "media-type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "connected"
+    },
+    "should": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {
+        "if": {
+          "type": "string",
+          "pattern": "^[^()\\r\\n]+$"
+        },
+        "because": {
+          "type": "string"
+        },
+        "not": {
+          "type": "boolean"
+        }
+      },
+      "required": [],
+      "family": "guidance"
+    },
+    "skill": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "trigger": {
+          "type": "string"
+        },
+        "resolver": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "connected"
+    },
+    "source": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "resolver": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "media-type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "connected"
+    },
+    "step": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "layout",
+      "parent": "steps"
+    },
+    "steps": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "layout"
+    },
+    "tab": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "layout",
+      "parent": "tabs"
+    },
+    "tabs": {
+      "body": "markdown",
+      "forms": [
+        "container"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "layout"
+    },
+    "test": {
+      "body": "yaml",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "dialect": {
+          "type": "string"
+        },
+        "adapter": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "schema-sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "family": "technical",
+      "formats": [
+        "yaml",
+        "json"
+      ]
+    },
+    "tip": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "advisory"
+    },
+    "tool": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "server": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "allow": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "deny": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "server",
+        "name"
+      ],
+      "family": "connected"
+    },
+    "video": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "leaf"
+      ],
+      "attributes": {
+        "media-type": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "family": "resource"
+    },
+    "warning": {
+      "body": "markdown",
+      "forms": [
+        "container",
+        "keyword",
+        "alert"
+      ],
+      "attributes": {},
+      "required": [],
+      "family": "advisory"
+    },
+    "workflow": {
+      "body": "yaml",
+      "forms": [
+        "container"
+      ],
+      "attributes": {
+        "dialect": {
+          "type": "string"
+        },
+        "adapter": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "schema-sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "id",
+        "dialect"
+      ],
+      "family": "technical",
+      "formats": [
+        "yaml",
+        "json"
+      ]
+    }
+  },
+  "inline": {
+    "ref": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "person": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "role": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "skill": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "mcp": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "tool": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "agent": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "service": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "source": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "resource": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "cite": {
+      "ref": {
+        "type": "string"
+      }
+    },
+    "mark": {},
+    "sub": {},
+    "sup": {},
+    "kbd": {},
+    "icon": {},
+    "badge": {},
+    "abbr": {
+      "title": {
+        "type": "string"
+      }
+    },
+    "button": {
+      "href": {
+        "type": "string"
+      }
+    }
+  },
+  "keywords": {
+    "MUST": "must",
+    "MUST NOT": "never",
+    "NEVER": "never",
+    "ALWAYS": "must",
+    "SHOULD": "should",
+    "SHOULD NOT": "should",
+    "AVOID": "should",
+    "MAY": "may",
+    "GUARDRAIL": "guardrail",
+    "NOTE": "note",
+    "INFO": "note",
+    "TIP": "tip",
+    "IMPORTANT": "important",
+    "WARNING": "warning",
+    "CAUTION": "caution"
+  },
+  "keyword_flags": {
+    "SHOULD NOT": {
+      "not": true
+    },
+    "AVOID": {
+      "not": true
+    }
+  },
+  "grammar": {
+    "kind": "^[a-z][a-z0-9-]*(?::[a-z][a-z0-9-]*)?$",
+    "id": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+    "parameter": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+    "digest": "^sha256:[0-9a-f]{64}$"
+  }
+}

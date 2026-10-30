@@ -1,0 +1,7 @@
+{
+  "nodes": [
+    { "id": "commitments", "type": "text", "x": 0, "y": 0, "width": 320, "height": 180, "text": "## Commitments\nKeep confirmed and tentative appointments distinct." },
+    { "id": "priorities", "type": "text", "x": 400, "y": 0, "width": 320, "height": 180, "text": "## Suggested priorities\nRecommend one achievable focus task." }
+  ],
+  "edges": [ { "id": "reading-order", "fromNode": "commitments", "toNode": "priorities", "fromSide": "right", "toSide": "left" } ]
+}

@@ -1,84 +1,33 @@
-# Cheat sheet
+# instruction.md cheat sheet
 
-Every construct, how you write it, and what the model receives (default label
-style). The full rules are in the [specification](../README.md); the guide is
-[here](README.md).
-
-## Rules
-
-| You write | The model receives |
+| Intent | Source |
 |---|---|
-| `MUST: x` · `ALWAYS: x` · `:::must` | `**MUST:** x` |
-| `SHOULD: x` | `**SHOULD:** x` |
-| `SHOULD NOT: x` · `AVOID: x` · `:::should{not}` | `**SHOULD NOT:** x` |
-| `NEVER: x` · `MUST NOT: x` | `**NEVER:** x` |
-| `MAY: x` | `**MAY:** x` |
-| `> [!GUARDRAIL]` | `**GUARDRAIL:** …` |
-| `MUST[name]: x` | `**MUST:** x` (the name is for people and references) |
-| `MUST (if c): x` · `:::must{if="c"}` | `**MUST (if c):** x` |
-| `BECAUSE: y` after a rule · `{because="y"}` | `**BECAUSE:** y` after the rule |
-| `:::must{overrides="should/brevity"}` | the overridden rule is not delivered |
-| `NOTE:` `TIP:` `WARNING:` `CAUTION:` `IMPORTANT:` | the same label, bold |
+| Bind guidance | `MUST[id]: …`, `NEVER: …`, `SHOULD NOT: …`, `MAY: …` |
+| Explain it | `BECAUSE: …` immediately after a rule |
+| Qualify a task-time rule | `MUST (if the invitation is tentative): …` |
+| Group policies | `:::policy{id=privacy title="Privacy"}` … `:::` |
+| Label examples | `:::example{avoid title="Counterexample"}` … `:::` |
+| Describe output | `:::output{response-format=json schema=#reply}` … `:::` |
+| Declare an object | `::person{id=owner title="Alex" src="https://…"}` |
+| Reference an object | `:person[Alex]{ref=#owner}` |
+| Reference guidance | `[[./team.md#id=privacy\|Privacy policy]]` |
+| Include guidance | `::include{src="./team.md#id=privacy" as=privacy required}` |
+| Preview a resource | `::embed{src="./brief.pdf" page=2}` |
+| Inherit | Front matter `extends: [{uri: ./base.md, as: personal}]` |
+| Modify inherited content | `:::replace{target="#personal/brief-length"}` … `:::` |
+| Add to inherited guidance | `:::extend{target="#personal/priorities"}` … `:::` |
+| Remove inherited content | `::remove{target="#personal/obsolete" reason="…"}` |
+| Embed media | `:::video{src="./demo.mp4" start=0 end=10000}` description `:::` |
+| Drawings | `:::drawing{src="./diagram.excalidraw" preview="./diagram.svg"}` description `:::` |
+| Third-party block | `:::charts:metric{label="Tasks" value=3}` fallback `:::` |
+| Runtime configuration | `:::config{id=runtime dialect="agentd/config"}` YAML/JSON `:::` |
+| Native workflow DSL | `:::workflow{id=brief dialect="instruction/workflow"}` typed steps `:::` |
+| Compiler target | Front-matter `exports` with adapter, profile and explicit block bindings |
+| Parameter | `${timezone}` in prose; declarations in metadata or a `param` leaf |
+| Front matter | Initial `---` / YAML mapping / `---` |
+| Backmatter | blank line + `---` / known metadata key first / YAML mapping through EOF |
 
-Strength: `GUARDRAIL` > `NEVER` = `MUST` > `SHOULD` > `MAY`.
-
-## Examples, context, output
-
-| You write | The model receives |
-|---|---|
-| `:::example{title=T}` | `**EXAMPLE — T:**` then the body verbatim |
-| `:::example{title=T avoid}` | `**EXAMPLE (avoid) — T:**` then the body |
-| `:::output{format=json title=T}` | `**OUTPUT (json) — T:**` then the body |
-| `:::context{title=T}` | `<reference title="T">` … `</reference>` |
-| `:::glossary` | `**Term** — definition`, one per line |
-| `:::tool{cap="server://x" allow="read"}` | `**Tool — X** (\`server://x\`) — allowed: read` |
-
-## Situations
-
-| You write | The model receives |
-|---|---|
-| `${name}` | its value, if it fits the parameter's type; else `${name}` |
-| `:::when{environment="production"}` | the body, for a matching context |
-| `:::unless{host="agentd"}` | the body, unless the context matches |
-| `:::otherwise` | the body, when no variant just before it was kept |
-| `::include{id="ins_42"}` | the included document, delivered for this reader |
-| `::param{…}` · `:::param[]` | nothing |
-
-Context keys: `agent` `model` `host` `environment` `locale`, and your parameters.
-Parameter types: `string` `number` `boolean` `enum` `list` `url` `duration`.
-
-## References
-
-| You write | Means |
-|---|---|
-| `[[kind/name]]` · `[label](#kind/name)` | a block in this document (delivered as its label or name) |
-| `[#Label](instruction://…)` | another instruction |
-| `[@Label](principal://…)` | a person or an agent |
-| `[&Label](server://…)` | a capability |
-| `#tag` | a topic label |
-
-## For people only
-
-| You write | The model receives |
-|---|---|
-| `<!-- note -->` on its own line | nothing |
-| front matter | nothing |
-| end matter — a closing `---` YAML block (owners, approved, review, changelog, sources) | nothing |
-| `:::!eval{name=…}` | nothing — run it with `instruction eval` |
-
-## Machinery (L3)
-
-| You write | The model receives |
-|---|---|
-| `:::!mcp{name=x …}` | `[mcp server "x" is connected; its tools are available]` |
-| `## !skill x {trigger="…"}` + section | `[skill "x" is available — use it when …; reference it as @skill/x]` |
-| `:::!human[]` table | `[3 human roles are declared: a, b, c]` |
-| `:::!workflow{name=x}` | `[workflow "x" is loaded and runs autonomously]` |
-
-## Label styles
-
-Front matter `delivery: { labels: bold | plain | tags }`:
-
-| bold (default) | plain | tags |
-|---|---|---|
-| `**MUST (if c):** x` | `MUST (if c): x` | `<must if="c">x</must>` |
+Nested containers use longer outer fences. Code, math, examples and verbatim
+content are literal. Metadata/comments are excluded from shared body. Every
+layout child remains available in agent projections. References never grant
+accounts or execution permission. Editor tests are explicit external operations.

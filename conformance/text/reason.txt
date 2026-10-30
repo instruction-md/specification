@@ -1,0 +1,2 @@
+MUST (if an event is tentative): retain its status.
+BECAUSE: Status matters.

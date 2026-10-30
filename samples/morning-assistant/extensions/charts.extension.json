@@ -1,0 +1,17 @@
+{
+  "format": "instruction-extension/1",
+  "id": "dev.example/charts",
+  "version": "1.0.0",
+  "spec": ["1"],
+  "roles": ["presentation"],
+  "provides": {
+    "blocks": {
+      "metric": {
+        "body": "markdown",
+        "forms": ["container"],
+        "attributes": { "label": { "type": "string" }, "value": { "type": "number" } },
+        "fallback": "children"
+      }
+    }
+  }
+}

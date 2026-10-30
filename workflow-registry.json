@@ -1,0 +1,1028 @@
+{
+  "format": "instruction-workflow-registry/1",
+  "dialect": "instruction/workflow",
+  "revision": "1",
+  "schema": "https://instruction.md/specification/1/schemas/workflow.schema.json",
+  "origin": {
+    "uri": "https://agentd.dev/schema/workflow.json",
+    "sha256": "sha256:40f1d4a06967af70705d1b6aa508ebcc7defc7693ad3e8d8570eb02637ac5f23"
+  },
+  "kinds": {
+    "a2a": {
+      "fields": [
+        "command",
+        "roles",
+        "inputs",
+        "schema",
+        "into"
+      ],
+      "required": [],
+      "start": true,
+      "summary": "Accept an authenticated command with declared roles and an input contract."
+    },
+    "a2a.delegate": {
+      "fields": [
+        "peer",
+        "objective",
+        "command",
+        "args",
+        "output_contract",
+        "timeout",
+        "idempotency",
+        "breaker",
+        "rate",
+        "auth_to",
+        "auth_timeout",
+        "payment"
+      ],
+      "required": [
+        "peer"
+      ],
+      "start": false,
+      "summary": "Delegate an objective and output contract to an authorized peer."
+    },
+    "a2a.send": {
+      "fields": [
+        "to",
+        "parts",
+        "command",
+        "args",
+        "context",
+        "timeout",
+        "idempotency",
+        "breaker",
+        "rate",
+        "payment"
+      ],
+      "required": [
+        "to"
+      ],
+      "start": false,
+      "summary": "Send an authenticated message or command to a named destination."
+    },
+    "a2a.wait": {
+      "fields": [
+        "conversation",
+        "from",
+        "timeout"
+      ],
+      "required": [
+        "from"
+      ],
+      "start": false,
+      "summary": "Wait for a matching conversation response from an expected peer."
+    },
+    "agent": {
+      "fields": [
+        "instruction",
+        "output_contract",
+        "output_schema",
+        "tools",
+        "servers",
+        "limits",
+        "context",
+        "skills",
+        "system",
+        "model",
+        "effort"
+      ],
+      "required": [
+        "instruction"
+      ],
+      "start": false,
+      "summary": "Run a bounded tool-using model turn with explicitly narrowed capabilities."
+    },
+    "artifact.create": {
+      "fields": [
+        "name",
+        "mime",
+        "content",
+        "from_step",
+        "sensitive"
+      ],
+      "required": [
+        "name"
+      ],
+      "start": false,
+      "summary": "Store content as an artifact with media type and sensitivity metadata."
+    },
+    "artifact.delete": {
+      "fields": [
+        "id"
+      ],
+      "required": [
+        "id"
+      ],
+      "start": false,
+      "summary": "Delete an artifact the active principal may manage."
+    },
+    "artifact.get": {
+      "fields": [
+        "id"
+      ],
+      "required": [
+        "id"
+      ],
+      "start": false,
+      "summary": "Read an artifact under the host access policy."
+    },
+    "assert": {
+      "fields": [
+        "condition",
+        "message"
+      ],
+      "required": [
+        "condition"
+      ],
+      "start": false,
+      "summary": "Fail unless its expression holds, recording the assertion message."
+    },
+    "assign": {
+      "fields": [
+        "value",
+        "writes",
+        "mode"
+      ],
+      "required": [
+        "value"
+      ],
+      "start": false,
+      "summary": "Write a rendered value into a run variable using its reducer and schema."
+    },
+    "batch": {
+      "fields": [
+        "over",
+        "body",
+        "by",
+        "size",
+        "parallel",
+        "rate",
+        "collect",
+        "on_error"
+      ],
+      "required": [
+        "over",
+        "body"
+      ],
+      "start": false,
+      "summary": "Run a scoped body per group, with grouping, size, parallelism and collection policy."
+    },
+    "checkpoint": {
+      "fields": [
+        "name"
+      ],
+      "required": [],
+      "start": false,
+      "summary": "Request an explicit durable checkpoint in the execution record."
+    },
+    "chunk": {
+      "fields": [
+        "value",
+        "by",
+        "size",
+        "overlap"
+      ],
+      "required": [
+        "value",
+        "size"
+      ],
+      "start": false,
+      "summary": "Split a value into bounded pieces with optional overlap."
+    },
+    "classify": {
+      "fields": [
+        "input",
+        "classes",
+        "prompt",
+        "skills",
+        "model",
+        "confidence",
+        "on_unsure"
+      ],
+      "required": [
+        "input",
+        "classes"
+      ],
+      "start": false,
+      "summary": "Choose among declared classes, preserving confidence and uncertainty policy."
+    },
+    "correlate": {
+      "fields": [
+        "stream",
+        "on",
+        "by",
+        "window",
+        "on_incomplete",
+        "filter",
+        "max_pending",
+        "inputs"
+      ],
+      "required": [
+        "stream",
+        "on"
+      ],
+      "start": true,
+      "summary": "Join related stream events in a bounded time window; expose missing members in partial results."
+    },
+    "decide": {
+      "fields": [
+        "state",
+        "questions",
+        "model",
+        "confidence",
+        "on_unsure"
+      ],
+      "required": [
+        "state",
+        "questions"
+      ],
+      "start": false,
+      "summary": "Answer declared decision questions about a state with confidence controls."
+    },
+    "dedupe": {
+      "fields": [
+        "over",
+        "by"
+      ],
+      "required": [
+        "over"
+      ],
+      "start": false,
+      "summary": "Remove duplicate collection members while retaining the first matching member."
+    },
+    "emit": {
+      "fields": [
+        "note",
+        "audit",
+        "value",
+        "stream",
+        "subject",
+        "data",
+        "correlation",
+        "forward"
+      ],
+      "required": [],
+      "start": false,
+      "summary": "Record a value/audit note or append an event to a declared stream."
+    },
+    "event": {
+      "fields": [
+        "on",
+        "filter",
+        "inputs"
+      ],
+      "required": [
+        "on"
+      ],
+      "start": true,
+      "summary": "Fire on an allowed host event, with a payload filter."
+    },
+    "extract": {
+      "fields": [
+        "input",
+        "output_schema",
+        "prompt",
+        "skills",
+        "model"
+      ],
+      "required": [
+        "input",
+        "output_schema"
+      ],
+      "start": false,
+      "summary": "Extract structured content that must satisfy an output schema."
+    },
+    "fail": {
+      "fields": [
+        "message",
+        "code"
+      ],
+      "required": [],
+      "start": false,
+      "summary": "End the run as a failure with an optional code and message."
+    },
+    "filter": {
+      "fields": [
+        "over",
+        "expr",
+        "as"
+      ],
+      "required": [
+        "over",
+        "expr"
+      ],
+      "start": false,
+      "summary": "Keep array members whose expression evaluates to true."
+    },
+    "finish": {
+      "fields": [
+        "status",
+        "output",
+        "reason"
+      ],
+      "required": [],
+      "start": false,
+      "summary": "End the run with a declared terminal status, output and reason."
+    },
+    "foreach": {
+      "fields": [
+        "over",
+        "body",
+        "batch",
+        "collect",
+        "on_error",
+        "as"
+      ],
+      "required": [
+        "over",
+        "body"
+      ],
+      "start": false,
+      "summary": "Run a scoped body per item under explicit batching and parallelism bounds."
+    },
+    "http": {
+      "fields": [
+        "method",
+        "url",
+        "headers",
+        "query",
+        "body",
+        "json",
+        "timeout",
+        "expect",
+        "allow_private",
+        "sign",
+        "idempotency",
+        "breaker",
+        "rate",
+        "auth",
+        "payment"
+      ],
+      "required": [
+        "url"
+      ],
+      "start": false,
+      "summary": "Make an authorized HTTP request with response, credential, retry and idempotency policy."
+    },
+    "human": {
+      "fields": [
+        "question",
+        "schema",
+        "to",
+        "timeout",
+        "reply_uri"
+      ],
+      "required": [
+        "question"
+      ],
+      "start": false,
+      "summary": "Suspend for an authorized person to answer a question under an optional schema."
+    },
+    "iterate": {
+      "fields": [
+        "body",
+        "while",
+        "until",
+        "max_iterations",
+        "collect"
+      ],
+      "required": [
+        "body"
+      ],
+      "start": false,
+      "summary": "Repeat a scoped body while/until a condition, bounded by a maximum iteration count."
+    },
+    "join": {
+      "fields": [
+        "handles",
+        "timeout",
+        "min",
+        "partials"
+      ],
+      "required": [
+        "handles"
+      ],
+      "start": false,
+      "summary": "Await child/subagent handles, with a deadline and minimum/partial-result policy."
+    },
+    "judge": {
+      "fields": [
+        "input",
+        "rubric",
+        "levels",
+        "prompt",
+        "skills",
+        "model",
+        "confidence",
+        "on_unsure"
+      ],
+      "required": [
+        "input",
+        "rubric"
+      ],
+      "start": false,
+      "summary": "Evaluate input against a rubric and optional discrete levels."
+    },
+    "knowledge.get": {
+      "fields": [
+        "id",
+        "uri"
+      ],
+      "required": [],
+      "start": false,
+      "summary": "Retrieve a selected knowledge item and its content metadata."
+    },
+    "knowledge.search": {
+      "fields": [
+        "query",
+        "top_k",
+        "filters"
+      ],
+      "required": [
+        "query"
+      ],
+      "start": false,
+      "summary": "Search a configured knowledge provider and return ranked hits."
+    },
+    "loop": {
+      "fields": [
+        "interval",
+        "delay",
+        "until",
+        "max_iterations",
+        "backoff",
+        "inputs"
+      ],
+      "required": [],
+      "start": true,
+      "summary": "Re-enter after a prior run, with pacing, backoff and termination bounds."
+    },
+    "manual": {
+      "fields": [
+        "inputs"
+      ],
+      "required": [],
+      "start": true,
+      "summary": "Admit a run only after an explicit operator or authorized caller request."
+    },
+    "map": {
+      "fields": [
+        "over",
+        "expr",
+        "as"
+      ],
+      "required": [
+        "over",
+        "expr"
+      ],
+      "start": false,
+      "summary": "Apply an expression to each item and return the resulting array."
+    },
+    "mcp.resource": {
+      "fields": [
+        "server",
+        "op",
+        "uri",
+        "name",
+        "arguments",
+        "reference",
+        "argument"
+      ],
+      "required": [
+        "server",
+        "op"
+      ],
+      "start": false,
+      "summary": "Read/list resources, use a prompt, or request completion through a declared MCP server."
+    },
+    "mcp.tool": {
+      "fields": [
+        "server",
+        "tool",
+        "args",
+        "idempotency",
+        "breaker",
+        "rate",
+        "detach",
+        "input",
+        "payment"
+      ],
+      "required": [
+        "server",
+        "tool"
+      ],
+      "start": false,
+      "summary": "Call a named tool on a declared MCP server, with task, elicitation and resilience options."
+    },
+    "memory.delete": {
+      "fields": [
+        "key"
+      ],
+      "required": [
+        "key"
+      ],
+      "start": false,
+      "summary": "Delete an accessible durable memory key."
+    },
+    "memory.get": {
+      "fields": [
+        "key"
+      ],
+      "required": [
+        "key"
+      ],
+      "start": false,
+      "summary": "Read an explicitly bound durable memory key."
+    },
+    "memory.list": {
+      "fields": [
+        "prefix",
+        "limit"
+      ],
+      "required": [],
+      "start": false,
+      "summary": "List accessible memory keys with prefix and result bounds."
+    },
+    "memory.pop": {
+      "fields": [
+        "key"
+      ],
+      "required": [
+        "key"
+      ],
+      "start": false,
+      "summary": "Remove and return the final member of a durable memory collection."
+    },
+    "memory.push": {
+      "fields": [
+        "key",
+        "value"
+      ],
+      "required": [
+        "key",
+        "value"
+      ],
+      "start": false,
+      "summary": "Append a value to a durable memory collection."
+    },
+    "memory.set": {
+      "fields": [
+        "key",
+        "value",
+        "ttl"
+      ],
+      "required": [
+        "key",
+        "value"
+      ],
+      "start": false,
+      "summary": "Write a durable memory key, optionally with a time-to-live."
+    },
+    "memory.shift": {
+      "fields": [
+        "key"
+      ],
+      "required": [
+        "key"
+      ],
+      "start": false,
+      "summary": "Remove and return the first member of a durable memory collection."
+    },
+    "message": {
+      "fields": [
+        "to",
+        "text",
+        "parts",
+        "wait",
+        "timeout",
+        "on_timeout"
+      ],
+      "required": [
+        "to"
+      ],
+      "start": false,
+      "summary": "Deliver a message through an authorized channel, optionally awaiting a reply."
+    },
+    "noop": {
+      "fields": [],
+      "required": [],
+      "start": false,
+      "summary": "Complete without an effect; useful as a join or routing point."
+    },
+    "once": {
+      "fields": [
+        "policy",
+        "inputs"
+      ],
+      "required": [],
+      "start": true,
+      "summary": "Fire when the activated definition is armed; an ensure policy avoids a duplicate live run."
+    },
+    "parallel": {
+      "fields": [
+        "branches",
+        "on_error",
+        "min_success"
+      ],
+      "required": [
+        "branches"
+      ],
+      "start": false,
+      "summary": "Run named scoped branches concurrently and combine their terminal results."
+    },
+    "parse": {
+      "fields": [
+        "text",
+        "format"
+      ],
+      "required": [
+        "text"
+      ],
+      "start": false,
+      "summary": "Parse text using a declared data format."
+    },
+    "race": {
+      "fields": [
+        "branches",
+        "timeout"
+      ],
+      "required": [
+        "branches"
+      ],
+      "start": false,
+      "summary": "Run named branches and accept the first qualifying result; cancel the losers."
+    },
+    "reduce": {
+      "fields": [
+        "over",
+        "expr",
+        "initial",
+        "as",
+        "acc"
+      ],
+      "required": [
+        "over",
+        "expr"
+      ],
+      "start": false,
+      "summary": "Fold an array from an initial accumulator with a declared expression."
+    },
+    "route": {
+      "fields": [
+        "input",
+        "choices",
+        "prompt",
+        "skills",
+        "model",
+        "confidence",
+        "on_unsure"
+      ],
+      "required": [
+        "input",
+        "choices"
+      ],
+      "start": false,
+      "summary": "Use a model to choose among declared routes, with uncertainty handling."
+    },
+    "schedule": {
+      "fields": [
+        "cron",
+        "every",
+        "at",
+        "inputs"
+      ],
+      "required": [],
+      "start": true,
+      "summary": "Fire from one UTC cron, interval or absolute-time declaration."
+    },
+    "search.fetch": {
+      "fields": [
+        "url",
+        "max_bytes"
+      ],
+      "required": [
+        "url"
+      ],
+      "start": false,
+      "summary": "Retrieve a selected page/resource within a byte bound."
+    },
+    "search.query": {
+      "fields": [
+        "query",
+        "kind",
+        "limit",
+        "freshness"
+      ],
+      "required": [
+        "query"
+      ],
+      "start": false,
+      "summary": "Query a configured search provider with explicit result and freshness bounds."
+    },
+    "signal": {
+      "fields": [
+        "name",
+        "filter",
+        "inputs"
+      ],
+      "required": [
+        "name"
+      ],
+      "start": true,
+      "summary": "Fire on an edge-triggered named signal; no implicit retained backlog."
+    },
+    "sleep": {
+      "fields": [
+        "duration"
+      ],
+      "required": [
+        "duration"
+      ],
+      "start": false,
+      "summary": "Suspend on a durable timer for the declared duration."
+    },
+    "sort": {
+      "fields": [
+        "over",
+        "by",
+        "order"
+      ],
+      "required": [
+        "over"
+      ],
+      "start": false,
+      "summary": "Order an array by a selected value/path and direction."
+    },
+    "stream": {
+      "fields": [
+        "stream",
+        "subject",
+        "filter",
+        "from",
+        "rate",
+        "batch",
+        "inputs"
+      ],
+      "required": [
+        "stream"
+      ],
+      "start": true,
+      "summary": "Consume persisted events with subject selection, durable offsets, batching and rate controls."
+    },
+    "subagent": {
+      "fields": [
+        "instruction",
+        "template",
+        "params",
+        "mode",
+        "tools",
+        "servers",
+        "limits",
+        "priority",
+        "context",
+        "output_contract",
+        "output_schema",
+        "skills",
+        "durable"
+      ],
+      "required": [],
+      "start": false,
+      "summary": "Delegate bounded work to a child agent with explicit tools, context and budgets."
+    },
+    "subgraph": {
+      "fields": [
+        "body"
+      ],
+      "required": [
+        "body"
+      ],
+      "start": false,
+      "summary": "Evaluate an inline scoped dependency graph and return its sink outputs."
+    },
+    "subscribe": {
+      "fields": [
+        "server",
+        "uri",
+        "debounce_ms",
+        "filter",
+        "window",
+        "inputs"
+      ],
+      "required": [
+        "server",
+        "uri"
+      ],
+      "start": true,
+      "summary": "Read an MCP resource after notifications, with filtering, debounce and bounded sampling."
+    },
+    "summarize": {
+      "fields": [
+        "input",
+        "length",
+        "prompt",
+        "skills",
+        "model"
+      ],
+      "required": [
+        "input"
+      ],
+      "start": false,
+      "summary": "Produce a model summary using declared length, context and model settings."
+    },
+    "switch": {
+      "fields": [
+        "on",
+        "cases",
+        "default",
+        "on_no_match"
+      ],
+      "required": [
+        "on",
+        "cases"
+      ],
+      "start": false,
+      "summary": "Select one string-valued routing target; prune the unchosen routes."
+    },
+    "template": {
+      "fields": [
+        "text",
+        "value"
+      ],
+      "required": [],
+      "start": false,
+      "summary": "Render text or a typed value from the current run context."
+    },
+    "think": {
+      "fields": [
+        "prompt",
+        "output_schema",
+        "reads",
+        "check",
+        "retries",
+        "skills",
+        "system",
+        "model",
+        "effort"
+      ],
+      "required": [
+        "prompt"
+      ],
+      "start": false,
+      "summary": "Make a tool-free model request for structured reasoning/output under a declared contract."
+    },
+    "tool": {
+      "fields": [
+        "name",
+        "args",
+        "detach",
+        "input"
+      ],
+      "required": [
+        "name"
+      ],
+      "start": false,
+      "summary": "Call an explicitly granted tool by its host registry name."
+    },
+    "transform": {
+      "fields": [
+        "value",
+        "writes",
+        "mode"
+      ],
+      "required": [
+        "value"
+      ],
+      "start": false,
+      "summary": "The assign operation, named for data transformation."
+    },
+    "validate": {
+      "fields": [
+        "value",
+        "schema"
+      ],
+      "required": [
+        "value",
+        "schema"
+      ],
+      "start": false,
+      "summary": "Return a value only if it conforms to the supplied schema."
+    },
+    "wait": {
+      "fields": [
+        "on",
+        "server",
+        "uri",
+        "condition",
+        "signal",
+        "run",
+        "subagent",
+        "conversation",
+        "from",
+        "webhook",
+        "stream",
+        "subject",
+        "subscribe",
+        "match",
+        "task",
+        "timeout",
+        "on_timeout"
+      ],
+      "required": [
+        "on"
+      ],
+      "start": false,
+      "summary": "Suspend on a declared resource, event, task, run, signal or other supported wait condition."
+    },
+    "webhook": {
+      "fields": [
+        "path",
+        "methods",
+        "auth",
+        "parallelism",
+        "on_overflow",
+        "rate",
+        "idempotency",
+        "respond",
+        "filter",
+        "inputs",
+        "signal",
+        "into"
+      ],
+      "required": [
+        "path"
+      ],
+      "start": true,
+      "summary": "Accept a bound, authenticated HTTP event with filtering, admission and response policy."
+    },
+    "workflow": {
+      "fields": [
+        "name",
+        "inputs",
+        "mode",
+        "start",
+        "version",
+        "cascade"
+      ],
+      "required": [
+        "name"
+      ],
+      "start": false,
+      "summary": "Invoke a named child workflow synchronously, asynchronously or detached, with explicit cancellation propagation."
+    },
+    "workflow.cancel": {
+      "fields": [
+        "run",
+        "reason"
+      ],
+      "required": [
+        "run"
+      ],
+      "start": false,
+      "summary": "Request cancellation of an authorized target run."
+    },
+    "workflow.signal": {
+      "fields": [
+        "name",
+        "payload",
+        "run"
+      ],
+      "required": [
+        "name"
+      ],
+      "start": false,
+      "summary": "Signal an existing waiter or an explicitly selected run."
+    },
+    "workflow.wait": {
+      "fields": [
+        "run",
+        "timeout"
+      ],
+      "required": [
+        "run"
+      ],
+      "start": false,
+      "summary": "Await a child or referenced run with an optional deadline."
+    }
+  },
+  "common_fields": [
+    "budget",
+    "cache",
+    "depends_on",
+    "description",
+    "idempotent",
+    "kind",
+    "on_error",
+    "on_replay",
+    "otel",
+    "output_schema",
+    "retry",
+    "skills",
+    "timeout",
+    "when"
+  ],
+  "limits": {
+    "steps": 512,
+    "body_depth": 4,
+    "retry_max": 20
+  }
+}

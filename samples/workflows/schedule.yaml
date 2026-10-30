@@ -1,0 +1,15 @@
+name: weekday-brief
+steps:
+  weekday:
+    kind: schedule
+    cron: 0 8 * * 1-5
+  draft:
+    kind: agent
+    depends_on:
+    - weekday
+    instruction: Prepare a weekday brief. Name uncertainty and keep it under 150 words.
+  done:
+    kind: finish
+    depends_on:
+    - draft
+    output: '{{ steps.draft.output }}'

@@ -1,0 +1,36 @@
+name: parallel-research
+limits:
+  steps: 20
+  tokens: 6000
+  deadline: 10m
+steps:
+  start:
+    kind: manual
+  research:
+    kind: parallel
+    depends_on:
+    - start
+    branches:
+      calendar:
+        steps:
+          read:
+            kind: mcp.tool
+            server: calendar
+            tool: availability.read
+            args: {}
+      priorities:
+        steps:
+          read:
+            kind: agent
+            instruction: Identify one achievable focus task from the supplied context.
+  brief:
+    kind: agent
+    depends_on:
+    - research
+    instruction: 'Combine the research into a short brief: {{ steps.research.output
+      }}'
+  done:
+    kind: finish
+    depends_on:
+    - brief
+    output: '{{ steps.brief.output }}'

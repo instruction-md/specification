@@ -1,0 +1,33 @@
+{
+  "format": "instruction-resolved/1",
+  "status": "complete",
+  "document": {
+    "uri": "https://example.org/simple.md",
+    "sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "body": [
+    {
+      "type": "directive",
+      "kind": "policy",
+      "form": "container",
+      "attrs": {
+        "id": "privacy",
+        "title": "Privacy"
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "Keep private details private.",
+          "instance": "root"
+        }
+      ],
+      "instance": "root"
+    }
+  ],
+  "extensions": [],
+  "objects": [],
+  "resources": [],
+  "dependencies": [],
+  "provenance": [],
+  "diagnostics": []
+}

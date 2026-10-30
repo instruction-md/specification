@@ -1,0 +1,33 @@
+name: review-items
+inputs:
+  schema:
+    type: object
+    required:
+    - items
+    properties:
+      items:
+        type: array
+steps:
+  start:
+    kind: manual
+  each:
+    kind: foreach
+    depends_on:
+    - start
+    over: '{{ inputs.items }}'
+    as: task
+    batch:
+      size: 1
+      parallel: 3
+      rate: 10/1s
+    body:
+      steps:
+        review:
+          kind: agent
+          instruction: 'Summarize this task and identify its next decision: {{ task
+            }}'
+  done:
+    kind: finish
+    depends_on:
+    - each
+    output: '{{ steps.each.output }}'

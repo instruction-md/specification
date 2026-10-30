@@ -1,0 +1,19 @@
+{
+  "format": "instruction/1",
+  "body": [
+    {
+      "type": "directive",
+      "kind": "script",
+      "form": "container",
+      "attrs": {
+        "id": "s"
+      },
+      "children": [
+        {
+          "type": "markdown",
+          "source": "```python\na = 1\n\n\nprint(a)\n```\n"
+        }
+      ]
+    }
+  ]
+}

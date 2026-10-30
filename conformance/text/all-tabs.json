@@ -1,0 +1,41 @@
+{
+  "format": "instruction/1",
+  "body": [
+    {
+      "type": "directive",
+      "kind": "tabs",
+      "form": "container",
+      "attrs": {},
+      "children": [
+        {
+          "type": "directive",
+          "kind": "tab",
+          "form": "container",
+          "attrs": {
+            "title": "A"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "First."
+            }
+          ]
+        },
+        {
+          "type": "directive",
+          "kind": "tab",
+          "form": "container",
+          "attrs": {
+            "title": "B"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Second."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

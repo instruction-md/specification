@@ -1,0 +1,35 @@
+name: reliable-read
+inputs:
+  schema:
+    type: object
+    required:
+    - request_id
+    properties:
+      request_id:
+        type: string
+steps:
+  start:
+    kind: manual
+  fetch:
+    kind: mcp.tool
+    depends_on:
+    - start
+    server: calendar
+    tool: events.list
+    args: {}
+    timeout: 30s
+    retry:
+      max: 3
+      backoff: 2s
+    breaker:
+      failures: 5
+      cooldown: 60s
+    rate: 10/1s
+    idempotency:
+      value: '{{ inputs.request_id }}'
+    on_replay: fail
+  done:
+    kind: finish
+    depends_on:
+    - fetch
+    output: '{{ steps.fetch.output }}'

@@ -1,0 +1,2979 @@
+[
+  {
+    "name": "agent-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "agent",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "agent-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "agent",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "always-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "always",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "always-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "always",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "aside-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "aside",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "aside-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "aside",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "audio-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "audio",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "audio-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "audio",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "avoid-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "avoid",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "avoid-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "avoid",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "card-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "card",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "card-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "card",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "caution-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "caution",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "caution-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "caution",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "column-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "columns",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "directive",
+              "kind": "column",
+              "form": "container",
+              "attrs": {},
+              "children": [
+                {
+                  "type": "markdown",
+                  "source": "Shared content."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "column-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "columns",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "directive",
+              "kind": "column",
+              "form": "container",
+              "attrs": {
+                "unregistered-core-attribute": "not allowed"
+              },
+              "children": [
+                {
+                  "type": "markdown",
+                  "source": "Shared content."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "columns-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "columns",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "columns-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "columns",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "component-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "component",
+          "form": "container",
+          "attrs": {
+            "component": "example-card"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "component-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "component",
+          "form": "container",
+          "attrs": {
+            "component": "example-card",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "config-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "config",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "dialect": "sample"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "config-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "config",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "dialect": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "context-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "context",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "context-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "context",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "data-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "data",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "data-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "data",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "details-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "details",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "details-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "details",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "diagram-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "diagram",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "diagram-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "diagram",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "drawing-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "drawing",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "drawing-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "drawing",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "embed-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "embed",
+          "form": "container",
+          "attrs": {
+            "src": "./resource.md"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "embed-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "embed",
+          "form": "container",
+          "attrs": {
+            "src": "./resource.md",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "eval-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "eval",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "eval-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "eval",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "example-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "example",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "example-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "example",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "extend-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "extend",
+          "form": "container",
+          "attrs": {
+            "target": "#base/block"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "extend-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "extend",
+          "form": "container",
+          "attrs": {
+            "target": "#base/block",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "figure-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "figure",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "figure-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "figure",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "form-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "form",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "form-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "form",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "glossary-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "glossary",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "glossary-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "glossary",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "grid-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "grid",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "grid-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "grid",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "guardrail-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "guardrail",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "guardrail-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "guardrail",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "image-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "image",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "image-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "image",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "important-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "important",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "important-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "important",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "include-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "include",
+          "form": "leaf",
+          "attrs": {
+            "src": "./resource.md",
+            "as": "shared"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "include-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "include",
+          "form": "leaf",
+          "attrs": {
+            "src": "./resource.md",
+            "as": "shared",
+            "unregistered-core-attribute": "not allowed"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "info-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "info",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "info-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "info",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "instruction-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "instruction",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "instruction-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "instruction",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "may-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "may",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "may-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "may",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "mcp-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "mcp",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "mcp-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "mcp",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "must-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "must",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "must-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "must",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "never-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "never",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "never-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "never",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "note-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "note",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "note-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "note",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "output-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "output",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "output-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "output",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "param-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "param",
+          "form": "leaf",
+          "attrs": {
+            "name": "sample"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "param-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "param",
+          "form": "leaf",
+          "attrs": {
+            "name": "sample",
+            "unregistered-core-attribute": "not allowed"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "pdf-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "pdf",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "pdf-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "pdf",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "person-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "person",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "person-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "person",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "policy-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "policy",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "policy-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "policy",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "properties-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "properties",
+          "form": "container",
+          "attrs": {},
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "properties-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "properties",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "remove-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "remove",
+          "form": "leaf",
+          "attrs": {
+            "target": "#base/block"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "remove-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "remove",
+          "form": "leaf",
+          "attrs": {
+            "target": "#base/block",
+            "unregistered-core-attribute": "not allowed"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "replace-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "replace",
+          "form": "container",
+          "attrs": {
+            "target": "#base/block"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "replace-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "replace",
+          "form": "container",
+          "attrs": {
+            "target": "#base/block",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "resource-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "resource",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "resource-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "resource",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "role-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "role",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "role-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "role",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "sandbox-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "sandbox",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "sandbox-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "sandbox",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "schedule-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "schedule",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "dialect": "sample"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "schedule-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "schedule",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "dialect": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "script-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "script",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "script-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "script",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "section-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "section",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "section-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "section",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "service-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "service",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "service-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "service",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "should-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "should",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "should-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "should",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "skill-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "skill",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "skill-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "skill",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "source-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "source",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "source-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "source",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "step-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "steps",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "directive",
+              "kind": "step",
+              "form": "container",
+              "attrs": {},
+              "children": [
+                {
+                  "type": "markdown",
+                  "source": "Shared content."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "step-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "steps",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "directive",
+              "kind": "step",
+              "form": "container",
+              "attrs": {
+                "unregistered-core-attribute": "not allowed"
+              },
+              "children": [
+                {
+                  "type": "markdown",
+                  "source": "Shared content."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "steps-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "steps",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "steps-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "steps",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "tab-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "tabs",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "directive",
+              "kind": "tab",
+              "form": "container",
+              "attrs": {},
+              "children": [
+                {
+                  "type": "markdown",
+                  "source": "Shared content."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "tab-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "tabs",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "directive",
+              "kind": "tab",
+              "form": "container",
+              "attrs": {
+                "unregistered-core-attribute": "not allowed"
+              },
+              "children": [
+                {
+                  "type": "markdown",
+                  "source": "Shared content."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "tabs-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "tabs",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "tabs-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "tabs",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "test-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "test",
+          "form": "container",
+          "attrs": {
+            "id": "sample"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "test-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "test",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "tip-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "tip",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "tip-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "tip",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "tool-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "tool",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "server": "#server",
+            "name": "sample"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "tool-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "tool",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "server": "#server",
+            "name": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "video-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "video",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "video-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "video",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "warning-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "warning",
+          "form": "container",
+          "attrs": {},
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "warning-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "warning",
+          "form": "container",
+          "attrs": {
+            "unregistered-core-attribute": "not allowed"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "workflow-valid",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "workflow",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "dialect": "sample"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "workflow-unknown-attribute",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "workflow",
+          "form": "container",
+          "attrs": {
+            "id": "sample",
+            "dialect": "sample",
+            "unregistered-core-attribute": "not allowed"
+          },
+          "value": {
+            "format": "yaml",
+            "source": "{}\n",
+            "data": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "id-with-spaces",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "person",
+          "form": "leaf",
+          "attrs": {
+            "id": "not a valid id"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "enum-without-values",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "param",
+          "form": "leaf",
+          "attrs": {
+            "name": "tier",
+            "type": "enum"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "column-span",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "column",
+          "form": "container",
+          "attrs": {
+            "span": 13
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "must-leaf",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "must",
+          "form": "leaf",
+          "attrs": {}
+        }
+      ]
+    }
+  },
+  {
+    "name": "output-response-format",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "output",
+          "form": "container",
+          "attrs": {
+            "response-format": "json"
+          },
+          "children": [
+            {
+              "type": "markdown",
+              "source": "Shared content."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "front-and-back-metadata",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "metadata": {
+        "front": {
+          "title": "Shared guidance"
+        },
+        "back": {
+          "authors": [
+            "Alex"
+          ],
+          "custom": {
+            "reviewed": true
+          }
+        }
+      },
+      "body": []
+    }
+  },
+  {
+    "name": "unknown-metadata-region",
+    "valid": false,
+    "document": {
+      "format": "instruction/1",
+      "metadata": {
+        "trailing": {}
+      },
+      "body": []
+    }
+  }
+]

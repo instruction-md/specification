@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320" role="img" aria-labelledby="title desc">
+<title id="title">Morning brief layout</title><desc id="desc">Commitments are read before suggested priorities. Tentative events retain their status.</desc>
+<rect width="720" height="320" rx="20" fill="#f6f4ee"/>
+<text x="32" y="52" font-family="sans-serif" font-size="26" fill="#18392d">Your morning brief</text>
+<rect x="24" y="80" width="328" height="212" rx="12" fill="#fff"/>
+<rect x="368" y="80" width="328" height="212" rx="12" fill="#fff"/>
+<g font-family="sans-serif" fill="#18392d"><text x="44" y="116" font-size="20">Commitments</text><text x="388" y="116" font-size="20">Suggested priorities</text></g>
+<g font-family="sans-serif" font-size="15" fill="#45534d"><text x="44" y="156">09:00 Catch-up — tentative</text><text x="44" y="186">11:00 Review — confirmed</text><text x="388" y="156">One achievable focus task</text><text x="388" y="186">One uninterrupted work period</text></g>
+</svg>
