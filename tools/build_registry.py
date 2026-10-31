@@ -55,7 +55,7 @@ add('role',forms=('container','leaf'),attrs={'resolver':S,'account':S},required=
 add('skill',forms=('container','leaf'),attrs={'trigger':S,'resolver':S},required=('id',),family='connected')
 add('mcp',forms=('container','leaf'),attrs={'registry':S,'server':S,'account':S,'tools':LS,'allow':LS,'deny':LS,'resolver':S},required=('id',),family='connected')
 add('tool',forms=('container','leaf'),attrs={'server':S,'name':S,'allow':LS,'deny':LS},required=('id','server','name'),family='connected')
-add('agent',forms=('container','leaf'),attrs={'protocol':S,'resolver':S,'account':S},required=('id',),family='connected')
+add('agent',forms=('container','leaf'),attrs={'protocol':S,'endpoint':S,'binding':S,'tenant':S,'skills':LS,'resolver':S,'account':S},required=('id',),family='connected')
 add('service source',forms=('container','leaf'),attrs={'resolver':S,'account':S,'media-type':S},required=('id',),family='connected')
 MEDIA = {'media-type':S,'alt':S,'caption':S,'transcript':S,'preview':S,'decorative':B,
          'page':{'type':'integer','minimum':1},'start':{'type':'integer','minimum':0},

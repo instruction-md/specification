@@ -43,6 +43,7 @@ def main():
       ('output-response-format',directive('output',{'response-format':'json'})),
     ]
     for name,node in edge:cases.append({'name':name,'valid':name=='output-response-format','document':{'format':'instruction/1','body':[node]}})
+    cases.append({'name':'agent-by-endpoint','valid':True,'document':{'format':'instruction/1','body':[directive('agent',{'protocol':'a2a','endpoint':'https://agents.example.org/a2a/v1','binding':'JSONRPC','tenant':'bookings','skills':['search','reserve']},form='leaf')]}})
     cases.append({'name':'front-and-back-metadata','valid':True,'document':{'format':'instruction/1','metadata':{'front':{'title':'Shared guidance'},'back':{'authors':['Alex'],'custom':{'reviewed':True}}},'body':[]}})
     cases.append({'name':'unknown-metadata-region','valid':False,'document':{'format':'instruction/1','metadata':{'trailing':{}},'body':[]}})
     write('conformance/model/cases.json',cases)
@@ -52,6 +53,7 @@ def main():
       {'name':'indented-directive-is-prose','source':'    :::unknown\n','valid':True,'directives':0},
       {'name':'shorter-inner-fences','source':'::::columns\n:::card{title="A"}\nShared.\n:::\n::::\n','valid':True,'directives':2},
       {'name':'equal-inner-fences','source':':::columns\n:::card\n:::\n:::\n','valid':False},
+      {'name':'code-fences-as-tabs','source':':::tabs\n```bash {title="npm"}\nnpm install instruction.md\n```\n```bash {title="pnpm"}\npnpm add instruction.md\n```\n:::\n','valid':True,'directives':1},
       {'name':'plain-backmatter-to-eof','source':'Shared.\n\n---\nowners: [Alex]\n','valid':True,'back':{'owners':['Alex']},'markdown':'Shared.\n\n'},
       {'name':'backmatter-after-front-matter','source':'---\ntitle: Shared guidance\n---\nShared.\n\n---\nauthors: [Alex]\n','valid':True,'back':{'authors':['Alex']},'markdown':'Shared.\n\n'},
       {'name':'backmatter-with-yaml-comments','source':'Shared.\n\n---\n\n# Review record\nhistory: [{summary: Clarified the goal}]\ncustom: preserved\n','valid':True,'back':{'history':[{'summary':'Clarified the goal'}],'custom':'preserved'}},

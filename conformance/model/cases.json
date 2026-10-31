@@ -2945,6 +2945,31 @@
     }
   },
   {
+    "name": "agent-by-endpoint",
+    "valid": true,
+    "document": {
+      "format": "instruction/1",
+      "body": [
+        {
+          "type": "directive",
+          "kind": "agent",
+          "form": "leaf",
+          "attrs": {
+            "protocol": "a2a",
+            "endpoint": "https://agents.example.org/a2a/v1",
+            "binding": "JSONRPC",
+            "tenant": "bookings",
+            "skills": [
+              "search",
+              "reserve"
+            ],
+            "id": "sample"
+          }
+        }
+      ]
+    }
+  },
+  {
     "name": "front-and-back-metadata",
     "valid": true,
     "document": {

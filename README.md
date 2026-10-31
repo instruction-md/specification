@@ -485,6 +485,23 @@ from 1 to 12. `column` may take `span` from 1 to 12. `details` takes boolean
 columns and MUST preserve reading order. Tabs and closed details retain all
 content in accessible views, exports and agent output.
 
+Inside `tabs`, a fenced code block that is not in a `tab` is a tab of its own,
+titled by its `title`, else its `filename`, else its language: the same step
+shown for several tools or languages. Such a tab is a view of the same children,
+not a node of its own; the text profile delivers the fences unchanged and in
+order, each with its attribute list.
+
+`````markdown
+:::tabs{title="Install"}
+```bash {title="npm"}
+npm install instruction.md
+```
+```bash {title="pnpm"}
+pnpm add instruction.md
+```
+:::
+`````
+
 ````markdown
 ::::columns{count=2}
 :::card{title="What to do"}
@@ -510,9 +527,17 @@ implement interactive UI through the host's component API.
 Ordinary fenced code supports any language info string, including `python`,
 `bash`, `javascript`, `pseudo`, `mermaid`, `dot`, `plantuml`, `json`, `yaml`,
 `toml` and `csv`. Unknown languages still show code. A trailing attribute list
-on the info line supports `id`, `title`, `filename`, `highlight` (line ranges)
-and `caption`. The language is the first token. Instruction constructs and
+on the info line supports `id`, `title`, `filename`, `highlight` (line ranges),
+`caption` and `preview`. The language is the first token. Instruction constructs and
 parameters inside code/math remain literal.
+
+A renderer MAY show an `html` fence both as its code and as the page that code
+describes. The rendering is a view of the code, never content of its own: it is
+drawn in an isolated frame that runs no script, submits no form, cannot navigate
+or read the host page, its storage or its credentials, and makes no request that
+carries them. The code remains the shared content and is what agents receive.
+`preview=false` keeps a fence as code only, for a fragment that is not a page;
+`preview` is ignored on other languages.
 
 `script` wraps code plus documentation, with `lang`, `sandbox` and `entry`
 attributes. It does not itself run. `sandbox` describes an external execution
@@ -609,6 +634,8 @@ Use the prioritization guidance when meetings and tasks compete for time.
 :::
 
 ::agent{id=travel title="Travel researcher" protocol=a2a src="https://example.org/.well-known/agent-card.json"}
+
+::agent{id=bookings title="Bookings" protocol=a2a endpoint="https://agents.example.org/a2a/v1" binding=JSONRPC skills="search,reserve"}
 ```
 
 A people reference is a stable identity/role with an authored readable label.
@@ -624,9 +651,22 @@ An inaccessible profile/tool/schema is not permission to broaden a request.
 
 A `skill` can reference a packaged Agent Skills `SKILL.md`, local guidance or
 another instruction. Its trigger is guidance, not a resolver-time condition.
-An A2A `agent` references an Agent Card or catalog record; A2A-advertised skills
-and packaged SKILL.md skills remain distinct unless an adapter explicitly maps
-them. This spec does not reproduce or override MCP, Agent Skills or A2A protocols.
+An A2A `agent` (`protocol=a2a`) is identified by its Agent Card, its endpoint,
+or both, and MUST have `src` or `endpoint`. `src` names the Agent Card or a
+catalog record. `endpoint` names the interface URL the agent receives A2A
+messages at; `binding` names that interface's protocol binding in A2A's own
+spelling (`JSONRPC`, `HTTP+JSON`, `GRPC`, or another the host supports), and
+`tenant` the A2A tenant when one endpoint serves several agents. Given only an
+endpoint, a resolver reads the card at `/.well-known/agent-card.json` on the
+endpoint's origin; with no card there, the agent is known by its endpoint, with
+the authored title and body as its only description. Given both, `endpoint`
+selects one of the card's interfaces: one the card does not list is
+`reference-missing` for a required agent and `reference-optional` otherwise.
+`skills` lists the A2A skill IDs the author intends the agent to be asked for;
+like an MCP server's `tools`, it expresses intended use and grants nothing.
+A2A-advertised skills and packaged SKILL.md skills remain distinct unless an
+adapter explicitly maps them. This spec does not reproduce or override MCP,
+Agent Skills or A2A protocols.
 
 Resolvers MUST record which fields came from a provider, their source/version
 and the authored label. They MUST NOT import arbitrary external descriptions as
@@ -1029,6 +1069,15 @@ alias; it returns status, immutable snapshot identity/digest, permitted object
 fields/resources and diagnostics. It MUST declare its supported protocols and
 must not perform business actions while enriching a reference. Authentication
 credentials stay outside shared source/bundles; hosts bind aliases per user.
+
+A host MAY keep a catalog of the integrations it has approved (MCP servers, MCP
+registries, skill repositories, A2A agents) and offer their objects in
+completions. A host MAY also restrict connected objects to that catalog. Under
+a restriction, an object whose target is outside the catalog stays in the
+document and in agent projections: it is never removed. It is not resolved or
+enriched, a renderer marks it as not approved, and the host reports it with a
+host-policy diagnostic (§18). The catalog grants nothing by itself; approved
+objects still need the host's access checks.
 
 An explicit test request identifies `format: instruction-test-request/1`, the
 resolved/source digest, target block ID, adapter, inputs and optional model or

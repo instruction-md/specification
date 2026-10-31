@@ -29,6 +29,12 @@
     "valid": false
   },
   {
+    "name": "code-fences-as-tabs",
+    "source": ":::tabs\n```bash {title=\"npm\"}\nnpm install instruction.md\n```\n```bash {title=\"pnpm\"}\npnpm add instruction.md\n```\n:::\n",
+    "valid": true,
+    "directives": 1
+  },
+  {
     "name": "plain-backmatter-to-eof",
     "source": "Shared.\n\n---\nowners: [Alex]\n",
     "valid": true,

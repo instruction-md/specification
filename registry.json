@@ -70,6 +70,21 @@
         "protocol": {
           "type": "string"
         },
+        "endpoint": {
+          "type": "string"
+        },
+        "binding": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "resolver": {
           "type": "string"
         },

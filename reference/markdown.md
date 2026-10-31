@@ -181,11 +181,35 @@ def format_event(event):
 ````
 
 The code content is literal. Code-fence attribute lists accept `id`, `title`,
-`filename`, `highlight` and `caption` only. `highlight` is a comma-separated
+`filename`, `highlight`, `caption` and `preview` only. `highlight` is a comma-separated
 list of positive integers or inclusive `a-b` ranges with `a <= b`. Values are
 presentation annotations, never dispatch targets. The displayed filename does
 not materialize a file. A `script` block gives an explicit script object for
 a testing/export adapter.
+
+An `html` fence may be shown as its code and as the page it describes, drawn in
+an isolated frame that runs no script and reaches nothing of the host's.
+`preview=false` keeps it as code only. Agents receive the code either way.
+
+````markdown
+```html {title="Reminder email" caption="What the reminder looks like"}
+<p style="font: 15px system-ui">Your 09:00 meeting is <b>tentative</b>.</p>
+```
+````
+
+Fences directly inside `tabs` are a tab each, titled by `title`, `filename`
+or their language:
+
+`````markdown
+:::tabs
+```python {filename="brief.py"}
+print(brief())
+```
+```javascript {filename="brief.js"}
+console.log(brief());
+```
+:::
+`````
 
 ## Media and drawings
 
